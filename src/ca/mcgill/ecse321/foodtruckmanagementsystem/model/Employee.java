@@ -22,8 +22,8 @@ public class Employee
 
   //Employee Attributes
   private String name;
-  private List<Date> workstarttime;
-  private List<Date> workendtime;
+  private List<Date> workStartTime;
+  private List<Date> workEndTime;
 
   //Autounique Attributes
   private int id;
@@ -35,8 +35,8 @@ public class Employee
   public Employee(String aName)
   {
     name = aName;
-    workstarttime = new ArrayList<Date>();
-    workendtime = new ArrayList<Date>();
+    workStartTime = new ArrayList<Date>();
+    workEndTime = new ArrayList<Date>();
     id = nextId++;
   }
 
@@ -52,31 +52,31 @@ public class Employee
     return wasSet;
   }
 
-  public boolean addWorkstarttime(Date aWorkstarttime)
+  public boolean addWorkStartTime(Date aWorkStartTime)
   {
     boolean wasAdded = false;
-    wasAdded = workstarttime.add(aWorkstarttime);
+    wasAdded = workStartTime.add(aWorkStartTime);
     return wasAdded;
   }
 
-  public boolean removeWorkstarttime(Date aWorkstarttime)
+  public boolean removeWorkStartTime(Date aWorkStartTime)
   {
     boolean wasRemoved = false;
-    wasRemoved = workstarttime.remove(aWorkstarttime);
+    wasRemoved = workStartTime.remove(aWorkStartTime);
     return wasRemoved;
   }
 
-  public boolean addWorkendtime(Date aWorkendtime)
+  public boolean addWorkEndTime(Date aWorkEndTime)
   {
     boolean wasAdded = false;
-    wasAdded = workendtime.add(aWorkendtime);
+    wasAdded = workEndTime.add(aWorkEndTime);
     return wasAdded;
   }
 
-  public boolean removeWorkendtime(Date aWorkendtime)
+  public boolean removeWorkEndTime(Date aWorkEndTime)
   {
     boolean wasRemoved = false;
-    wasRemoved = workendtime.remove(aWorkendtime);
+    wasRemoved = workEndTime.remove(aWorkEndTime);
     return wasRemoved;
   }
 
@@ -85,63 +85,63 @@ public class Employee
     return name;
   }
 
-  public Date getWorkstarttime(int index)
+  public Date getWorkStartTime(int index)
   {
-    Date aWorkstarttime = workstarttime.get(index);
-    return aWorkstarttime;
+    Date aWorkStartTime = workStartTime.get(index);
+    return aWorkStartTime;
   }
 
-  public Date[] getWorkstarttime()
+  public Date[] getWorkStartTime()
   {
-    Date[] newWorkstarttime = workstarttime.toArray(new Date[workstarttime.size()]);
-    return newWorkstarttime;
+    Date[] newWorkStartTime = workStartTime.toArray(new Date[workStartTime.size()]);
+    return newWorkStartTime;
   }
 
-  public int numberOfWorkstarttime()
+  public int numberOfWorkStartTime()
   {
-    int number = workstarttime.size();
+    int number = workStartTime.size();
     return number;
   }
 
-  public boolean hasWorkstarttime()
+  public boolean hasWorkStartTime()
   {
-    boolean has = workstarttime.size() > 0;
+    boolean has = workStartTime.size() > 0;
     return has;
   }
 
-  public int indexOfWorkstarttime(Date aWorkstarttime)
+  public int indexOfWorkStartTime(Date aWorkStartTime)
   {
-    int index = workstarttime.indexOf(aWorkstarttime);
+    int index = workStartTime.indexOf(aWorkStartTime);
     return index;
   }
 
-  public Date getWorkendtime(int index)
+  public Date getWorkEndTime(int index)
   {
-    Date aWorkendtime = workendtime.get(index);
-    return aWorkendtime;
+    Date aWorkEndTime = workEndTime.get(index);
+    return aWorkEndTime;
   }
 
-  public Date[] getWorkendtime()
+  public Date[] getWorkEndTime()
   {
-    Date[] newWorkendtime = workendtime.toArray(new Date[workendtime.size()]);
-    return newWorkendtime;
+    Date[] newWorkEndTime = workEndTime.toArray(new Date[workEndTime.size()]);
+    return newWorkEndTime;
   }
 
-  public int numberOfWorkendtime()
+  public int numberOfWorkEndTime()
   {
-    int number = workendtime.size();
+    int number = workEndTime.size();
     return number;
   }
 
-  public boolean hasWorkendtime()
+  public boolean hasWorkEndTime()
   {
-    boolean has = workendtime.size() > 0;
+    boolean has = workEndTime.size() > 0;
     return has;
   }
 
-  public int indexOfWorkendtime(Date aWorkendtime)
+  public int indexOfWorkEndTime(Date aWorkEndTime)
   {
-    int index = workendtime.indexOf(aWorkendtime);
+    int index = workEndTime.indexOf(aWorkEndTime);
     return index;
   }
 

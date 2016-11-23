@@ -28,8 +28,8 @@ class Ingredient {
 class Employee {
   autounique id;
   name;
-  Date[] workstarttime;
-  Date[] workendtime;
+  Date[] workStartTime;
+  Date[] workEndTime;
 }//$?[End_of_model]$?
 
 class FoodTruckManager
