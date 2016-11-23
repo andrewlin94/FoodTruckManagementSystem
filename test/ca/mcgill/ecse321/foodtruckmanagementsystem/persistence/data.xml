@@ -1,0 +1,19 @@
+<manager id="1">
+  <foods id="2"/>
+  <employees id="3">
+    <employee id="4">
+      <name>Michael</name>
+      <workstarttime id="5"/>
+      <workendtime id="6"/>
+      <id>1</id>
+    </employee>
+    <employee id="7">
+      <name>Steve</name>
+      <workstarttime id="8"/>
+      <workendtime id="9"/>
+      <id>2</id>
+    </employee>
+  </employees>
+  <equipment id="10"/>
+  <ingredients id="11"/>
+</manager>

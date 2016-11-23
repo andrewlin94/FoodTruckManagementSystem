@@ -8,7 +8,7 @@ public class PersistenceFoodTruckManagementSystem{
 	
 	private static void initializeXStream()
 	{
-		PersistenceXStream.setFilename("eventregistration.xml");
+		PersistenceXStream.setFilename("foodtruckmanagementsystem.xml");
 		PersistenceXStream.setAlias("employee", Employee.class);
 		PersistenceXStream.setAlias("equipment", Equipment.class);
 		PersistenceXStream.setAlias("food", Food.class);
