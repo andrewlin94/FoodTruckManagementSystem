@@ -1,0 +1,58 @@
+namespace ca.mcgill.ecse321.foodtruckmanagementsystem.model;
+
+class FoodTruckManager {
+  singleton;
+  1 -> * Food;
+  1 -> * Employee;
+  1 -> * Equipment;
+  1 -> * Ingredient;
+}
+
+class Food {
+  autounique id;
+  name;
+  double price;
+  int popularity;
+}
+
+class Equipment {
+  name;
+  int quantity;
+}
+
+class Ingredient {
+  name;
+  int quantity;
+}
+
+class Employee {
+  autounique id;
+  name;
+  Date[] workstarttime;
+  Date[] workendtime;
+}//$?[End_of_model]$?
+
+class FoodTruckManager
+{
+  position 50 30 109 45;
+}
+
+class Food
+{
+  position 50 130 109 45;
+}
+
+class Equipment
+{
+  position 50 230 109 45;
+}
+
+class Ingredient
+{
+  position 50 330 109 45;
+}
+
+class Employee
+{
+  position 50 430 109 45;
+}
