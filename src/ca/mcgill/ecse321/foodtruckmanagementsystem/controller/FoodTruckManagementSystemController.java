@@ -1,6 +1,9 @@
 package ca.mcgill.ecse321.foodtruckmanagementsystem.controller;
 
 import ca.mcgill.ecse321.foodtruckmanagementsystem.persistence.PersistenceXStream;
+
+import java.util.Iterator;
+
 import ca.mcgill.ecse321.foodtruckmanagementsystem.model.*;
 public class FoodTruckManagementSystemController {
 
@@ -30,6 +33,18 @@ public class FoodTruckManagementSystemController {
 		Employee aEmployee = new Employee(name);
 		ftm.addEmployee(aEmployee);
 		PersistenceXStream.saveToXMLwithXStream(ftm);
+	}
+	
+	public void removeEmployee (String name) throws InvalidInputException {
+		String error = "";
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		Employee e;
+		for (int i = 0; i < ftm.getEmployees().size(); i++) {
+			e = ftm.getEmployee(i);
+			if (e.getName() == name) {
+				ftm.removeEmployee(e);
+			}
+		}
 	}
 	
 	public void createIngredient(String name, int quantity) throws InvalidInputException {

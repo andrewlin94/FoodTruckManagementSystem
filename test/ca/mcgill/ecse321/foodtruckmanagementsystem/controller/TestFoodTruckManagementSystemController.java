@@ -152,6 +152,22 @@ public class TestFoodTruckManagementSystemController {
 	}
 	
 	@Test
+	public void testCreateEmployee() {
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		assertEquals(0, ftm.getEmployees().size());
+		
+		String error = "";
+		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		try {
+			ftmsc.createEmployee("Michael");
+		} catch (InvalidInputException e) {
+			fail();
+		}
+		assertEquals(1, ftm.getEmployees().size());
+		assertEquals("Michael", ftm.getEmployee(0).getName());
+	}
+	
+	@Test
 	public void testCreateEmptyIngredient() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
 		assertEquals(0, ftm.getIngredients().size());
