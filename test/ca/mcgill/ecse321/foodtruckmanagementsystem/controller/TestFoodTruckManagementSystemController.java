@@ -130,7 +130,7 @@ public class TestFoodTruckManagementSystemController {
 			error = e.getMessage();
 		}
 		
-		assertEquals("Food price is not valid! Food popularity is not valid! ", error);		
+		assertEquals("Food popularity is not valid! Food price is not valid! ", error);		
 		assertEquals(0, ftm.getFoods().size());
 	}
 	/**

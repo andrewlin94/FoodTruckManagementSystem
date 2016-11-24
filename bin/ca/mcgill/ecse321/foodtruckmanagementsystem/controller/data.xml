@@ -1,13 +1,11 @@
 <manager id="1">
-  <foods id="2">
-    <food id="3">
-      <name>Burger</name>
-      <price>12.95</price>
-      <popularity>0</popularity>
-      <id>1</id>
-    </food>
-  </foods>
-  <employees id="4"/>
-  <equipment id="5"/>
-  <ingredients id="6"/>
+  <foods id="2"/>
+  <employees id="3"/>
+  <equipment id="4"/>
+  <ingredients id="5">
+    <ingredient id="6">
+      <name>Lettuce</name>
+      <quantity>1</quantity>
+    </ingredient>
+  </ingredients>
 </manager>
