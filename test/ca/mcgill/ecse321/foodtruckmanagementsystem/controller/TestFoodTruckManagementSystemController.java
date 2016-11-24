@@ -198,6 +198,35 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals("", error);
 		assertEquals(1, ftm.getFoods().size());
 	}
+	
+	@Test
+	public void testValidOrder() {
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		assertEquals(0, ftm.getFoods().size());
+		
+		String error = "";
+		
+		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		try {
+			ftmsc.createFood("Burger", 12.95, 12);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		assertEquals(12, ftm.getFood(0).getPopularity());
+		assertEquals("", error);
+		
+		try {
+			ftmsc.editOrder(ftm.getFood(0), 12);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm2.getFoods().size());
+		assertEquals("Burger", ftm2.getFood(0).getName());
+		assertEquals(24, ftm2.getFood(0).getPopularity());
+		
+		assertEquals("", error);
+	}
 
 	/**
 	 * Unit test case for empty employee name (INVALID)
