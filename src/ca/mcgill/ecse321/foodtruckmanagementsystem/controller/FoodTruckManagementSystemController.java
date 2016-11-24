@@ -189,8 +189,34 @@ public class FoodTruckManagementSystemController {
 		PersistenceXStream.saveToXMLwithXStream(ftm);
 	}
 	
-	public void editFood(Food food, String newName, double newPrice){
-		
+	public void editFood(Food food, String newName, double newPrice) throws InvalidInputException{
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		String error = "";
+		if (newName == null || newName.trim().length() == 0) {
+			error = error + "Food name cannot be empty! ";
+		}
+		else {
+			int ascii;
+			for (int i = 0; i < newName.trim().length(); i++) {
+				ascii = (int) newName.trim().charAt(i);
+				if ((ascii < 32) || (ascii > 32 && ascii < 48) || (ascii > 57 && ascii < 65)
+						|| (ascii > 90 && ascii < 97) || (ascii > 122)) {
+					error = error + "Food name is not valid! ";
+					break;
+				}
+			}
+		}
+			
+		if (Double.compare(newPrice, (double)0.0) <= 0) {
+			error = error + "Food price is not valid! ";
+		}			
+		if (error.length() > 0) {
+			throw new InvalidInputException(error);
+		}
+		int index = ftm.indexOfFood(food);
+		ftm.getFood(index).setName(newName);
+		ftm.getFood(index).setPrice(newPrice);
+		PersistenceXStream.saveToXMLwithXStream(ftm);
 	}
 	
 	public void editOrder(Food food, int order) throws InvalidInputException{

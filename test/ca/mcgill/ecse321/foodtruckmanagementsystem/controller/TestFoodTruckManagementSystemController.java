@@ -495,4 +495,30 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(1, ftm.getEquipment().size());
 	}
 	
+	
+	@Test
+	public void testEditFoodNameAndQuantity() {
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		double price = 1.5;
+		String name = "Hot Dog";
+		int pop = 0;
+		Food f = new Food(name, price, pop);
+		ftm.addFood(f);
+		assertEquals(1, ftm.getFoods().size());
+		assertEquals(name, ftm.getFood(0).getName());
+		assertEquals(true, Double.compare(ftm.getFood(0).getPrice(), price) == 0);
+		
+		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		try {
+			ftmsc.editFood(ftm.getFood(0), "Burger", 5);
+		} catch (InvalidInputException e) {
+			fail();
+		}
+		
+		assertEquals(1, ftm.getFoods().size());
+		assertEquals("Burger", ftm.getFood(0).getName());
+		assertEquals(true, Double.compare(ftm.getFood(0).getPrice(), 5) == 0);
+		
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();		
+	}
 }
