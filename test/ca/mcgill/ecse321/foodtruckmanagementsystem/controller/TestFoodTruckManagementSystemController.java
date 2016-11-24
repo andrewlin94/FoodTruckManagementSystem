@@ -182,12 +182,18 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(0, ftm.getFoods().size());
 				
 		String error = "";
+		String name = "Burger";
+		
 		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
 		try {
-			ftmsc.createFood("Burger", 12.95, 0);
+			ftmsc.createFood(name, 12.95, 0);
 		} catch (InvalidInputException e) {
 			error = e.getMessage();
 		}
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm2.getFoods().size());
+		assertEquals(name, ftm2.getFood(0).getName());
+		assertEquals(0, ftm2.getFood(0).getPopularity());
 		
 		assertEquals("", error);
 		assertEquals(1, ftm.getFoods().size());
@@ -241,12 +247,16 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(0, ftm.getEmployees().size());
 				
 		String error = "";
+		String name = "BobbyJoe";
 		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
 		try {
-			ftmsc.createEmployee("BobbyJoe");
+			ftmsc.createEmployee(name);
 		} catch (InvalidInputException e) {
 			error = e.getMessage();
 		}
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm2.getEmployees().size());
+		assertEquals(name, ftm2.getEmployee(0).getName());
 		
 		assertEquals("", error);
 		assertEquals(1, ftm.getEmployees().size());
@@ -337,12 +347,19 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(0, ftm.getIngredients().size());
 		
 		String error = "";
+		String name = "Lettuce";
+		
 		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
 		try {
-			ftmsc.createIngredient("Lettuce", 1);
+			ftmsc.createIngredient(name, 1);
 		} catch (InvalidInputException e) {
 			error = e.getMessage();
 		}
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm2.getIngredients().size());
+		assertEquals(name, ftm2.getIngredient(0).getName());
+		assertEquals(1, ftm2.getIngredient(0).getQuantity());
+		
 		assertEquals("", error);
 		assertEquals(1, ftm.getIngredients().size());
 	}
@@ -432,12 +449,19 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(0, ftm.getEquipment().size());
 		
 		String error = "";
+		String name = "Fork";
+		
 		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
 		try {
-			ftmsc.createEquipment("Fork", 1);
+			ftmsc.createEquipment(name, 1);
 		} catch (InvalidInputException e) {
 			error = e.getMessage();
 		}
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm2.getEquipment().size());
+		assertEquals(name, ftm2.getEquipment(0).getName());
+		assertEquals(1, ftm2.getEquipment(0).getQuantity());
+		
 		assertEquals("", error);
 		assertEquals(1, ftm.getEquipment().size());
 	}
