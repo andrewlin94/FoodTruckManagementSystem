@@ -222,9 +222,15 @@ public class FoodTruckManagementSystemController {
 	public void editOrder(Food food, int order) throws InvalidInputException{
 		FoodTruckManager ftm = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
 		String error = "";
-		
-		if (food == null){
-			error = error + "Food item does not exist! ";
+		int index = 0;
+		for (int i = 0; i < ftm.getFoods().size(); i++) {
+			if (ftm.getFood(i).getName().equals(food.getName()) && Double.compare(ftm.getFood(i).getPrice(), food.getPrice()) == 0 && ftm.getFood(i).getPopularity() == food.getPopularity()) {
+				index = i;
+				break;
+			}
+			if (i == ftm.getFoods().size()-1) {
+				error = error + "Food item is not on the list! ";
+			}
 		}
 		if (order <= 0){
 			error = error + "Order must be greater than 0! ";
@@ -232,8 +238,8 @@ public class FoodTruckManagementSystemController {
 		if (error.length() > 0){
 			throw new InvalidInputException(error);
 		}
-		int index = ftm.indexOfFood(food);		
-		ftm.getFood(index).setPopularity(ftm.getFood(index).getPopularity() + order);
+		int newPop = ftm.getFood(index).getPopularity() + order;
+		ftm.getFood(index).setPopularity(newPop);
 		PersistenceXStream.saveToXMLwithXStream(ftm);
 	}
 }

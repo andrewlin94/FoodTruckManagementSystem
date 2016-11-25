@@ -118,7 +118,7 @@ public class TestFoodTruckManagementSystemController {
 	 * Unit test case for valid name and invalid price & popularity (INVALID)
 	 */
 	@Test
-	public void testBadPriceAndPopFood() {
+	public void testInvalidPriceInvalidPopFood() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
 		assertEquals(0, ftm.getFoods().size());
 		
@@ -137,7 +137,7 @@ public class TestFoodTruckManagementSystemController {
 	 * Unit test case for valid price and invalid name & popularity (INVALID)
 	 */
 	@Test
-	public void testBadNameAndPopFood(){
+	public void testInvalidNameInvalidPopFood(){
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
 		assertEquals(0, ftm.getFoods().size());
 		
@@ -157,7 +157,7 @@ public class TestFoodTruckManagementSystemController {
 	 * Unit test case for valid popularity and invalid name & price (INVALID)
 	 */
 	@Test
-	public void testBadNameAndPriceFood(){
+	public void testInvalidNameInvalidPriceFood(){
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
 		assertEquals(0, ftm.getFoods().size());
 		
@@ -494,31 +494,73 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals("", error);
 		assertEquals(1, ftm.getEquipment().size());
 	}
-	
-	
+	/**
+	 * Unit test case for editing order with invalid number and non-existent food (INVALID)
+	 */
 	@Test
-	public void testEditFoodNameAndQuantity() {
+	public void testInvalidOrderEdit() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
-		double price = 1.5;
-		String name = "Hot Dog";
-		int pop = 0;
-		Food f = new Food(name, price, pop);
-		ftm.addFood(f);
-		assertEquals(1, ftm.getFoods().size());
-		assertEquals(name, ftm.getFood(0).getName());
-		assertEquals(true, Double.compare(ftm.getFood(0).getPrice(), price) == 0);
+		assertEquals(0, ftm.getFoods().size());
+				
+		String error = "";
+		String name = "Burger";
+		double price = 12.95;
 		
 		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
 		try {
-			ftmsc.editFood(ftm.getFood(0), "Burger", 5);
+			ftmsc.createFood(name, price, 0);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm2.getFoods().size());
+		assertEquals(name, ftm2.getFood(0).getName());
+		assertEquals(0, ftm2.getFood(0).getPopularity());
+		assertEquals(0, Double.compare(price, ftm2.getFood(0).getPrice()));
+		
+		assertEquals("", error);
+		assertEquals(1, ftm.getFoods().size());
+		
+		Food f = new Food(name, price, 0);
+		try {
+			ftmsc.editOrder(f, 0);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		assertEquals("Order must be greater than 0! ", error);
+	}
+	
+	@Test
+	public void testValidOrderEdit() {
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		assertEquals(0, ftm.getFoods().size());
+				
+		String error = "";
+		String name = "Burger";
+		double price = 12.95;
+		
+		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		try {
+			ftmsc.createFood(name, price, 0);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm2.getFoods().size());
+		assertEquals(name, ftm2.getFood(0).getName());
+		assertEquals(0, ftm2.getFood(0).getPopularity());
+		assertEquals(0, Double.compare(price, ftm2.getFood(0).getPrice()));
+		
+		assertEquals("", error);
+		assertEquals(1, ftm.getFoods().size());
+		
+		Food f = new Food(name, price, 0);
+		try {
+			ftmsc.editOrder(f, 10);
 		} catch (InvalidInputException e) {
 			fail();
 		}
 		
-		assertEquals(1, ftm.getFoods().size());
-		assertEquals("Burger", ftm.getFood(0).getName());
-		assertEquals(true, Double.compare(ftm.getFood(0).getPrice(), 5) == 0);
-		
-		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();		
+		assertEquals(10, ftm2.getFood(0).getPopularity());
 	}
 }

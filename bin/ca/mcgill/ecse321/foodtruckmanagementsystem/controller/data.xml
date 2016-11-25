@@ -2,9 +2,9 @@
   <foods id="2">
     <food id="3">
       <name>Burger</name>
-      <price>5.0</price>
+      <price>12.95</price>
       <popularity>0</popularity>
-      <id>3</id>
+      <id>5</id>
     </food>
   </foods>
   <employees id="4"/>
