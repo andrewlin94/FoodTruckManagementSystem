@@ -1,5 +1,7 @@
 package ca.mcgill.ecse321.foodtruckmanagementsystem.controller;
 
+import java.util.Iterator;
+
 import ca.mcgill.ecse321.foodtruckmanagementsystem.persistence.PersistenceXStream;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.model.*;
 public class FoodTruckManagementSystemController {
@@ -40,21 +42,7 @@ public class FoodTruckManagementSystemController {
 		ftm.addEmployee(aEmployee);
 		PersistenceXStream.saveToXMLwithXStream(ftm);
 	}
-	
-	/**
-	 * Method used to change an existing employee's name into a different name.
-	 * Takes two String inputs (old name, new name).
-	 * Names can only contain ascii alphabetical and numerical values and spaces,
-	 * any other inputs will throw errors.
-	 * 
-	 * @param oldName
-	 * @param newName
-	 * @throws InvalidInputException
-	 */
-	public void editEmployee(Employee employee, String newName) throws InvalidInputException{
 		
-	}
-	
 	/**
 	 * Method takes one string and one integer as input. String must contain only alphabetical
 	 * and numerical ascii values (throws an error otherwise). Thus, special characters and 
@@ -190,7 +178,7 @@ public class FoodTruckManagementSystemController {
 	}
 	
 	public void editFood(Food food, String newName, double newPrice) throws InvalidInputException{
-		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		FoodTruckManager ftm = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
 		String error = "";
 		if (newName == null || newName.trim().length() == 0) {
 			error = error + "Food name cannot be empty! ";
@@ -220,26 +208,53 @@ public class FoodTruckManagementSystemController {
 	}
 	
 	public void editOrder(Food food, int order) throws InvalidInputException{
-		FoodTruckManager ftm = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
 		String error = "";
-		int index = 0;
-		for (int i = 0; i < ftm.getFoods().size(); i++) {
-			if (ftm.getFood(i).getName().equals(food.getName()) && Double.compare(ftm.getFood(i).getPrice(), food.getPrice()) == 0 && ftm.getFood(i).getPopularity() == food.getPopularity()) {
-				index = i;
-				break;
-			}
-			if (i == ftm.getFoods().size()-1) {
-				error = error + "Food item is not on the list! ";
-			}
-		}
-		if (order <= 0){
+		if (order < 0) {
 			error = error + "Order must be greater than 0! ";
 		}
-		if (error.length() > 0){
+		if (error.length() > 0) {
 			throw new InvalidInputException(error);
 		}
-		int newPop = ftm.getFood(index).getPopularity() + order;
-		ftm.getFood(index).setPopularity(newPop);
+		FoodTruckManager ftm = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+	}
+	
+	/**
+	 * Method used to change an existing employee's name into a different name.
+	 * Takes two String inputs (old name, new name).
+	 * Names can only contain ascii alphabetical and numerical values and spaces,
+	 * any other inputs will throw errors.
+	 * 
+	 * @param oldName
+	 * @param newName
+	 * @throws InvalidInputException
+	 */
+	public void editEmployeeName(Employee employee, String newName) throws InvalidInputException{
+		String error = "";
+		if (newName == null || newName.trim().length() == 0) {
+			error = error + "New employee name cannot be empty! ";
+		}
+		else {
+			int ascii;
+			for (int i = 0; i < newName.trim().length(); i++) {
+				ascii = (int) newName.trim().charAt(i);
+				if ((ascii < 32) || (ascii > 32 && ascii < 48) || (ascii > 57 && ascii < 65)
+						|| (ascii > 90 && ascii < 97) || (ascii > 122)) {
+					error = error + "New employee name is not valid! ";
+					break;
+				}
+			}
+		}
+		if (error.length() > 0) {
+			throw new InvalidInputException(error);
+		}
+		FoodTruckManager ftm = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		int i = 0;
+		for (i = 0; i < ftm.getEmployees().size(); i++) {
+			if (ftm.getEmployee(i).getName().equals(employee.getName())) {
+				break;
+			}
+		}
+		ftm.getEmployee(i).setName(newName);
 		PersistenceXStream.saveToXMLwithXStream(ftm);
 	}
 }
