@@ -2,7 +2,7 @@
   <foods id="2"/>
   <employees id="3">
     <employee id="4">
-      <name>BobbyJoe</name>
+      <name>Bob</name>
       <workStartTime id="5"/>
       <workEndTime id="6"/>
       <id>1</id>

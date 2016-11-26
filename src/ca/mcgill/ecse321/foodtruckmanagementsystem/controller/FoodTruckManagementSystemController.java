@@ -127,10 +127,6 @@ public class FoodTruckManagementSystemController {
 		PersistenceXStream.saveToXMLwithXStream(ftm);
 	}
 	
-	public void editEquipment(Equipment equipment, String newName, int newQuant){
-		
-	}
-	
 	/**
 	 * Method takes one string, one double and one integer as input. String must contain only alphabetical
 	 * and numerical ascii values (throws an error otherwise). Thus, special characters and 
@@ -181,7 +177,7 @@ public class FoodTruckManagementSystemController {
 		FoodTruckManager ftm = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
 		String error = "";
 		if (newName == null || newName.trim().length() == 0) {
-			error = error + "Food name cannot be empty! ";
+			error = error + "New food name cannot be empty! ";
 		}
 		else {
 			int ascii;
@@ -189,33 +185,51 @@ public class FoodTruckManagementSystemController {
 				ascii = (int) newName.trim().charAt(i);
 				if ((ascii < 32) || (ascii > 32 && ascii < 48) || (ascii > 57 && ascii < 65)
 						|| (ascii > 90 && ascii < 97) || (ascii > 122)) {
-					error = error + "Food name is not valid! ";
+					error = error + "New food name is not valid! ";
 					break;
 				}
 			}
 		}
 			
 		if (Double.compare(newPrice, (double)0.0) <= 0) {
-			error = error + "Food price is not valid! ";
+			error = error + "New food price is not valid! ";
 		}			
 		if (error.length() > 0) {
 			throw new InvalidInputException(error);
 		}
-		int index = ftm.indexOfFood(food);
-		ftm.getFood(index).setName(newName);
-		ftm.getFood(index).setPrice(newPrice);
+		int i = 0;
+		for (i = 0; i < ftm.getFoods().size(); i++) {
+			if (ftm.getFood(i).getName().equals(food.getName())) {
+				if (!(newName.equals(food.getName()))) {
+					ftm.getFood(i).setName(newName);
+				}
+				if (!(Double.compare(food.getPrice(), newPrice) == 0)) {
+					ftm.getFood(i).setPrice(newPrice);
+				}
+				break;
+			}
+		}
 		PersistenceXStream.saveToXMLwithXStream(ftm);
 	}
 	
 	public void editOrder(Food food, int order) throws InvalidInputException{
 		String error = "";
-		if (order < 0) {
+		if (order <= 0) {
 			error = error + "Order must be greater than 0! ";
 		}
 		if (error.length() > 0) {
 			throw new InvalidInputException(error);
 		}
 		FoodTruckManager ftm = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		int i = 0;
+		for (i = 0; i < ftm.getFoods().size(); i++) {
+			if (ftm.getFood(i).getName().equals(food.getName())) {
+				break;
+			}
+		}	
+		int p = ftm.getFood(i).getPopularity();
+		ftm.getFood(i).setPopularity(p + order);
+		PersistenceXStream.saveToXMLwithXStream(ftm);
 	}
 	
 	/**
@@ -228,7 +242,7 @@ public class FoodTruckManagementSystemController {
 	 * @param newName
 	 * @throws InvalidInputException
 	 */
-	public void editEmployeeName(Employee employee, String newName) throws InvalidInputException{
+	public void editEmployeeName(Employee employee, String newName) throws InvalidInputException {
 		String error = "";
 		if (newName == null || newName.trim().length() == 0) {
 			error = error + "New employee name cannot be empty! ";
@@ -251,10 +265,56 @@ public class FoodTruckManagementSystemController {
 		int i = 0;
 		for (i = 0; i < ftm.getEmployees().size(); i++) {
 			if (ftm.getEmployee(i).getName().equals(employee.getName())) {
-				break;
+				ftm.getEmployee(i).setName(newName);
+				PersistenceXStream.saveToXMLwithXStream(ftm);
 			}
 		}
-		ftm.getEmployee(i).setName(newName);
-		PersistenceXStream.saveToXMLwithXStream(ftm);
+	}
+	
+	public void editEquipmentName(Equipment e, String newName) throws InvalidInputException {
+		String error = "";
+		if (newName == null || newName.trim().length() == 0) {
+			error = error + "New equipment name cannot be empty! ";
+		}
+		else {
+			int ascii;
+			for (int i = 0; i < newName.trim().length(); i++) {
+				ascii = (int) newName.trim().charAt(i);
+				if ((ascii < 32) || (ascii > 32 && ascii < 48) || (ascii > 57 && ascii < 65)
+						|| (ascii > 90 && ascii < 97) || (ascii > 122)) {
+					error = error + "New equipment name is not valid! ";
+					break;
+				}
+			}
+		}
+		if (error.length() > 0) {
+			throw new InvalidInputException(error);
+		}
+		FoodTruckManager ftm = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		int i = 0;
+		for (i = 0; i < ftm.getEmployees().size(); i++) {
+			if (ftm.getEquipment(i).getName().equals(e.getName())) {
+				ftm.getEquipment(i).setName(newName);
+				PersistenceXStream.saveToXMLwithXStream(ftm);
+			}
+		}
+	}
+	
+	public void editEquipmentQuantity(Equipment e, int newQuantity) throws InvalidInputException {
+		String error = "";
+		if (newQuantity < 0) {
+			error = "New equipment quantity must be greater than 0! ";
+		}
+		if (error.length() > 0) {
+			throw new InvalidInputException(error);
+		}
+		FoodTruckManager ftm = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		int i = 0;
+		for (i = 0; i < ftm.getEmployees().size(); i++) {
+			if (ftm.getEquipment(i).getName().equals(e.getName())) {
+				ftm.getEquipment(i).setQuantity(newQuantity);
+				PersistenceXStream.saveToXMLwithXStream(ftm);
+			}
+		}
 	}
 }

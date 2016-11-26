@@ -30,6 +30,9 @@ public class TestFoodTruckManagementSystemController {
 		ftm.delete();
 	}
 
+/**************************************************************************************
+************************************FOOD TESTS*****************************************	
+**************************************************************************************/
 	/**
 	 * Unit test case for empty food name and free price (INVALID)
 	 */
@@ -200,85 +203,203 @@ public class TestFoodTruckManagementSystemController {
 	}
 	
 	@Test
-	public void testValidOrder() {
+	public void testFoodEdit() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
 		assertEquals(0, ftm.getFoods().size());
-		
-		String error = "";
-		
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
-		try {
-			ftmsc.createFood("Burger", 12.95, 12);
-		} catch (InvalidInputException e) {
-			error = e.getMessage();
-		}
-		assertEquals(12, ftm.getFood(0).getPopularity());
-		assertEquals("", error);
-	}
-
-	/**
-	 * Unit test case for empty employee name (INVALID)
-	 */
-	@Test
-	public void testEmptyNameEmployee() {
-		FoodTruckManager ftm = FoodTruckManager.getInstance();
-		assertEquals(0, ftm.getEmployees().size());
-		
-		String error = "";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
-		try {
-			ftmsc.createEmployee(" ");
-		} catch (InvalidInputException e) {
-			error = e.getMessage();
-		}
-		
-		assertEquals("Employee name cannot be empty! ", error);		
-		assertEquals(0, ftm.getEmployees().size());
-	}
-
-	/**
-	 * Unit test case for employee name input with invalid ascii symbols (INVALID)
-	 */
-	@Test
-	public void testInvalidNameEmployee() {
-		FoodTruckManager ftm = FoodTruckManager.getInstance();
-		assertEquals(0, ftm.getEmployees().size());
-		
-		String error = "";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
-		try {
-			ftmsc.createEmployee("Albert!@#");
-		} catch (InvalidInputException e) {
-			error = e.getMessage();
-		}
-		assertEquals("Employee name is not valid! ", error);		
-		assertEquals(0, ftm.getEmployees().size());
-	}
-	
-	/**
-	 * Unit test case for valid Employee input (VALID)
-	 */
-	@Test
-	public void testValidEmployee(){
-		FoodTruckManager ftm = FoodTruckManager.getInstance();
-		assertEquals(0, ftm.getEmployees().size());
 				
 		String error = "";
-		String name = "BobbyJoe";
+		String name = "Burger";
+		double price = 12.95;
+		Food f = new Food(name, price, 0);
 		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
 		try {
-			ftmsc.createEmployee(name);
+			ftmsc.createFood(name, price, 0);
 		} catch (InvalidInputException e) {
 			error = e.getMessage();
 		}
 		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
-		assertEquals(1, ftm2.getEmployees().size());
-		assertEquals(name, ftm2.getEmployee(0).getName());
+		assertEquals(1, ftm2.getFoods().size());
+		assertEquals(name, ftm2.getFood(0).getName());
+		assertEquals(0, ftm2.getFood(0).getPopularity());
 		
 		assertEquals("", error);
-		assertEquals(1, ftm.getEmployees().size());
+		assertEquals(1, ftm.getFoods().size());
+		
+		try {
+			ftmsc.editFood(f, "Hot Dog", 1.5);
+		} catch (InvalidInputException e) {
+			fail();
+		}
+		FoodTruckManager ftm3 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm3.getFoods().size());
+		assertEquals("Hot Dog", ftm3.getFood(0).getName());
+		assertEquals(0, Double.compare(ftm3.getFood(0).getPrice(), 1.5));
 	}
 	
+	@Test
+	public void testInvalidFoodNameEdit() {
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		assertEquals(0, ftm.getFoods().size());
+				
+		String error = "";
+		String name = "Burger";
+		double price = 12.95;
+		Food f = new Food(name, price, 0);
+		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		try {
+			ftmsc.createFood(name, price, 0);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm2.getFoods().size());
+		assertEquals(name, ftm2.getFood(0).getName());
+		assertEquals(0, ftm2.getFood(0).getPopularity());
+		
+		assertEquals("", error);
+		assertEquals(1, ftm.getFoods().size());
+		
+		try {
+			ftmsc.editFood(f, "Burger!@#", 1.5);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		assertEquals("New food name is not valid! ", error);
+	}
+	
+	@Test
+	public void testEmptyFoodNameEdit() {
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		assertEquals(0, ftm.getFoods().size());
+				
+		String error = "";
+		String name = "Burger";
+		double price = 12.95;
+		Food f = new Food(name, price, 0);
+		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		try {
+			ftmsc.createFood(name, price, 0);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm2.getFoods().size());
+		assertEquals(name, ftm2.getFood(0).getName());
+		assertEquals(0, ftm2.getFood(0).getPopularity());
+		
+		assertEquals("", error);
+		assertEquals(1, ftm.getFoods().size());
+		
+		try {
+			ftmsc.editFood(f, "", 1.5);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		assertEquals("New food name cannot be empty! ", error);
+	}
+	
+	@Test
+	public void testInvalidFoodPriceEdit() {
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		assertEquals(0, ftm.getFoods().size());
+				
+		String error = "";
+		String name = "Burger";
+		double price = 12.95;
+		Food f = new Food(name, price, 0);
+		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		try {
+			ftmsc.createFood(name, price, 0);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm2.getFoods().size());
+		assertEquals(name, ftm2.getFood(0).getName());
+		assertEquals(0, ftm2.getFood(0).getPopularity());
+		
+		assertEquals("", error);
+		assertEquals(1, ftm.getFoods().size());
+		
+		try {
+			ftmsc.editFood(f, "Burger", 0);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		assertEquals("New food price is not valid! ", error);
+	}
+	
+	@Test
+	public void testFoodNameEdit() {
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		assertEquals(0, ftm.getFoods().size());
+				
+		String error = "";
+		String name = "Burger";
+		double price = 12.95;
+		Food f = new Food(name, price, 0);
+		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		try {
+			ftmsc.createFood(name, price, 0);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm2.getFoods().size());
+		assertEquals(name, ftm2.getFood(0).getName());
+		assertEquals(0, ftm2.getFood(0).getPopularity());
+		
+		assertEquals("", error);
+		assertEquals(1, ftm.getFoods().size());
+		
+		try {
+			ftmsc.editFood(f, "Cheeseburger", 12.95);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		FoodTruckManager ftm3 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm3.getFoods().size());
+		assertEquals("Cheeseburger", ftm3.getFood(0).getName());
+		assertEquals(0, Double.compare(ftm3.getFood(0).getPrice(), 12.95));
+	}
+	
+	@Test
+	public void testFoodPriceEdit() {
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		assertEquals(0, ftm.getFoods().size());
+				
+		String error = "";
+		String name = "Burger";
+		double price = 12.95;
+		Food f = new Food(name, price, 0);
+		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		try {
+			ftmsc.createFood(name, price, 0);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm2.getFoods().size());
+		assertEquals(name, ftm2.getFood(0).getName());
+		assertEquals(0, ftm2.getFood(0).getPopularity());
+		
+		assertEquals("", error);
+		assertEquals(1, ftm.getFoods().size());
+		
+		try {
+			ftmsc.editFood(f, "Burger", 5.95);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		FoodTruckManager ftm3 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm3.getFoods().size());
+		assertEquals("Burger", ftm3.getFood(0).getName());
+		assertEquals(0, Double.compare(ftm3.getFood(0).getPrice(), 5.95));
+	}
+
+/**************************************************************************************
+********************************INGREDIENTS TESTS**************************************	
+**************************************************************************************/
 	/**
 	 * Unit test case for empty ingredient name with valid quantity(INVALID)
 	 */
@@ -380,7 +501,9 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals("", error);
 		assertEquals(1, ftm.getIngredients().size());
 	}
-	
+/**************************************************************************************
+**********************************EQUIPMENT TESTS**************************************	
+**************************************************************************************/	
 	/**
 	 * Unit test case for empty equipment name with valid quantity (INVALID)
 	 */
@@ -482,74 +605,323 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals("", error);
 		assertEquals(1, ftm.getEquipment().size());
 	}
+	
+	@Test
+	public void testEmptyEquipmentNameEdit() {
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		assertEquals(0, ftm.getEquipment().size());
+		
+		String error = "";
+		String name = "Fork";
+		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		try {
+			ftmsc.createEquipment(name, 1);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm2.getEquipment().size());
+		assertEquals(name, ftm2.getEquipment(0).getName());
+		assertEquals(1, ftm2.getEquipment(0).getQuantity());
+		
+		assertEquals("", error);
+		assertEquals(1, ftm.getEquipment().size());
+		
+		Equipment emp = new Equipment("Fork", 1);
+		try {
+			ftmsc.editEquipmentName(emp, "");
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		assertEquals("New equipment name cannot be empty! ", error);
+	}
+	
+	@Test
+	public void testInvalidEquipmentNameEdit() {
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		assertEquals(0, ftm.getEquipment().size());
+		
+		String error = "";
+		String name = "Fork";
+		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		try {
+			ftmsc.createEquipment(name, 1);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm2.getEquipment().size());
+		assertEquals(name, ftm2.getEquipment(0).getName());
+		assertEquals(1, ftm2.getEquipment(0).getQuantity());
+		
+		assertEquals("", error);
+		assertEquals(1, ftm.getEquipment().size());
+		
+		Equipment eq = new Equipment("Fork", 1);
+		try {
+			ftmsc.editEquipmentName(eq, "Spoon!@#");
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		assertEquals("New equipment name is not valid! ", error);
+	}
+	
+	@Test
+	public void testInvalidEquipmentQuantityEdit() {
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		assertEquals(0, ftm.getEquipment().size());
+		
+		String error = "";
+		String name = "Fork";
+		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		try {
+			ftmsc.createEquipment(name, 1);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm2.getEquipment().size());
+		assertEquals(name, ftm2.getEquipment(0).getName());
+		assertEquals(1, ftm2.getEquipment(0).getQuantity());
+		
+		assertEquals("", error);
+		assertEquals(1, ftm.getEquipment().size());
+		
+		Equipment eq = new Equipment("Fork", 1);
+		try {
+			ftmsc.editEquipmentQuantity(eq, -1);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		assertEquals("New equipment quantity must be greater than 0! ", error);
+	}
+	
+	@Test
+	public void testInvalidEquipmentNameQuantityEdit() {
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		assertEquals(0, ftm.getEquipment().size());
+		
+		String error = "";
+		String name = "Fork";
+		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		try {
+			ftmsc.createEquipment(name, 1);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm2.getEquipment().size());
+		assertEquals(name, ftm2.getEquipment(0).getName());
+		assertEquals(1, ftm2.getEquipment(0).getQuantity());
+		
+		assertEquals("", error);
+		assertEquals(1, ftm.getEquipment().size());
+		
+		Equipment eq = new Equipment("Fork", 1);
+		try {
+			ftmsc.editEquipmentQuantity(eq, -1);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		try {
+			ftmsc.editEquipmentName(eq, "Fork!");
+		} catch (InvalidInputException e) {
+			error = error + e.getMessage();
+		}
+		assertEquals("New equipment quantity must be greater than 0! New equipment name is not valid! ", error);
+	}
+	
+	@Test
+	public void testEmptyEquipmentNameInvalidQuantityEdit() {
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		assertEquals(0, ftm.getEquipment().size());
+		
+		String error = "";
+		String name = "Fork";
+		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		try {
+			ftmsc.createEquipment(name, 1);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm2.getEquipment().size());
+		assertEquals(name, ftm2.getEquipment(0).getName());
+		assertEquals(1, ftm2.getEquipment(0).getQuantity());
+		
+		assertEquals("", error);
+		assertEquals(1, ftm.getEquipment().size());
+		
+		Equipment eq = new Equipment("Fork", 1);
+		try {
+			ftmsc.editEquipmentQuantity(eq, -1);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		try {
+			ftmsc.editEquipmentName(eq, "");
+		} catch (InvalidInputException e) {
+			error = error + e.getMessage();
+		}
+		assertEquals("New equipment quantity must be greater than 0! New equipment name cannot be empty! ", error);
+	}
+/**************************************************************************************
+ *************************************ORDER TESTS**************************************	
+ **************************************************************************************/
+	@Test
+	public void testValidOrder() {
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		assertEquals(0, ftm.getFoods().size());
+		
+		String error = "";
+		
+		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		try {
+			ftmsc.createFood("Burger", 12.95, 12);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		assertEquals(12, ftm.getFood(0).getPopularity());
+		assertEquals("", error);
+	}
+	
 	/**
 	 * Unit test case for editing order with invalid number and non-existent food (INVALID)
 	 */
-//	@Test
-//	public void testInvalidOrderEdit() {
-//		FoodTruckManager ftm = FoodTruckManager.getInstance();
-//		assertEquals(0, ftm.getFoods().size());
-//				
-//		String error = "";
-//		String name = "Burger";
-//		double price = 12.95;
-//		
-//		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
-//		try {
-//			ftmsc.createFood(name, price, 0);
-//		} catch (InvalidInputException e) {
-//			error = e.getMessage();
-//		}
-//		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
-//		assertEquals(1, ftm2.getFoods().size());
-//		assertEquals(name, ftm2.getFood(0).getName());
-//		assertEquals(0, ftm2.getFood(0).getPopularity());
-//		assertEquals(0, Double.compare(price, ftm2.getFood(0).getPrice()));
-//		
-//		assertEquals("", error);
-//		assertEquals(1, ftm.getFoods().size());
-//		
-//		Food f = new Food(name, price, 0);
-//		try {
-//			ftmsc.editOrder(f, 0);
-//		} catch (InvalidInputException e) {
-//			error = e.getMessage();
-//		}
-//		assertEquals("Order must be greater than 0! ", error);
-//	}
+	@Test
+	public void testInvalidOrderEdit() {
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		assertEquals(0, ftm.getFoods().size());
+				
+		String error = "";
+		String name = "Burger";
+		double price = 12.95;
+		
+		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		try {
+			ftmsc.createFood(name, price, 0);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm2.getFoods().size());
+		assertEquals(name, ftm2.getFood(0).getName());
+		assertEquals(0, ftm2.getFood(0).getPopularity());
+		assertEquals(0, Double.compare(price, ftm2.getFood(0).getPrice()));
+		
+		assertEquals("", error);
+		assertEquals(1, ftm.getFoods().size());
+		
+		Food f = new Food(name, price, 0);
+		try {
+			ftmsc.editOrder(f, 0);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		assertEquals("Order must be greater than 0! ", error);
+	}
 	
-//	@Test
-//	public void testValidOrderEdit() {
-//		FoodTruckManager ftm = FoodTruckManager.getInstance();
-//		assertEquals(0, ftm.getFoods().size());
-//				
-//		String error = "";
-//		String name = "Burger";
-//		double price = 12.95;
-//		
-//		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
-//		try {
-//			ftmsc.createFood(name, price, 0);
-//		} catch (InvalidInputException e) {
-//			error = e.getMessage();
-//		}
-//		assertEquals("", error);
-//
-//		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
-//		assertEquals(1, ftm2.getFoods().size());
-//		assertEquals(name, ftm2.getFood(0).getName());
-//		assertEquals(0, ftm2.getFood(0).getPopularity());
-//		assertEquals(0, Double.compare(price, ftm2.getFood(0).getPrice()));
-//		
-//		Food f = new Food(name, price, 0);
-//		try {
-//			ftmsc.editOrder(f, 10);
-//		} catch (InvalidInputException e) {
-//			fail();
-//		}
-//		
-//		assertEquals(10, ftm2.getFood(0).getPopularity());
-//	}
+	@Test
+	public void testValidOrderEdit() {
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		assertEquals(0, ftm.getFoods().size());
+				
+		String error = "";
+		String name = "Burger";
+		double price = 12.95;
+		
+		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		try {
+			ftmsc.createFood(name, price, 0);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		assertEquals("", error);
+
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm2.getFoods().size());
+		assertEquals(name, ftm2.getFood(0).getName());
+		assertEquals(0, ftm2.getFood(0).getPopularity());
+		assertEquals(0, Double.compare(price, ftm2.getFood(0).getPrice()));
+		
+		Food f = new Food(name, price, 0);
+		try {
+			ftmsc.editOrder(f, 10);
+		} catch (InvalidInputException e) {
+			fail();
+		}
+		FoodTruckManager ftm3 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(10, ftm3.getFood(0).getPopularity());
+	}
+
+/**************************************************************************************
+ *************************************EMPLOYEE TEST************************************	
+ **************************************************************************************/
+	
+	/**
+	 * Unit test case for empty employee name (INVALID)
+	 */
+	@Test
+	public void testEmptyNameEmployee() {
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		assertEquals(0, ftm.getEmployees().size());
+		
+		String error = "";
+		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		try {
+			ftmsc.createEmployee(" ");
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals("Employee name cannot be empty! ", error);		
+		assertEquals(0, ftm.getEmployees().size());
+	}
+
+	/**
+	 * Unit test case for employee name input with invalid ascii symbols (INVALID)
+	 */
+	@Test
+	public void testInvalidNameEmployee() {
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		assertEquals(0, ftm.getEmployees().size());
+		
+		String error = "";
+		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		try {
+			ftmsc.createEmployee("Albert!@#");
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		assertEquals("Employee name is not valid! ", error);		
+		assertEquals(0, ftm.getEmployees().size());
+	}
+	
+	/**
+	 * Unit test case for valid Employee input (VALID)
+	 */
+	@Test
+	public void testValidEmployee(){
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		assertEquals(0, ftm.getEmployees().size());
+				
+		String error = "";
+		String name = "BobbyJoe";
+		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		try {
+			ftmsc.createEmployee(name);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm2.getEmployees().size());
+		assertEquals(name, ftm2.getEmployee(0).getName());
+		
+		assertEquals("", error);
+		assertEquals(1, ftm.getEmployees().size());
+	}
 	
 	@Test
 	public void testValidEmployeeNameEdit() {
