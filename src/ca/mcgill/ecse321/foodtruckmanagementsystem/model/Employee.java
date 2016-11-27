@@ -2,7 +2,7 @@
 /*This code was generated using the UMPLE 1.20.1.4071 modeling language!*/
 
 package ca.mcgill.ecse321.foodtruckmanagementsystem.model;
-import java.sql.Date;
+import java.util.Date;
 import java.util.*;
 
 // line 28 "../../../../../FoodTruckManagementSystem.ump"

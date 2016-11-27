@@ -3,6 +3,8 @@ package ca.mcgill.ecse321.foodtruckmanagementsystem.controller;
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.junit.After;
 import org.junit.BeforeClass;
@@ -240,7 +242,7 @@ public class TestFoodTruckManagementSystemController {
 		try {
 			ftmsc.createFood(name, 12.95, 0);
 		} catch (InvalidInputException e) {
-			error = e.getMessage();
+			fail();
 		}
 		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
 		assertEquals(1, ftm2.getFoods().size());
@@ -249,6 +251,35 @@ public class TestFoodTruckManagementSystemController {
 		
 		assertEquals("", error);
 		assertEquals(1, ftm.getFoods().size());
+	}
+	
+	@Test
+	public void testRemoveFood() {
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		assertEquals(0, ftm.getFoods().size());
+				
+		String error = "";
+		String name = "Burger";
+		
+		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		try {
+			ftmsc.createFood(name, 12.95, 0);
+		} catch (InvalidInputException e) {
+			fail();
+		}
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm2.getFoods().size());
+		assertEquals(name, ftm2.getFood(0).getName());
+		assertEquals(0, ftm2.getFood(0).getPopularity());
+		
+		assertEquals("", error);
+		assertEquals(1, ftm.getFoods().size());
+		
+		Food f = new Food (name, 12.95, 0);
+		ftmsc.removeFood(f);
+		
+		FoodTruckManager ftm3 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(0, ftm3.getFoods().size());
 	}
 	
 	@Test
@@ -602,7 +633,7 @@ public class TestFoodTruckManagementSystemController {
 		try {
 			ftmsc.createIngredient(name, 1);
 		} catch (InvalidInputException e) {
-			error = e.getMessage();
+			fail();
 		}
 		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
 		assertEquals(1, ftm2.getIngredients().size());
@@ -611,6 +642,35 @@ public class TestFoodTruckManagementSystemController {
 		
 		assertEquals("", error);
 		assertEquals(1, ftm.getIngredients().size());
+	}
+	
+	@Test
+	public void testRemoveIngredient() {
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		assertEquals(0, ftm.getIngredients().size());
+		
+		String error = "";
+		String name = "Lettuce";
+		
+		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		try {
+			ftmsc.createIngredient(name, 1);
+		} catch (InvalidInputException e) {
+			fail();
+		}
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm2.getIngredients().size());
+		assertEquals(name, ftm2.getIngredient(0).getName());
+		assertEquals(1, ftm2.getIngredient(0).getQuantity());
+		
+		assertEquals("", error);
+		assertEquals(1, ftm.getIngredients().size());
+		
+		Ingredient i = new Ingredient(name, 1);
+		ftmsc.removeIngredient(i);
+		
+		FoodTruckManager ftm3 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(0, ftm3.getIngredients().size());
 	}
 	
 	@Test
@@ -970,7 +1030,7 @@ public class TestFoodTruckManagementSystemController {
 	 * Unit test case for equipment with valid name and quantity (VALID)
 	 */
 	@Test
-	public void testCreateEquipment(){
+	public void testCreateEquipment() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
 		assertEquals(0, ftm.getEquipment().size());
 		
@@ -981,7 +1041,7 @@ public class TestFoodTruckManagementSystemController {
 		try {
 			ftmsc.createEquipment(name, 1);
 		} catch (InvalidInputException e) {
-			error = e.getMessage();
+			fail();
 		}
 		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
 		assertEquals(1, ftm2.getEquipment().size());
@@ -990,6 +1050,34 @@ public class TestFoodTruckManagementSystemController {
 		
 		assertEquals("", error);
 		assertEquals(1, ftm.getEquipment().size());
+	}
+	
+	@Test
+	public void testRemoveEquipment() {
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		assertEquals(0, ftm.getEquipment().size());
+		
+		String error = "";
+		String name = "Fork";
+		
+		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		try {
+			ftmsc.createEquipment(name, 1);
+		} catch (InvalidInputException e) {
+			fail();
+		}
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm2.getEquipment().size());
+		assertEquals(name, ftm2.getEquipment(0).getName());
+		assertEquals(1, ftm2.getEquipment(0).getQuantity());
+		
+		assertEquals("", error);
+		assertEquals(1, ftm.getEquipment().size());
+		
+		Equipment e = new Equipment(name, 1);
+		ftmsc.removeEquipment(e);
+		FoodTruckManager ftm3 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(0, ftm3.getEquipment().size());
 	}
 	
 	@Test
@@ -1013,9 +1101,9 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals("", error);
 		assertEquals(1, ftm.getEquipment().size());
 		
-		Equipment emp = new Equipment("Fork", 1);
+		Equipment eq = new Equipment("Fork", 1);
 		try {
-			ftmsc.editEquipment(emp, "", 1);
+			ftmsc.editEquipment(eq, "", 1);
 		} catch (InvalidInputException e) {
 			error = e.getMessage();
 		}
@@ -1305,7 +1393,28 @@ public class TestFoodTruckManagementSystemController {
 		try {
 			ftmsc.createEmployee(name);
 		} catch (InvalidInputException e) {
-			error = e.getMessage();
+			fail();
+		}
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm2.getEmployees().size());
+		assertEquals(name, ftm2.getEmployee(0).getName());
+		
+		assertEquals("", error);
+		assertEquals(1, ftm.getEmployees().size());		
+	}
+	
+	@Test
+	public void testRemoveEmployee() {
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		assertEquals(0, ftm.getEmployees().size());
+				
+		String error = "";
+		String name = "BobbyJoe";
+		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		try {
+			ftmsc.createEmployee(name);
+		} catch (InvalidInputException e) {
+			fail();
 		}
 		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
 		assertEquals(1, ftm2.getEmployees().size());
@@ -1313,6 +1422,10 @@ public class TestFoodTruckManagementSystemController {
 		
 		assertEquals("", error);
 		assertEquals(1, ftm.getEmployees().size());
+		Employee e = new Employee(name);
+		ftmsc.removeEmployee(e);
+		FoodTruckManager ftm3 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(0, ftm3.getEmployees().size());
 	}
 	
 	@Test
@@ -1401,4 +1514,476 @@ public class TestFoodTruckManagementSystemController {
 		
 		assertEquals("New employee name is not valid! ", error);
 	}
+	
+	@Test
+	public void testAddEmptyEmployeeStartTime() {
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		assertEquals(0, ftm.getEmployees().size());
+				
+		String error = "";
+		String name = "Michael";
+		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		try {
+			ftmsc.createEmployee(name);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm2.getEmployees().size());
+		assertEquals(name, ftm2.getEmployee(0).getName());
+		
+		assertEquals("", error);
+		assertEquals(1, ftm.getEmployees().size());
+		
+		Employee emp = new Employee(name);
+		Calendar c = Calendar.getInstance();
+		c.set(2016, Calendar.DECEMBER, 1, 23, 0);
+		Date startTime = null;
+		Date endTime = new Date(c.getTimeInMillis());
+		try {
+			ftmsc.addShift(emp, startTime, endTime);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		assertEquals("Start time cannot be empty! ", error);
+		
+		startTime = new Date();
+		try {
+			ftmsc.addShift(emp, startTime, endTime);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		assertEquals("Start time cannot be empty! ", error);
+	}
+	
+	@Test
+	public void testAddEmptyEmployeeEndTime() {
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		assertEquals(0, ftm.getEmployees().size());
+				
+		String error = "";
+		String name = "Michael";
+		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		try {
+			ftmsc.createEmployee(name);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm2.getEmployees().size());
+		assertEquals(name, ftm2.getEmployee(0).getName());
+		
+		assertEquals("", error);
+		assertEquals(1, ftm.getEmployees().size());
+		
+		Employee emp = new Employee(name);
+		Calendar c = Calendar.getInstance();
+		c.set(2016, Calendar.DECEMBER, 1, 22, 0);
+		Date startTime = new Date(c.getTimeInMillis());
+		Date endTime = null;
+		try {
+			ftmsc.addShift(emp, startTime, endTime);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		assertEquals("End time cannot be empty! ", error);
+		
+		endTime = new Date();
+		try {
+			ftmsc.addShift(emp, startTime, endTime);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		assertEquals("End time cannot be empty! ", error);
+	}
+	
+	@Test
+	public void testAddEmptyEmployeeStartTimeEndTime() {
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		assertEquals(0, ftm.getEmployees().size());
+				
+		String error = "";
+		String name = "Michael";
+		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		try {
+			ftmsc.createEmployee(name);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm2.getEmployees().size());
+		assertEquals(name, ftm2.getEmployee(0).getName());
+		
+		assertEquals("", error);
+		assertEquals(1, ftm.getEmployees().size());
+		
+		Employee emp = new Employee(name);
+		Date startTime = new Date();
+		Date endTime = new Date();
+		try {
+			ftmsc.addShift(emp, startTime, endTime);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		assertEquals("Start time cannot be empty! End time cannot be empty! ", error);
+		
+		startTime = null;
+		endTime = new Date();
+		try {
+			ftmsc.addShift(emp, startTime, endTime);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		assertEquals("Start time cannot be empty! End time cannot be empty! ", error);
+		
+		startTime = new Date();
+		endTime = null;
+		try {
+			ftmsc.addShift(emp, startTime, endTime);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		assertEquals("Start time cannot be empty! End time cannot be empty! ", error);
+		
+		startTime = null;
+		endTime = null;
+		try {
+			ftmsc.addShift(emp, startTime, endTime);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		assertEquals("Start time cannot be empty! End time cannot be empty! ", error);
+	}
+	
+	@Test
+	public void testAddInvalidEmployeeStartTimeEndTime() {
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		assertEquals(0, ftm.getEmployees().size());
+				
+		String error = "";
+		String name = "Michael";
+		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		try {
+			ftmsc.createEmployee(name);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm2.getEmployees().size());
+		assertEquals(name, ftm2.getEmployee(0).getName());
+		
+		assertEquals("", error);
+		assertEquals(1, ftm.getEmployees().size());
+		
+		Employee emp = new Employee(name);
+		Calendar c = Calendar.getInstance();
+		c.set(2016, Calendar.DECEMBER, 1, 23, 0);
+		Date startTime = new Date(c.getTimeInMillis());
+		c.set(2016, Calendar.DECEMBER, 1, 22, 0);
+		Date endTime = new Date(c.getTimeInMillis());
+		try {
+			ftmsc.addShift(emp, startTime, endTime);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		assertEquals("End time cannot be before start time! ", error);
+	}
+	
+	@Test
+	public void testAddEmployeeStartTimeEndTime() {
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		assertEquals(0, ftm.getEmployees().size());
+				
+		String error = "";
+		String name = "Michael";
+		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		try {
+			ftmsc.createEmployee(name);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm2.getEmployees().size());
+		assertEquals(name, ftm2.getEmployee(0).getName());
+		
+		assertEquals("", error);
+		assertEquals(1, ftm.getEmployees().size());
+		
+		Employee emp = new Employee(name);
+		Calendar c = Calendar.getInstance();
+		c.set(2016, Calendar.DECEMBER, 1, 22, 0);
+		Date startTime = new Date(c.getTimeInMillis());
+		c.set(2016, Calendar.DECEMBER, 1, 23, 0);
+		Date endTime = new Date(c.getTimeInMillis());
+		try {
+			ftmsc.addShift(emp, startTime, endTime);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		FoodTruckManager ftm3 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm3.getEmployees().size());
+		assertEquals(name, ftm3.getEmployee(0).getName());
+		assertEquals(1, ftm3.getEmployee(0).getWorkStartTime().length);
+		assertEquals(1, ftm3.getEmployee(0).getWorkEndTime().length);
+		assertEquals(startTime, ftm3.getEmployee(0).getWorkStartTime(0));
+		assertEquals(endTime, ftm3.getEmployee(0).getWorkEndTime(0));
+	}
+	
+	@Test
+	public void testRemoveEmployeeStartTimeEndTime() {
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		assertEquals(0, ftm.getEmployees().size());
+				
+		String error = "";
+		String name = "Michael";
+		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		try {
+			ftmsc.createEmployee(name);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm2.getEmployees().size());
+		assertEquals(name, ftm2.getEmployee(0).getName());
+		
+		assertEquals("", error);
+		assertEquals(1, ftm.getEmployees().size());
+		
+		Employee emp = new Employee(name);
+		Calendar c = Calendar.getInstance();
+		c.set(2016, Calendar.DECEMBER, 1, 22, 0);
+		Date startTime = new Date(c.getTimeInMillis());
+		c.set(2016, Calendar.DECEMBER, 1, 23, 0);
+		Date endTime = new Date(c.getTimeInMillis());
+		try {
+			ftmsc.addShift(emp, startTime, endTime);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		FoodTruckManager ftm3 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm3.getEmployees().size());
+		assertEquals(name, ftm3.getEmployee(0).getName());
+		assertEquals(1, ftm3.getEmployee(0).getWorkStartTime().length);
+		assertEquals(1, ftm3.getEmployee(0).getWorkEndTime().length);
+		assertEquals(startTime, ftm3.getEmployee(0).getWorkStartTime(0));
+		assertEquals(endTime, ftm3.getEmployee(0).getWorkEndTime(0));
+		
+		ftmsc.removeShift(emp, startTime, endTime);
+		FoodTruckManager ftm4 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm4.getEmployees().size());
+		assertEquals(name, ftm4.getEmployee(0).getName());
+		assertEquals(0, ftm4.getEmployee(0).getWorkStartTime().length);
+		assertEquals(0, ftm4.getEmployee(0).getWorkEndTime().length);
+	}
+	
+	@Test
+	public void testEditEmptyEmployeeStartTime() {
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		assertEquals(0, ftm.getEmployees().size());
+				
+		String error = "";
+		String name = "Michael";
+		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		try {
+			ftmsc.createEmployee(name);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm2.getEmployees().size());
+		assertEquals(name, ftm2.getEmployee(0).getName());
+		
+		assertEquals("", error);
+		assertEquals(1, ftm.getEmployees().size());
+		
+		Employee emp = new Employee(name);
+		Calendar c = Calendar.getInstance();
+		c.set(2016, Calendar.DECEMBER, 1, 22, 0);
+		Date startTime = new Date(c.getTimeInMillis());
+		c.set(2016, Calendar.DECEMBER, 1, 23, 0);
+		Date endTime = new Date(c.getTimeInMillis());
+		try {
+			ftmsc.addShift(emp, startTime, endTime);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		FoodTruckManager ftm3 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm3.getEmployees().size());
+		assertEquals(name, ftm3.getEmployee(0).getName());
+		assertEquals(1, ftm3.getEmployee(0).getWorkStartTime().length);
+		assertEquals(1, ftm3.getEmployee(0).getWorkEndTime().length);
+		assertEquals(startTime, ftm3.getEmployee(0).getWorkStartTime(0));
+		assertEquals(endTime, ftm3.getEmployee(0).getWorkEndTime(0));
+		
+		Date newStartTime = new Date();
+		try {
+			ftmsc.editShift(emp, startTime, endTime, newStartTime, endTime);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		assertEquals("New start time cannot be empty! ", error);
+	}	
+	
+	@Test
+	public void testEditEmptyEmployeeEndTime() {
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		assertEquals(0, ftm.getEmployees().size());
+				
+		String error = "";
+		String name = "Michael";
+		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		try {
+			ftmsc.createEmployee(name);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm2.getEmployees().size());
+		assertEquals(name, ftm2.getEmployee(0).getName());
+		
+		assertEquals("", error);
+		assertEquals(1, ftm.getEmployees().size());
+		
+		Employee emp = new Employee(name);
+		Calendar c = Calendar.getInstance();
+		c.set(2016, Calendar.DECEMBER, 1, 22, 0);
+		Date startTime = new Date(c.getTimeInMillis());
+		c.set(2016, Calendar.DECEMBER, 1, 23, 0);
+		Date endTime = new Date(c.getTimeInMillis());
+		try {
+			ftmsc.addShift(emp, startTime, endTime);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		FoodTruckManager ftm3 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm3.getEmployees().size());
+		assertEquals(name, ftm3.getEmployee(0).getName());
+		assertEquals(1, ftm3.getEmployee(0).getWorkStartTime().length);
+		assertEquals(1, ftm3.getEmployee(0).getWorkEndTime().length);
+		assertEquals(startTime, ftm3.getEmployee(0).getWorkStartTime(0));
+		assertEquals(endTime, ftm3.getEmployee(0).getWorkEndTime(0));
+		
+		Date newEndTime = new Date();
+		try {
+			ftmsc.editShift(emp, startTime, endTime, startTime, newEndTime);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		assertEquals("New end time cannot be empty! ", error);
+	}
+	
+	@Test
+	public void testEditInvalidEmployeeStartTimeEndTime() {
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		assertEquals(0, ftm.getEmployees().size());
+				
+		String error = "";
+		String name = "Michael";
+		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		try {
+			ftmsc.createEmployee(name);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm2.getEmployees().size());
+		assertEquals(name, ftm2.getEmployee(0).getName());
+		
+		assertEquals("", error);
+		assertEquals(1, ftm.getEmployees().size());
+		
+		Employee emp = new Employee(name);
+		Calendar c = Calendar.getInstance();
+		c.set(2016, Calendar.DECEMBER, 1, 22, 0);
+		Date startTime = new Date(c.getTimeInMillis());
+		c.set(2016, Calendar.DECEMBER, 1, 23, 0);
+		Date endTime = new Date(c.getTimeInMillis());
+		try {
+			ftmsc.addShift(emp, startTime, endTime);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		FoodTruckManager ftm3 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm3.getEmployees().size());
+		assertEquals(name, ftm3.getEmployee(0).getName());
+		assertEquals(1, ftm3.getEmployee(0).getWorkStartTime().length);
+		assertEquals(1, ftm3.getEmployee(0).getWorkEndTime().length);
+		assertEquals(startTime, ftm3.getEmployee(0).getWorkStartTime(0));
+		assertEquals(endTime, ftm3.getEmployee(0).getWorkEndTime(0));
+		
+		c.set(2016, Calendar.DECEMBER, 3, 20, 0);
+		Date newStartTime = new Date(c.getTimeInMillis());
+		c.set(2016, Calendar.DECEMBER, 3, 18, 0);
+		Date newEndTime = new Date(c.getTimeInMillis());
+		try {
+			ftmsc.editShift(emp, startTime, endTime, newStartTime, newEndTime);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		assertEquals("New end time cannot be before new start time! ", error);
+	}
+	
+	@Test
+	public void testEditEmployeeStartTimeEndTime() {
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		assertEquals(0, ftm.getEmployees().size());
+				
+		String error = "";
+		String name = "Michael";
+		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		try {
+			ftmsc.createEmployee(name);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm2.getEmployees().size());
+		assertEquals(name, ftm2.getEmployee(0).getName());
+		
+		assertEquals("", error);
+		assertEquals(1, ftm.getEmployees().size());
+		
+		Employee emp = new Employee(name);
+		Calendar c = Calendar.getInstance();
+		c.set(2016, Calendar.DECEMBER, 1, 22, 0);
+		Date startTime = new Date(c.getTimeInMillis());
+		c.set(2016, Calendar.DECEMBER, 1, 23, 0);
+		Date endTime = new Date(c.getTimeInMillis());
+		try {
+			ftmsc.addShift(emp, startTime, endTime);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		FoodTruckManager ftm3 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm3.getEmployees().size());
+		assertEquals(name, ftm3.getEmployee(0).getName());
+		assertEquals(1, ftm3.getEmployee(0).getWorkStartTime().length);
+		assertEquals(1, ftm3.getEmployee(0).getWorkEndTime().length);
+		assertEquals(startTime, ftm3.getEmployee(0).getWorkStartTime(0));
+		assertEquals(endTime, ftm3.getEmployee(0).getWorkEndTime(0));
+		
+		c.set(2016, Calendar.DECEMBER, 3, 22, 0);
+		Date newStartTime = new Date(c.getTimeInMillis());
+		c.set(2016, Calendar.DECEMBER, 3, 23, 0);
+		Date newEndTime = new Date(c.getTimeInMillis());
+		try {
+			ftmsc.editShift(emp, startTime, endTime, newStartTime, newEndTime);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		FoodTruckManager ftm4 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		assertEquals(1, ftm4.getEmployees().size());
+		assertEquals(name, ftm4.getEmployee(0).getName());
+		assertEquals(1, ftm4.getEmployee(0).getWorkStartTime().length);
+		assertEquals(1, ftm4.getEmployee(0).getWorkEndTime().length);
+		assertEquals(newStartTime, ftm4.getEmployee(0).getWorkStartTime(0));
+		assertEquals(newEndTime, ftm4.getEmployee(0).getWorkEndTime(0));
+	}	
 }

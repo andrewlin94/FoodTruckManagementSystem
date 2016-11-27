@@ -3,7 +3,6 @@
 
 package ca.mcgill.ecse321.foodtruckmanagementsystem.model;
 import java.util.*;
-import java.sql.Date;
 
 // line 3 "../../../../../FoodTruckManagementSystem.ump"
 // line 35 "../../../../../FoodTruckManagementSystem.ump"

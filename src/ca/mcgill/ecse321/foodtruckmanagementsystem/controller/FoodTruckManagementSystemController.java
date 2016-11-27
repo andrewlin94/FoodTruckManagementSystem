@@ -1,6 +1,8 @@
 package ca.mcgill.ecse321.foodtruckmanagementsystem.controller;
 
-import java.util.Iterator;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 import ca.mcgill.ecse321.foodtruckmanagementsystem.persistence.PersistenceXStream;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.model.*;
@@ -337,6 +339,147 @@ public class FoodTruckManagementSystemController {
 				if (!(ftm.getEquipment(i).getQuantity() == newQuantity)) {
 					ftm.getEquipment(i).setQuantity(newQuantity);
 				}
+				break;
+			}
+		}
+		PersistenceXStream.saveToXMLwithXStream(ftm);
+	}
+	
+	public void addShift(Employee e, Date workStartTime, Date workEndTime) throws InvalidInputException {
+		String error = "";
+		Date empty= new Date();
+		if (workStartTime == null || (workStartTime.compareTo(empty) == 0)) {
+			error = error + "Start time cannot be empty! ";
+		}
+		if (workEndTime == null || (workEndTime.compareTo(empty) == 0)) {
+			error = error + "End time cannot be empty! ";
+		}
+		if (workStartTime != null && workEndTime != null && (workStartTime.compareTo(workEndTime) > 0)) {
+			if (!(workEndTime.compareTo(empty) == 0)) {
+				error = error + "End time cannot be before start time! ";
+			}			
+		}
+		if (error.length() > 0) {
+			throw new InvalidInputException(error);
+		}
+		FoodTruckManager ftm = (FoodTruckManager)PersistenceXStream.loadFromXMLwithXStream();
+		int i = 0;
+		for (i = 0; i < ftm.getEmployees().size(); i++) {
+			if (ftm.getEmployee(i).getName().equals(e.getName())) {
+				ftm.getEmployee(i).addWorkStartTime(workStartTime);
+				ftm.getEmployee(i).addWorkEndTime(workEndTime);
+				break;
+			}
+		}
+		PersistenceXStream.saveToXMLwithXStream(ftm);
+	}
+	
+	public void editShift(Employee e, Date oldStartTime, Date oldEndTime, Date newStartTime, Date newEndTime) throws InvalidInputException {
+		String error = "";
+		Date empty = new Date();
+		if (newStartTime == null || newStartTime.compareTo(empty) == 0) {
+			error = error + "New start time cannot be empty! ";
+		}
+		if (newEndTime == null || newEndTime.compareTo(empty) == 0) {
+			error = error + "New end time cannot be empty! ";
+		}
+		if (newEndTime.before(newStartTime) && newStartTime != null && newEndTime != null ) {
+			if (!(newEndTime.compareTo(empty) == 0)) {
+				error = error + "New end time cannot be before new start time! ";
+			}
+		}
+		if (error.length() > 0) {
+			throw new InvalidInputException(error);
+		}
+		
+		FoodTruckManager ftm = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		Calendar c = Calendar.getInstance();
+		int i = 0;
+		int j = 0;
+		for (i = 0; i < ftm.getEmployees().size(); i++) {
+			if (ftm.getEmployee(i).getName().equals(e.getName())) {
+				for (j = 0; j < ftm.getEmployee(i).numberOfWorkStartTime(); j++) {
+					if (ftm.getEmployee(i).getWorkStartTime(j).equals(oldStartTime) && (ftm.getEmployee(i).getWorkEndTime(j).equals(oldEndTime))) {
+						
+						if (!(ftm.getEmployee(i).getWorkStartTime(j).equals(newStartTime))) {
+							c.setTime(newStartTime);
+							ftm.getEmployee(i).getWorkStartTime(j).setTime(c.getTimeInMillis());
+						}
+						if (!(ftm.getEmployee(i).getWorkEndTime(j).equals(newEndTime))) {
+							c.setTime(newEndTime);
+							ftm.getEmployee(i).getWorkEndTime(j).setTime(c.getTimeInMillis());
+						}
+						break;
+					}
+				}
+			}
+		}
+		PersistenceXStream.saveToXMLwithXStream(ftm);
+	}
+	
+	public void removeShift(Employee e, Date startTime, Date endTime) {
+		FoodTruckManager ftm = (FoodTruckManager)PersistenceXStream.loadFromXMLwithXStream();
+		int i = 0;
+		int j = 0;
+		int k = 0;
+		for (i = 0; i < ftm.getEmployees().size(); i++) {
+			if (ftm.getEmployee(i).getName().equals(e.getName())) {
+				for (j = 0; j < ftm.getEmployee(i).numberOfWorkStartTime(); j++) {
+					if (ftm.getEmployee(i).getWorkStartTime(j).equals(startTime)) {
+						break;
+					}
+				}
+				for (k = 0; k < ftm.getEmployee(i).numberOfWorkEndTime(); k++) {
+					if (ftm.getEmployee(i).getWorkEndTime(k).equals(endTime)) {
+						break;
+					}
+				}
+				if (j == k) {
+					ftm.getEmployee(i).removeWorkStartTime(ftm.getEmployee(i).getWorkStartTime(j));
+					ftm.getEmployee(i).removeWorkEndTime(ftm.getEmployee(i).getWorkEndTime(k));
+					break;
+				}
+			}
+		}
+		PersistenceXStream.saveToXMLwithXStream(ftm);
+	}
+	
+	public void removeFood(Food f) {
+		FoodTruckManager ftm = (FoodTruckManager)PersistenceXStream.loadFromXMLwithXStream();
+		for (int i = 0; i < ftm.getFoods().size(); i++) {
+			if (ftm.getFood(i).getName().equals(f.getName())) {
+				ftm.removeFood(ftm.getFood(i));
+			}
+		}
+		PersistenceXStream.saveToXMLwithXStream(ftm);
+	}
+	
+	public void removeIngredient(Ingredient i) {
+		FoodTruckManager ftm = (FoodTruckManager)PersistenceXStream.loadFromXMLwithXStream();
+		for (int j = 0; j < ftm.getIngredients().size(); j++) {
+			if (ftm.getIngredient(j).getName().equals(i.getName())) {
+				ftm.removeIngredient(ftm.getIngredient(j));
+			}
+		}
+		PersistenceXStream.saveToXMLwithXStream(ftm);
+	}
+	
+	public void removeEquipment(Equipment e) {
+		FoodTruckManager ftm = (FoodTruckManager)PersistenceXStream.loadFromXMLwithXStream();
+		for (int i = 0; i < ftm.getEquipment().size(); i++) {
+			if (ftm.getEquipment(i).getName().equals(e.getName())) {
+				ftm.removeEquipment(ftm.getEquipment(i));
+			}
+		}
+		PersistenceXStream.saveToXMLwithXStream(ftm);
+	}
+	
+	public void removeEmployee(Employee e) {
+		FoodTruckManager ftm = (FoodTruckManager)PersistenceXStream.loadFromXMLwithXStream();
+		int i = 0;
+		for (i = 0; i < ftm.getEmployees().size(); i++) {
+			if (ftm.getEmployee(i).getName().equals(e.getName())){
+				ftm.removeEmployee(ftm.getEmployee(i));
 				break;
 			}
 		}
