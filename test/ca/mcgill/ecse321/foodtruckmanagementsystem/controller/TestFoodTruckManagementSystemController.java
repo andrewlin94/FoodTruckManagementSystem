@@ -35,7 +35,9 @@ public class TestFoodTruckManagementSystemController {
 /**************************************************************************************
 ************************************FOOD TESTS*****************************************	
 **************************************************************************************/
-	
+	/**
+	 * Unit test case for empty food name (INVALID)
+	 */
 	@Test
 	public void testCreateEmptyFoodName() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -153,6 +155,7 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals("Food price is not valid! Food popularity is not valid! ", error);		
 		assertEquals(0, ftm.getFoods().size());
 	}
+	
 	/**
 	 * Unit test case for valid price and invalid name & popularity (INVALID)
 	 */
@@ -193,6 +196,9 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(0, ftm.getFoods().size());
 	}
 	
+	/**
+	 * Unit test case for invalid popularity and invalid name and invalid price (INVALID)
+	 */	
 	@Test
 	public void testCreateInvalidFoodNamePricePopularity() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -210,6 +216,9 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(0, ftm.getFoods().size());
 	}
 	
+	/**
+	 * Unit test case for empty name, invalid popularity and invalid price (INVALID)
+	 */
 	@Test
 	public void testCreateEmptyInvalidFoodNamePricePopularity() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -253,6 +262,9 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(1, ftm.getFoods().size());
 	}
 	
+	/**
+	 * Unit test case for food removal (VALID)
+	 */
 	@Test
 	public void testRemoveFood() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -282,6 +294,10 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(0, ftm3.getFoods().size());
 	}
 	
+	
+	/**
+	 * Unit test case for editing food (VALID)
+	 */
 	@Test
 	public void testEditFood() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -316,6 +332,10 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(0, Double.compare(ftm3.getFood(0).getPrice(), 1.5));
 	}
 	
+	
+	/**
+	 * Unit test case for editing name to invalid name (INVALID)
+	 */
 	@Test
 	public void testEditInvalidFoodName() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -347,6 +367,10 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals("New food name is not valid! ", error);
 	}
 	
+	
+	/**
+	 * Unit test case for editing food name to empty name (INVALID)
+	 */
 	@Test
 	public void testEditEmptyFoodName() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -378,6 +402,9 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals("New food name cannot be empty! ", error);
 	}
 	
+	/**
+	 * Unit test case for editing price to invalid price (INVALID)
+	 */
 	@Test
 	public void testEditInvalidFoodPrice() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -409,6 +436,10 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals("New food price is not valid! ", error);
 	}
 	
+	
+	/**
+	 * Unit test case for editing name and price to invalid name and invalid price (INVALID)
+	 */
 	@Test
 	public void testEditInvalidFoodNamePrice() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -440,6 +471,10 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals("New food name is not valid! New food price is not valid! ", error);
 	}
 	
+	
+	/**
+	 * Unit test case for editing food and price to empty name and invalid price (INVALID)
+	 */
 	@Test
 	public void testEditEmptyInvalidFoodPrice() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -471,6 +506,10 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals("New food name cannot be empty! New food price is not valid! ", error);
 	}
 	
+	
+	/**
+	 * Unit test case for editing food name (VALID)
+	 */
 	@Test
 	public void testEditFoodName() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -505,6 +544,10 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(0, Double.compare(ftm3.getFood(0).getPrice(), 12.95));
 	}
 	
+	
+	/**
+	 * Unit test case for editing price (VALID)
+	 */
 	@Test
 	public void testEditFoodPrice() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -644,6 +687,10 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(1, ftm.getIngredients().size());
 	}
 	
+	
+	/**
+	 * Unit test case for removing existing ingredient(VALID)
+	 */
 	@Test
 	public void testRemoveIngredient() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -673,6 +720,10 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(0, ftm3.getIngredients().size());
 	}
 	
+	
+	/**
+	 * Unit test case for editing name to invalid name(INVALID)
+	 */
 	@Test
 	public void testEditInvalidIngredientName() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -704,6 +755,10 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals("New ingredient name cannot be empty! ", error);
 	}
 	
+	
+	/**
+	 * Unit test case for editing name and quantity to empty name and invalid quantity (INVALID)
+	 */
 	@Test
 	public void testEditEmptyInvalidIngredientNameQuantity() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -735,6 +790,10 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals("New ingredient name cannot be empty! New ingredient quantity must be greater than 0! ", error);
 	}
 	
+	
+	/**
+	 * Unit test case for editing quantity to invalid quantity(INVALID)
+	 */
 	@Test
 	public void testEditInvalidIngredientQuantity() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -766,6 +825,10 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals("New ingredient quantity must be greater than 0! ", error);
 	}
 	
+	
+	/**
+	 * Unit test case for editing name to empty name (INVALID)
+	 */	
 	@Test
 	public void testEditEmptyIngredientName() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -796,6 +859,10 @@ public class TestFoodTruckManagementSystemController {
 		}
 		assertEquals("New ingredient name cannot be empty! ", error);
 	}
+	
+	/**
+	 * Unit test case for editing name and quantity to invalid name and invalid quantity (INVALID)
+	 */
 	@Test
 	public void testEditInvalidIngredientNameQuantity() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -827,6 +894,9 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals("New ingredient name cannot be empty! New ingredient quantity must be greater than 0! ", error);
 	}
 	
+	/**
+	 * Unit test case for editing name (VALID)
+	 */
 	@Test
 	public void testEditIngredientName() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -861,7 +931,10 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals("Tomato", ftm3.getIngredient(0).getName());
 		assertEquals(1, ftm3.getIngredient(0).getQuantity());
 	}
-	
+		
+	/**
+	 * Unit test case for editing quantity (VALID)
+	 */
 	@Test
 	public void testEditIngredientQuantity() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -897,6 +970,10 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(2, ftm3.getIngredient(0).getQuantity());
 	}
 	
+	
+	/**
+	 * Unit test case for editing name and quantity (VALID)
+	 */
 	@Test
 	public void testEditIngredientNameQuantity() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -933,7 +1010,8 @@ public class TestFoodTruckManagementSystemController {
 	}
 /**************************************************************************************
 **********************************EQUIPMENT TESTS**************************************	
-**************************************************************************************/	
+**************************************************************************************/
+	
 	/**
 	 * Unit test case for empty equipment name with valid quantity (INVALID)
 	 */
@@ -1010,6 +1088,10 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(0, ftm.getEquipment().size());
 	}
 	
+	
+	/**
+	 * Unit test case for empty name and invalid quantity(INVALID)
+	 */
 	@Test
 	public void testCreateEmptyInvalidEquipmentNameQuantity(){
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -1052,6 +1134,10 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(1, ftm.getEquipment().size());
 	}
 	
+	
+	/**
+	 * Unit test case for removing existing equipment(VALID)
+	 */
 	@Test
 	public void testRemoveEquipment() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -1080,6 +1166,10 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(0, ftm3.getEquipment().size());
 	}
 	
+	
+	/**
+	 * Unit test case for editing name to empty name (INVALID)
+	 */
 	@Test
 	public void testEditEmptyEquipmentName() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -1140,6 +1230,10 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals("New equipment name is not valid! ", error);
 	}
 	
+	
+	/**
+	 * Unit test case for editing quantity to invalid quantity (INVALID)
+	 */
 	@Test
 	public void testEditInvalidEquipmentQuantity() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -1170,6 +1264,9 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals("New equipment quantity must be greater than 0! ", error);
 	}
 	
+	/**
+	 * Unit test case for editing name and quantity to invalid name and invalid quantity (INVALID)
+	 */
 	@Test
 	public void testEditInvalidEquipmentNameQuantity() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -1200,6 +1297,9 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals("New equipment name is not valid! New equipment quantity must be greater than 0! ", error);
 	}
 	
+	/**
+	 * Unit test case for editing name and quantity to empty name and invalid quantity (INVALID)
+	 */
 	@Test
 	public void testEditEmptyInvalidEquipmentNameQuantity() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -1231,6 +1331,10 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals("New equipment name cannot be empty! New equipment quantity must be greater than 0! ", error);
 	}
 	
+	
+	/**
+	 * Unit test case for editing equipment (VALID)
+	 */
 	@Test
 	public void testEditEquipment() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -1260,7 +1364,7 @@ public class TestFoodTruckManagementSystemController {
 		}
 		FoodTruckManager ftm3 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
 		assertEquals(1, ftm3.getEquipment().size());
-//		assertEquals("Spoon", ftm3.getEquipment(0).getName());
+		assertEquals("Spoon", ftm3.getEquipment(0).getName());
 		assertEquals(123, ftm3.getEquipment(0).getQuantity());
 	}
 /**************************************************************************************
@@ -1303,6 +1407,9 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals("Order must be greater than 0! ", error);
 	}
 	
+	/**
+	 * Unit test case for editing popularity (VALID)
+	 */
 	@Test
 	public void testEditOrder() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -1403,6 +1510,9 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(1, ftm.getEmployees().size());		
 	}
 	
+	/**
+	 * Unit test case for removing employee (VALID)
+	 */
 	@Test
 	public void testRemoveEmployee() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -1428,6 +1538,9 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(0, ftm3.getEmployees().size());
 	}
 	
+	/**
+	 * Unit test case for editing name (VALID)
+	 */
 	@Test
 	public void testEditEmployee() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -1457,7 +1570,10 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(1, ftm3.getEmployees().size());
 		assertEquals("Bob", ftm3.getEmployee(0).getName());
 	}
-	
+		
+	/**
+	 * Unit test case for editing name to empty name (INVALID)
+	 */
 	@Test
 	public void testEditEmptyEmployeeName() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -1486,6 +1602,9 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals("New employee name cannot be empty! ", error);
 	}
 	
+	/**
+	 * Unit test case for editing name to invalid name (INVALID)
+	 */
 	@Test
 	public void testEditInvalidEmployeeName() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -1515,6 +1634,9 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals("New employee name is not valid! ", error);
 	}
 	
+	/**
+	 * Unit test case for adding empty start time to employee (INVALID)
+	 */
 	@Test
 	public void testAddEmptyEmployeeStartTime() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -1556,6 +1678,9 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals("Start time cannot be empty! ", error);
 	}
 	
+	/**
+	 * Unit test case for adding empty end time to employee (INVALID)
+	 */
 	@Test
 	public void testAddEmptyEmployeeEndTime() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -1597,6 +1722,9 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals("End time cannot be empty! ", error);
 	}
 	
+	/**
+	 * Unit test case for adding empty start time and empty end time to employee (INVALID)
+	 */
 	@Test
 	public void testAddEmptyEmployeeStartTimeEndTime() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -1655,6 +1783,9 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals("Start time cannot be empty! End time cannot be empty! ", error);
 	}
 	
+	/**
+	 * Unit test case for adding invalid start time and end time to employee (INVALID)
+	 */
 	@Test
 	public void testAddInvalidEmployeeStartTimeEndTime() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -1689,6 +1820,9 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals("End time cannot be before start time! ", error);
 	}
 	
+	/**
+	 * Unit test case for adding start time and end time to employee (VALID)
+	 */
 	@Test
 	public void testAddEmployeeStartTimeEndTime() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -1730,6 +1864,9 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(endTime, ftm3.getEmployee(0).getWorkEndTime(0));
 	}
 	
+	/**
+	 * Unit test case for removing start time and end time from employee (VALID)
+	 */
 	@Test
 	public void testRemoveEmployeeStartTimeEndTime() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -1778,6 +1915,9 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(0, ftm4.getEmployee(0).getWorkEndTime().length);
 	}
 	
+	/**
+	 * Unit test case for editing start time to empty start time (INVALID)
+	 */
 	@Test
 	public void testEditEmptyEmployeeStartTime() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -1827,6 +1967,9 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals("New start time cannot be empty! ", error);
 	}	
 	
+	/**
+	 * Unit test case for editing end time to empty end time (INVALID)
+	 */
 	@Test
 	public void testEditEmptyEmployeeEndTime() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -1876,6 +2019,9 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals("New end time cannot be empty! ", error);
 	}
 	
+	/**
+	 * Unit test case for editing start time and end time to invalid start time and invalid end time (INVALID)
+	 */
 	@Test
 	public void testEditInvalidEmployeeStartTimeEndTime() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -1928,6 +2074,9 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals("New end time cannot be before new start time! ", error);
 	}
 	
+	/**
+	 * Unit test case for editing start time and end time (VALID)
+	 */
 	@Test
 	public void testEditEmployeeStartTimeEndTime() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();

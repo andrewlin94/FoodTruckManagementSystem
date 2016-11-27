@@ -2,7 +2,6 @@ package ca.mcgill.ecse321.foodtruckmanagementsystem.controller;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import ca.mcgill.ecse321.foodtruckmanagementsystem.persistence.PersistenceXStream;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.model.*;
@@ -11,16 +10,14 @@ public class FoodTruckManagementSystemController {
 	public FoodTruckManagementSystemController() {}
 	
 	/**
-	 * Method takes a string as input that only contains alphabetical and
-	 * numerical ascii characters (otherwise throws an error).
-	 * Thus, special characters with accents cannot be input.
-	 * 
-	 * Creates a new Employee with (name) and saves their name into the xml file.
-	 * 
+	 * Create an employee object with the string attribute name,
+	 * and store in xml file. name must only contain alphabetical letters
+	 * and numerical numbers (0 to 9). Store in memory.
+	 *  
 	 * @param name
 	 * @throws InvalidInputException
 	 */
-	public void createEmployee (String name) throws InvalidInputException {
+	public void createEmployee(String name) throws InvalidInputException {
 		String error = "";
 		if (name == null || name.trim().length() == 0) {
 			error = error + "Employee name cannot be empty! ";
@@ -46,13 +43,10 @@ public class FoodTruckManagementSystemController {
 	}
 		
 	/**
-	 * Method takes one string and one integer as input. String must contain only alphabetical
-	 * and numerical ascii values (throws an error otherwise). Thus, special characters and 
-	 * accents cannot be given as valid input.
-	 * Integer must be >=1 to be valid.
-	 * 
 	 * Creates a new Ingredient with (name, quantity) and stores it into the xml file.
-	 * 
+	 * name must only contain alphabetical letters and numerical numbers (0 to 9).
+	 * quantity must be greater than 0. Store in memory.
+	 * 	
 	 * @param name
 	 * @param quantity
 	 * @throws InvalidInputException
@@ -85,6 +79,16 @@ public class FoodTruckManagementSystemController {
 		PersistenceXStream.saveToXMLwithXStream(ftm);
 	}
 	
+	/**
+	 * Edit an ingredient object specified, edit its name to newName, and its quantity to newQuantity.
+	 * newName must only contain alphabetical letters and numerical numbers (0 to 9).
+	 * newQuantity must be greater than 0. Store in memory.
+	 *  
+	 * @param ingredient
+	 * @param newName
+	 * @param newQuantity
+	 * @throws InvalidInputException
+	 */
 	public void editIngredient(Ingredient ingredient, String newName, int newQuantity) throws InvalidInputException {
 		String error = "";
 		if (newName == null || newName.trim().length() == 0) {
@@ -124,12 +128,9 @@ public class FoodTruckManagementSystemController {
 	}
 	
 	/**
-	 * Method takes one string and one integer as input. String must contain only alphabetical
-	 * and numerical ascii values (throws an error otherwise). Thus, special characters and 
-	 * accents cannot be given as valid input.
-	 * Integer must be >=1 to be valid.
-	 * 
 	 * Creates a new Equipment with (name, quantity) and stores it into the xml file.
+	 * name must only contain alphabetical letters and numerical numbers (0 to 9).
+	 * quantity must be greater than 0. Store in memory.
 	 * 
 	 * @param name
 	 * @param quantity
@@ -164,13 +165,10 @@ public class FoodTruckManagementSystemController {
 	}
 	
 	/**
-	 * Method takes one string, one double and one integer as input. String must contain only alphabetical
-	 * and numerical ascii values (throws an error otherwise). Thus, special characters and 
-	 * accents cannot be given as valid input.
-	 * Double must be > 0.0 to be valid.
-	 * Integer must be >=1 to be valid.
-	 * 
 	 * Creates a new Food with (name, price, popularity rating) and stores it into the xml file.
+	 * name must only contain alphabetical letters and numerical numbers (0 to 9).
+	 * price must be greater than 0. popularity must be greater than 0. Store in memory.
+	 * 
 	 * 
 	 * @param name
 	 * @param price
@@ -209,6 +207,17 @@ public class FoodTruckManagementSystemController {
 		PersistenceXStream.saveToXMLwithXStream(ftm);
 	}
 	
+	/**
+	 * Edit the food object specified, changing its name attribute to newName,
+	 * and changing its price attribute to newPrice.
+	 * newName must only contain alphabetical letters and numerical numbers (0 to 9).
+	 * newPrice must be greater than 0. Store in memory.
+	 * 
+	 * @param food
+	 * @param newName
+	 * @param newPrice
+	 * @throws InvalidInputException
+	 */
 	public void editFood(Food food, String newName, double newPrice) throws InvalidInputException{
 		FoodTruckManager ftm = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
 		String error = "";
@@ -247,7 +256,14 @@ public class FoodTruckManagementSystemController {
 		}
 		PersistenceXStream.saveToXMLwithXStream(ftm);
 	}
-	
+	/**
+	 * Edit the popularity attribute of a specified food food. 
+	 * Order must be greater than 0. Store in memory.
+	 * 
+	 * @param food
+	 * @param order
+	 * @throws InvalidInputException
+	 */
 	public void editOrder(Food food, int order) throws InvalidInputException{
 		String error = "";
 		if (order <= 0) {
@@ -269,10 +285,9 @@ public class FoodTruckManagementSystemController {
 	}
 	
 	/**
-	 * Method used to change an existing employee's name into a different name.
-	 * Takes two String inputs (old name, new name).
-	 * Names can only contain ascii alphabetical and numerical values and spaces,
-	 * any other inputs will throw errors.
+	 * Edit the name attribute of an specified employee employee.
+	 * newName must only contain alphabetical letters and numerical numbers (0 to 9).
+	 * Store in memory.
 	 * 
 	 * @param oldName
 	 * @param newName
@@ -307,6 +322,16 @@ public class FoodTruckManagementSystemController {
 		}
 	}
 
+	/**
+	 * Edit the quantity, to newQuantity, and name, to newName, attribute of an specified equipment e.
+	 * newQuantity must be greater than 0.newName must only contain alphabetical letters and numerical
+	 * numbers (0 to 9). Store in memory.
+	 * 
+	 * @param e
+	 * @param newName
+	 * @param newQuantity
+	 * @throws InvalidInputException
+	 */
 	public void editEquipment(Equipment e, String newName, int newQuantity) throws InvalidInputException {
 		String error = "";
 		if (newName == null || newName.trim().length() == 0) {
@@ -345,6 +370,17 @@ public class FoodTruckManagementSystemController {
 		PersistenceXStream.saveToXMLwithXStream(ftm);
 	}
 	
+	/**
+	 * Adding a workStartTime and a workEndTime attribute to an specified employee e.
+	 * workStartTime and workEndTime both contain information about the year, month,
+	 * date, hours and minutes of the working shift. Store in memory.
+	 * workEndTime must be after workStartTime.
+	 * 
+	 * @param e
+	 * @param workStartTime
+	 * @param workEndTime
+	 * @throws InvalidInputException
+	 */
 	public void addShift(Employee e, Date workStartTime, Date workEndTime) throws InvalidInputException {
 		String error = "";
 		Date empty= new Date();
@@ -374,6 +410,18 @@ public class FoodTruckManagementSystemController {
 		PersistenceXStream.saveToXMLwithXStream(ftm);
 	}
 	
+	/**
+	 * Editing the workStartTime and the workEndTime attribute of a specified employee e.
+	 * newStartTime must be before newEndTime. oldStartTime and oldEndTime must be of the same
+	 * index in the lists of startTime and lists of endTime in employee e. Store in memory.
+	 * 
+	 * @param e
+	 * @param oldStartTime
+	 * @param oldEndTime
+	 * @param newStartTime
+	 * @param newEndTime
+	 * @throws InvalidInputException
+	 */
 	public void editShift(Employee e, Date oldStartTime, Date oldEndTime, Date newStartTime, Date newEndTime) throws InvalidInputException {
 		String error = "";
 		Date empty = new Date();
@@ -396,18 +444,20 @@ public class FoodTruckManagementSystemController {
 		Calendar c = Calendar.getInstance();
 		int i = 0;
 		int j = 0;
+		Employee et;
 		for (i = 0; i < ftm.getEmployees().size(); i++) {
-			if (ftm.getEmployee(i).getName().equals(e.getName())) {
-				for (j = 0; j < ftm.getEmployee(i).numberOfWorkStartTime(); j++) {
-					if (ftm.getEmployee(i).getWorkStartTime(j).equals(oldStartTime) && (ftm.getEmployee(i).getWorkEndTime(j).equals(oldEndTime))) {
+			et = ftm.getEmployee(i);
+			if (et.getName().equals(e.getName())) {
+				for (j = 0; j < et.numberOfWorkStartTime(); j++) {
+					if (et.getWorkStartTime(j).equals(oldStartTime) && (et.getWorkEndTime(j).equals(oldEndTime))) {
 						
-						if (!(ftm.getEmployee(i).getWorkStartTime(j).equals(newStartTime))) {
+						if (!(et.getWorkStartTime(j).equals(newStartTime))) {
 							c.setTime(newStartTime);
-							ftm.getEmployee(i).getWorkStartTime(j).setTime(c.getTimeInMillis());
+							et.getWorkStartTime(j).setTime(c.getTimeInMillis());
 						}
-						if (!(ftm.getEmployee(i).getWorkEndTime(j).equals(newEndTime))) {
+						if (!(et.getWorkEndTime(j).equals(newEndTime))) {
 							c.setTime(newEndTime);
-							ftm.getEmployee(i).getWorkEndTime(j).setTime(c.getTimeInMillis());
+							et.getWorkEndTime(j).setTime(c.getTimeInMillis());
 						}
 						break;
 					}
@@ -417,26 +467,36 @@ public class FoodTruckManagementSystemController {
 		PersistenceXStream.saveToXMLwithXStream(ftm);
 	}
 	
+	/**
+	 * Removing a startTime and endTime from the lists of startTime and endTime
+	 * of the specified employee e from memory.
+	 * 
+	 * @param e
+	 * @param startTime
+	 * @param endTime
+	 */
 	public void removeShift(Employee e, Date startTime, Date endTime) {
 		FoodTruckManager ftm = (FoodTruckManager)PersistenceXStream.loadFromXMLwithXStream();
 		int i = 0;
 		int j = 0;
 		int k = 0;
+		Employee et;
 		for (i = 0; i < ftm.getEmployees().size(); i++) {
-			if (ftm.getEmployee(i).getName().equals(e.getName())) {
-				for (j = 0; j < ftm.getEmployee(i).numberOfWorkStartTime(); j++) {
-					if (ftm.getEmployee(i).getWorkStartTime(j).equals(startTime)) {
+			et = ftm.getEmployee(i);
+			if (et.getName().equals(e.getName())) {
+				for (j = 0; j < et.numberOfWorkStartTime(); j++) {
+					if (et.getWorkStartTime(j).equals(startTime)) {
 						break;
 					}
 				}
-				for (k = 0; k < ftm.getEmployee(i).numberOfWorkEndTime(); k++) {
-					if (ftm.getEmployee(i).getWorkEndTime(k).equals(endTime)) {
+				for (k = 0; k < et.numberOfWorkEndTime(); k++) {
+					if (et.getWorkEndTime(k).equals(endTime)) {
 						break;
 					}
 				}
 				if (j == k) {
-					ftm.getEmployee(i).removeWorkStartTime(ftm.getEmployee(i).getWorkStartTime(j));
-					ftm.getEmployee(i).removeWorkEndTime(ftm.getEmployee(i).getWorkEndTime(k));
+					et.removeWorkStartTime(et.getWorkStartTime(j));
+					et.removeWorkEndTime(et.getWorkEndTime(k));
 					break;
 				}
 			}
@@ -444,6 +504,11 @@ public class FoodTruckManagementSystemController {
 		PersistenceXStream.saveToXMLwithXStream(ftm);
 	}
 	
+	/**
+	 * Remove the food object f from memory.
+	 * 
+	 * @param f
+	 */
 	public void removeFood(Food f) {
 		FoodTruckManager ftm = (FoodTruckManager)PersistenceXStream.loadFromXMLwithXStream();
 		for (int i = 0; i < ftm.getFoods().size(); i++) {
@@ -454,6 +519,11 @@ public class FoodTruckManagementSystemController {
 		PersistenceXStream.saveToXMLwithXStream(ftm);
 	}
 	
+	/**
+	 * Remove the ingredient object i from memory.
+	 * 
+	 * @param i
+	 */
 	public void removeIngredient(Ingredient i) {
 		FoodTruckManager ftm = (FoodTruckManager)PersistenceXStream.loadFromXMLwithXStream();
 		for (int j = 0; j < ftm.getIngredients().size(); j++) {
@@ -464,6 +534,11 @@ public class FoodTruckManagementSystemController {
 		PersistenceXStream.saveToXMLwithXStream(ftm);
 	}
 	
+	/**
+	 * Remove the equipment object e from memory.
+	 * 
+	 * @param e
+	 */
 	public void removeEquipment(Equipment e) {
 		FoodTruckManager ftm = (FoodTruckManager)PersistenceXStream.loadFromXMLwithXStream();
 		for (int i = 0; i < ftm.getEquipment().size(); i++) {
@@ -474,6 +549,10 @@ public class FoodTruckManagementSystemController {
 		PersistenceXStream.saveToXMLwithXStream(ftm);
 	}
 	
+	/**
+	 * Remove the employee object e from memory.
+	 * @param e
+	 */
 	public void removeEmployee(Employee e) {
 		FoodTruckManager ftm = (FoodTruckManager)PersistenceXStream.loadFromXMLwithXStream();
 		int i = 0;
