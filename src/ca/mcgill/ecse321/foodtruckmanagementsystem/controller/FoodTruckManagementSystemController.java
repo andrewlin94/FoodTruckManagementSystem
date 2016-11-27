@@ -234,10 +234,10 @@ public class FoodTruckManagementSystemController {
 		int i = 0;
 		for (i = 0; i < ftm.getFoods().size(); i++) {
 			if (ftm.getFood(i).getName().equals(food.getName())) {
-				if (!(newName.equals(food.getName()))) {
+				if (!(ftm.getFood(i).getName().equals(newName))) {
 					ftm.getFood(i).setName(newName);
 				}
-				if (!(Double.compare(food.getPrice(), newPrice) == 0)) {
+				if (!(Double.compare(ftm.getFood(i).getPrice(), newPrice) == 0)) {
 					ftm.getFood(i).setPrice(newPrice);
 				}
 				break;
@@ -304,8 +304,8 @@ public class FoodTruckManagementSystemController {
 			}
 		}
 	}
-	
-	public void editEquipmentName(Equipment e, String newName) throws InvalidInputException {
+
+	public void editEquipment(Equipment e, String newName, int newQuantity) throws InvalidInputException {
 		String error = "";
 		if (newName == null || newName.trim().length() == 0) {
 			error = error + "New equipment name cannot be empty! ";
@@ -321,34 +321,25 @@ public class FoodTruckManagementSystemController {
 				}
 			}
 		}
-		if (error.length() > 0) {
-			throw new InvalidInputException(error);
-		}
-		FoodTruckManager ftm = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
-		int i = 0;
-		for (i = 0; i < ftm.getEmployees().size(); i++) {
-			if (ftm.getEquipment(i).getName().equals(e.getName())) {
-				ftm.getEquipment(i).setName(newName);
-				PersistenceXStream.saveToXMLwithXStream(ftm);
-			}
-		}
-	}
-	
-	public void editEquipmentQuantity(Equipment e, int newQuantity) throws InvalidInputException {
-		String error = "";
 		if (newQuantity < 0) {
-			error = "New equipment quantity must be greater than 0! ";
+			error = error + "New equipment quantity must be greater than 0! ";
 		}
 		if (error.length() > 0) {
 			throw new InvalidInputException(error);
 		}
 		FoodTruckManager ftm = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
 		int i = 0;
-		for (i = 0; i < ftm.getEmployees().size(); i++) {
+		for (i = 0; i < ftm.getEquipment().size(); i++) {
 			if (ftm.getEquipment(i).getName().equals(e.getName())) {
-				ftm.getEquipment(i).setQuantity(newQuantity);
-				PersistenceXStream.saveToXMLwithXStream(ftm);
+				if (!(ftm.getEquipment(i).getName().equals(newName))) {
+					ftm.getEquipment(i).setName(newName);
+				}
+				if (!(ftm.getEquipment(i).getQuantity() == newQuantity)) {
+					ftm.getEquipment(i).setQuantity(newQuantity);
+				}
+				break;
 			}
 		}
+		PersistenceXStream.saveToXMLwithXStream(ftm);
 	}
 }
