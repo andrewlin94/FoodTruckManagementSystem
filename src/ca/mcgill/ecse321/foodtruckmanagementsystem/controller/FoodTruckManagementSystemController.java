@@ -83,8 +83,42 @@ public class FoodTruckManagementSystemController {
 		PersistenceXStream.saveToXMLwithXStream(ftm);
 	}
 	
-	public void editIngredient(Ingredient ingredient, String newName, int newQuant){
-		
+	public void editIngredient(Ingredient ingredient, String newName, int newQuantity) throws InvalidInputException {
+		String error = "";
+		if (newName == null || newName.trim().length() == 0) {
+			error = error + "New ingredient name cannot be empty! ";
+		}
+		else {
+			int ascii;
+			for (int i = 0; i < newName.trim().length(); i++) {
+				ascii = (int) newName.trim().charAt(i);
+				if ((ascii < 32) || (ascii > 32 && ascii < 48) || (ascii > 57 && ascii < 65)
+						|| (ascii > 90 && ascii < 97) || (ascii > 122)) {
+					error = error + "New ingredient name is not valid! ";
+					break;
+				}
+			}
+		}
+		if (newQuantity <= 0) {
+			error = error + "New ingredient quantity must be greater than 0! ";
+		}
+		if (error.length() > 0) {
+			throw new InvalidInputException(error);
+		}
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		int i = 0;
+		for (i = 0; i < ftm2.getIngredients().size(); i++) {
+			if (ftm2.getIngredient(i).getName().equals(ingredient.getName())) {
+				if (!(ftm2.getIngredient(i).getName().equals(newName))) {
+					ftm2.getIngredient(i).setName(newName);
+				}
+				if (!(ftm2.getIngredient(i).getQuantity() == newQuantity)) {
+					ftm2.getIngredient(i).setQuantity(newQuantity);
+				}
+				break;
+			}
+		}
+		PersistenceXStream.saveToXMLwithXStream(ftm2);
 	}
 	
 	/**
