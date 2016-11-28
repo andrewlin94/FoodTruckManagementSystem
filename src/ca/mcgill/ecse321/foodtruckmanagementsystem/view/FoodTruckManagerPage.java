@@ -2,24 +2,21 @@ package ca.mcgill.ecse321.foodtruckmanagementsystem.view;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.DefaultCellEditor;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 
 import ca.mcgill.ecse321.foodtruckmanagementsystem.model.Employee;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.model.Equipment;
@@ -31,38 +28,24 @@ public class FoodTruckManagerPage extends JFrame{
 
 	private static final long serialVersionUID = 1860279074122772938L;
 	
-	private JFrame frame;
 	private JLabel errorMessage;
 	private JTabbedPane functions;
 	
 	private String[] foodColumns = new String[] {"Dish", "Price", "Popularity", "Edit/Add/Remove"};
 	private Object[][] foods;
 	private JTable foodTable;
-	private JButton editFood;
-	private JButton addFood;
-	private JButton removeFood;
 	
 	private String[] equipmentColumns = new String[] {"Item", "Quantity", "Edit/Add/Remove"};
 	private Object[][] equipment;
 	private JTable equipmentTable;
-	private JButton editEquipment;
-	private JButton addEquipment;
-	private JButton removeEquipment;
 	
 	private String[] ingredientColumns = new String[] {"Ingredient", "Quantity", "Edit/Add/Remove"};
 	private Object[][] ingredients;
 	private JTable ingredientTable;
-	private JButton editIngredient;
-	private JButton addIngredient;
-	private JButton removeIngredient;
 	
 	private String[] employeeColumns = new String[] {"Employee", "Check Shifts", "Edit/Add/Remove"};
 	private Object[][] employees;
 	private JTable employeeTable;
-	private JComboBox<String> employeeShifts;
-	private JButton editEmployee;
-	private JButton addEmployee;
-	private JButton removeEmployee;
 	
 	private String error = null;
 	private HashMap<Integer, Food> foodMap;
@@ -78,13 +61,13 @@ public class FoodTruckManagerPage extends JFrame{
 	
 	public FoodTruckManagerPage(){
 		
-		frame = new JFrame("Food Truck Manager");
-		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		frame.setSize(600, 400);	
+		setTitle("Food Truck Manager");
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		setSize(700, 400);	
 		
 		initComponents();
 		
-		frame.setVisible(true);
+		setVisible(true);
 		
 	}
 	
@@ -110,7 +93,7 @@ public class FoodTruckManagerPage extends JFrame{
 		refreshIngredient();
 		refreshEmployee();
 		
-		frame.add(functions);
+		add(functions);
 		
 	}
 	
@@ -132,19 +115,24 @@ public class FoodTruckManagerPage extends JFrame{
 				Food f = fIt.next();
 				foodMap.put(i, f);
 				foods[i][0] = f.getName();
-				foods[i][1] = f.getPrice();
+				foods[i][1] = "$ " + f.getPrice();
 				foods[i][2] = f.getPopularity();
 				
-				foods[i][3] = "Edit/Remove " + f.getName();
+				foods[i][3] = "Edit/Remove " + "\""+f.getName()+"\"";
 				i++;
 			}
 			
 			foods[i][3] = "Add new food";
 			
 			foodTable = new JTable(foods, foodColumns);
-			
+			@SuppressWarnings("unused")
+			ButtonColumn editColumn = new ButtonColumn(foodTable, edit, 3);
+						
 			functions.setComponentAt(0, new JScrollPane(foodTable));
-			
+			SwingUtilities.updateComponentTreeUI(this);
+			invalidate();
+			validate();
+			repaint();
 		}
 	}
 	
@@ -167,12 +155,14 @@ public class FoodTruckManagerPage extends JFrame{
 				equipmentMap.put(i, e);
 				equipment[i][0] = e.getName();
 				equipment[i][1] = e.getQuantity();
-				equipment[i][2] = "Edit/Remove " + e.getName();
+				equipment[i][2] = "Edit/Remove " + "\""+e.getName()+"\"";
 				i++;
 			}
 			equipment[i][2] = "Add new equipment";
 			
 			equipmentTable = new JTable(equipment, equipmentColumns);
+			@SuppressWarnings("unused")
+			ButtonColumn editColumn = new ButtonColumn(equipmentTable, edit, 2);
 			
 			functions.setComponentAt(3, new JScrollPane(equipmentTable));
 		}
@@ -197,12 +187,14 @@ public class FoodTruckManagerPage extends JFrame{
 				ingredientMap.put(i, ing);
 				ingredients[i][0] = ing.getName();
 				ingredients[i][1] = ing.getQuantity();
-				ingredients[i][2] = "Edit/Remove " +ing.getName();
+				ingredients[i][2] = "Edit/Remove " +"\""+ing.getName()+"\"";
 				i++;
 			}
 			ingredients[i][2] = "Add new ingredient";
 			
 			ingredientTable = new JTable (ingredients, ingredientColumns);
+			@SuppressWarnings("unused")
+			ButtonColumn editColumn = new ButtonColumn(ingredientTable, edit, 2);
 			
 			functions.setComponentAt(2, new JScrollPane(ingredientTable));			
 		}
@@ -218,9 +210,6 @@ public class FoodTruckManagerPage extends JFrame{
 			employeeMap = new HashMap<Integer, Employee>();
 			employeeTable.removeAll();
 			
-			//String shift;
-			//DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-			
 			employees = new Object[ftm.getEmployees().size() + 1][3];
 			Iterator<Employee> emIt = ftm.getEmployees().iterator();
 			
@@ -229,28 +218,82 @@ public class FoodTruckManagerPage extends JFrame{
 				
 				Employee e = emIt.next();
 				employeeMap.put(i, e);
-				employees[i][0] = e.getName();
-				
-				/*
-				for (int j = 0; e.numberOfWorkstarttime() > j; j++){
-					shift = dateFormat.format(e.getWorkstarttime(j));
-					shift = shift + " to " + dateFormat.format(e.getWorkendtime(j));
-					employeeShifts.addItem(shift);
-				}
-				*/
-				
-				employees[i][1] = "Check Shifts";
-				employees[i][2] = "Edit/Remove " + e.getName();
+				employees[i][0] = e.getName();								
+				employees[i][1] = "Check/Edit Shifts";
+				employees[i][2] = "Edit/Remove " + "\""+e.getName()+"\"";
 				i++;
 			}
 			employees[i][2] = "Add new employee";
 			
 			employeeTable = new JTable(employees, employeeColumns);
+			@SuppressWarnings("unused")
+			ButtonColumn editColumn = new ButtonColumn(employeeTable, edit, 2);
+			@SuppressWarnings("unused")
+			ButtonColumn shiftColumn = new ButtonColumn(employeeTable, shifts, 1);
 			
 			functions.setComponentAt(1, new JScrollPane(employeeTable));
 			
 		}
 	}
+	
+	Action edit = new AbstractAction(){
+		private static final long serialVersionUID = 2807908237298004936L;
+		
+		@SuppressWarnings("unused")
+		ViewEditGUI veg;
+		
+		public void actionPerformed(ActionEvent evt) {
+			JTable table = (JTable)evt.getSource();
+			int modelRow = Integer.valueOf(evt.getActionCommand());
+			boolean isNew = false;
+			
+			if ((modelRow+1) == table.getRowCount()){
+				isNew = true;
+			}
+			
+			if(table.equals(employeeTable)){
+				veg = new ViewEditGUI("Employee", modelRow, isNew);		
+				refreshEmployee();
+			}
+			
+			else if(table.equals(foodTable)){
+				veg = new ViewEditGUI("Food", modelRow, isNew);
+				refreshFood();
+			}
+			
+			else if(table.equals(ingredientTable)){
+				veg = new ViewEditGUI("Ingredient", modelRow, isNew);	
+				refreshIngredient();
+			}
+			
+			else if(table.equals(equipmentTable)){
+				veg = new ViewEditGUI("Equipment", modelRow, isNew);				
+				refreshEquipment();
+			}
+			
+			else{
+				System.out.println("Something went very very wrong");
+			}
+		}
+	};
+
+	Action shifts = new AbstractAction(){
+		private static final long serialVersionUID = -2586924078002381328L;
+
+		public void actionPerformed(ActionEvent evt){
+			JTable table = (JTable)evt.getSource();
+			int modelRow = Integer.valueOf(evt.getActionCommand());
+			
+			if(table.getRowCount() == (modelRow+1)){}
+			
+			else{
+				@SuppressWarnings("unused")
+				ViewShiftGUI vsg = new ViewShiftGUI();				
+				refreshEmployee();
+			}
+		}
+	};
+	
 }
 
 
