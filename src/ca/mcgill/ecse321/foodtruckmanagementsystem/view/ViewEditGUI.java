@@ -3,6 +3,7 @@ package ca.mcgill.ecse321.foodtruckmanagementsystem.view;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -43,6 +44,8 @@ public class ViewEditGUI extends JFrame{
 	private String itemType;
 	private int index;
 	private boolean isNew;
+	private HashMap<Integer, Employee> employeeMap;
+
 	
 	
 	public ViewEditGUI(String item, int index, boolean isNew){
@@ -93,9 +96,7 @@ public class ViewEditGUI extends JFrame{
 			}
 			else{	//Equipment
 				equipmentWindow(new Equipment("", 0));
-			}
-			
-			
+			}		
 		}
 		
 		else{	

@@ -276,7 +276,7 @@ public class FoodTruckManagerPage extends JFrame{
 			}
 		}
 	};
-
+	
 	Action shifts = new AbstractAction(){
 		private static final long serialVersionUID = -2586924078002381328L;
 
@@ -288,7 +288,7 @@ public class FoodTruckManagerPage extends JFrame{
 			
 			else{
 				@SuppressWarnings("unused")
-				ViewShiftGUI vsg = new ViewShiftGUI();				
+				ViewShiftGUI vsg = new ViewShiftGUI("Employee", 0);				
 				refreshEmployee();
 			}
 		}
