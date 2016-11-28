@@ -141,7 +141,10 @@ public class FoodTruckManagerPage extends JFrame{
 		ButtonColumn editColumn = new ButtonColumn(equipmentTable, edit, 2);
 
 		functions.setComponentAt(3, new JScrollPane(equipmentTable));
-
+		SwingUtilities.updateComponentTreeUI(this);
+		invalidate();
+		validate();
+		repaint();
 	}
 	
 	
@@ -168,7 +171,10 @@ public class FoodTruckManagerPage extends JFrame{
 		ButtonColumn editColumn = new ButtonColumn(ingredientTable, edit, 2);
 
 		functions.setComponentAt(2, new JScrollPane(ingredientTable));
-
+		SwingUtilities.updateComponentTreeUI(this);
+		invalidate();
+		validate();
+		repaint();
 	}
 	
 	
@@ -198,7 +204,10 @@ public class FoodTruckManagerPage extends JFrame{
 		ButtonColumn shiftColumn = new ButtonColumn(employeeTable, shifts, 1);
 
 		functions.setComponentAt(1, new JScrollPane(employeeTable));
-
+		SwingUtilities.updateComponentTreeUI(this);
+		invalidate();
+		validate();
+		repaint();
 	}
 	
 	Action edit = new AbstractAction(){

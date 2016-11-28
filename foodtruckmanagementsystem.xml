@@ -1,10 +1,10 @@
 <manager id="1">
   <foods id="2">
     <food id="3">
-      <name>Cheeseburger</name>
-      <price>6.0</price>
+      <name>Burger</name>
+      <price>5.0</price>
       <popularity>0</popularity>
-      <id>3</id>
+      <id>2</id>
     </food>
   </foods>
   <employees id="4">
@@ -26,17 +26,31 @@
       <workEndTime id="13"/>
       <id>5</id>
     </employee>
+    <employee id="14">
+      <name>Kolento</name>
+      <workStartTime id="15"/>
+      <workEndTime id="16"/>
+      <id>3</id>
+    </employee>
   </employees>
-  <equipment id="14">
-    <equipment id="15">
+  <equipment id="17">
+    <equipment id="18">
       <name>Forks</name>
       <quantity>10</quantity>
     </equipment>
+    <equipment id="19">
+      <name>Spoon</name>
+      <quantity>420</quantity>
+    </equipment>
   </equipment>
-  <ingredients id="16">
-    <ingredient id="17">
+  <ingredients id="20">
+    <ingredient id="21">
       <name>Lettuce</name>
       <quantity>10</quantity>
+    </ingredient>
+    <ingredient id="22">
+      <name>Tomato</name>
+      <quantity>12</quantity>
     </ingredient>
   </ingredients>
 </manager>
