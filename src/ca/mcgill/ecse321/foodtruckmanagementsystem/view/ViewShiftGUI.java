@@ -45,27 +45,29 @@ public class ViewShiftGUI extends JFrame{
 	private JTable shiftsTable;
 	private JTabbedPane functions;
 	
-	public ViewShiftGUI(String item, int index) {
-		this.itemType = item;
+	public ViewShiftGUI(int index) {
+		
 		this.index = index;
-		setTitle(itemType + "Shifts");
+		setTitle("Shifts");
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		functions = new JTabbedPane();
 		initComponents();
 		setVisible(true);
 	}
 	
 	private void initComponents() {
+		cancel = new JButton();
 		cancel.setText("Quit without Saving");
 		cancel.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
 				dispose();
 			}
 		});
+		
+		shiftsTable = new JTable();
 		ftmsc = new FoodTruckManagementSystemController();
 		ftm = FoodTruckManager.getInstance();
 		shiftsWindow(ftm.getEmployee(index));
-		add(functions);
+		pack();
 	}
 	
 	private void shiftsWindow(Employee e) {
@@ -113,6 +115,6 @@ public class ViewShiftGUI extends JFrame{
 //		ButtonColumn editColumn = new ButtonColumn(employeeTable, edit, 2);
 //		@SuppressWarnings("unused")
 //		ButtonColumn shiftColumn = new ButtonColumn(employeeTable, shifts, 1);
-		functions.setComponentAt(0, new JScrollPane(shiftsTable));
+		add(new JScrollPane(shiftsTable));
 	}
 }

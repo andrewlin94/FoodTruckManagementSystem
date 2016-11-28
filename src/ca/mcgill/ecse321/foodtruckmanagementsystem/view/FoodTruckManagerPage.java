@@ -1,6 +1,5 @@
 package ca.mcgill.ecse321.foodtruckmanagementsystem.view;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -9,7 +8,6 @@ import java.util.Iterator;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -26,7 +24,6 @@ public class FoodTruckManagerPage extends JFrame{
 
 	private static final long serialVersionUID = 1860279074122772938L;
 	
-	private JLabel errorMessage;
 	private JTabbedPane functions;
 	
 	private String[] foodColumns = new String[] {"Dish", "Price", "Popularity", "Edit/Add/Remove"};
@@ -65,9 +62,6 @@ public class FoodTruckManagerPage extends JFrame{
 	
 	
 	private void initComponents(){
-		
-		errorMessage = new JLabel();
-		errorMessage.setForeground(Color.RED);
 		
 		foodTable = new JTable();		
 		equipmentTable = new JTable();		
@@ -265,7 +259,7 @@ public class FoodTruckManagerPage extends JFrame{
 			}
 		}
 	};
-	
+
 	Action shifts = new AbstractAction(){
 		private static final long serialVersionUID = -2586924078002381328L;
 
@@ -277,7 +271,7 @@ public class FoodTruckManagerPage extends JFrame{
 			
 			else{
 				@SuppressWarnings("unused")
-				ViewShiftGUI vsg = new ViewShiftGUI("Employee", 0);				
+				ViewShiftGUI vsg = new ViewShiftGUI(modelRow);				
 				refreshEmployee();
 			}
 		}
