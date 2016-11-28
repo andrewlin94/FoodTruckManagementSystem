@@ -16,7 +16,7 @@ public class PersistenceFoodTruckManagementSystem{
 		PersistenceXStream.setAlias("manager", FoodTruckManager.class);
 	}
 
-	public static void loadEventRegistrationModel()
+	public static void loadFoodTruckManagerModel()
 	{
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
 		PersistenceFoodTruckManagementSystem.initializeXStream();
