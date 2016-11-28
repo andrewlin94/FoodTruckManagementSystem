@@ -4,9 +4,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.concurrent.TimeUnit;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -46,12 +44,6 @@ public class FoodTruckManagerPage extends JFrame{
 	private String[] employeeColumns = new String[] {"Employee", "Check Shifts", "Edit/Add/Remove"};
 	private Object[][] employees;
 	private JTable employeeTable;
-	
-	private String error = null;
-	private HashMap<Integer, Food> foodMap;
-	private HashMap<Integer, Ingredient> ingredientMap;
-	private HashMap<Integer, Equipment> equipmentMap;
-	private HashMap<Integer, Employee> employeeMap;
 	
 	final static String FOODTAB = "Food";
 	final static String EMPLOYEETAB = "Employees";
@@ -99,147 +91,125 @@ public class FoodTruckManagerPage extends JFrame{
 	
 	
 	private void refreshFood(){
-		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		FoodTruckManager ftm = FoodTruckManager.getInstance();		
 		
-		errorMessage.setText(error);
-		if(error == null || error.length() == 0) {
-			
-			foodMap = new HashMap<Integer, Food>();
-			foodTable.removeAll();
-			foods = new Object[ftm.getFoods().size() + 1][4];
-			Iterator<Food> fIt = ftm.getFoods().iterator();
-			
-			int i = 0;
-			while (fIt.hasNext()){
-				
-				Food f = fIt.next();
-				foodMap.put(i, f);
-				foods[i][0] = f.getName();
-				foods[i][1] = "$ " + f.getPrice();
-				foods[i][2] = f.getPopularity();
-				
-				foods[i][3] = "Edit/Remove " + "\""+f.getName()+"\"";
-				i++;
-			}
-			
-			foods[i][3] = "Add new food";
-			
-			foodTable = new JTable(foods, foodColumns);
-			@SuppressWarnings("unused")
-			ButtonColumn editColumn = new ButtonColumn(foodTable, edit, 3);
-						
-			functions.setComponentAt(0, new JScrollPane(foodTable));
-			SwingUtilities.updateComponentTreeUI(this);
-			invalidate();
-			validate();
-			repaint();
+		foodTable.removeAll();
+		foods = new Object[ftm.getFoods().size() + 1][4];
+		Iterator<Food> fIt = ftm.getFoods().iterator();
+
+		int i = 0;
+		while (fIt.hasNext()) {
+
+			Food f = fIt.next();
+			foods[i][0] = f.getName();
+			foods[i][1] = "$ " + f.getPrice();
+			foods[i][2] = f.getPopularity();
+
+			foods[i][3] = "Edit/Remove " + "\"" + f.getName() + "\"";
+			i++;
 		}
+
+		foods[i][3] = "Add new food";
+
+		foodTable = new JTable(foods, foodColumns);
+		@SuppressWarnings("unused")
+		ButtonColumn editColumn = new ButtonColumn(foodTable, edit, 3);
+
+		functions.setComponentAt(0, new JScrollPane(foodTable));
+		SwingUtilities.updateComponentTreeUI(this);
+		invalidate();
+		validate();
+		repaint();
+
 	}
 	
 	
 	private void refreshEquipment(){
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
 		
-		errorMessage.setText(error);
-		if(error == null || error.length() == 0) {
-			
-			equipmentMap = new HashMap<Integer, Equipment>();
-			equipmentTable.removeAll();
-			equipment = new Object[ftm.getEquipment().size() + 1][3];
-			Iterator<Equipment> eIt = ftm.getEquipment().iterator();
-			
-			int i = 0;
-			while(eIt.hasNext()){
-				
-				Equipment e = eIt.next();
-				equipmentMap.put(i, e);
-				equipment[i][0] = e.getName();
-				equipment[i][1] = e.getQuantity();
-				equipment[i][2] = "Edit/Remove " + "\""+e.getName()+"\"";
-				i++;
-			}
-			equipment[i][2] = "Add new equipment";
-			
-			equipmentTable = new JTable(equipment, equipmentColumns);
-			@SuppressWarnings("unused")
-			ButtonColumn editColumn = new ButtonColumn(equipmentTable, edit, 2);
-			
-			functions.setComponentAt(3, new JScrollPane(equipmentTable));
+		equipmentTable.removeAll();
+		equipment = new Object[ftm.getEquipment().size() + 1][3];
+		Iterator<Equipment> eIt = ftm.getEquipment().iterator();
+
+		int i = 0;
+		while (eIt.hasNext()) {
+
+			Equipment e = eIt.next();
+			equipment[i][0] = e.getName();
+			equipment[i][1] = e.getQuantity();
+			equipment[i][2] = "Edit/Remove " + "\"" + e.getName() + "\"";
+			i++;
 		}
+		equipment[i][2] = "Add new equipment";
+
+		equipmentTable = new JTable(equipment, equipmentColumns);
+		@SuppressWarnings("unused")
+		ButtonColumn editColumn = new ButtonColumn(equipmentTable, edit, 2);
+
+		functions.setComponentAt(3, new JScrollPane(equipmentTable));
+
 	}
 	
 	
 	private void refreshIngredient(){
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
 		
-		errorMessage.setText(error);
-		if(error == null || error.length() == 0) {
-			
-			ingredientMap = new HashMap<Integer, Ingredient>();
-			ingredientTable.removeAll();
-			ingredients = new Object[ftm.getIngredients().size() + 1][3];
-			Iterator<Ingredient> iIt = ftm.getIngredients().iterator();
-			
-			int i = 0;
-			while(iIt.hasNext()){
-				
-				Ingredient ing = iIt.next();
-				ingredientMap.put(i, ing);
-				ingredients[i][0] = ing.getName();
-				ingredients[i][1] = ing.getQuantity();
-				ingredients[i][2] = "Edit/Remove " +"\""+ing.getName()+"\"";
-				i++;
-			}
-			ingredients[i][2] = "Add new ingredient";
-			
-			ingredientTable = new JTable (ingredients, ingredientColumns);
-			@SuppressWarnings("unused")
-			ButtonColumn editColumn = new ButtonColumn(ingredientTable, edit, 2);
-			
-			functions.setComponentAt(2, new JScrollPane(ingredientTable));			
+		ingredientTable.removeAll();
+		ingredients = new Object[ftm.getIngredients().size() + 1][3];
+		Iterator<Ingredient> iIt = ftm.getIngredients().iterator();
+
+		int i = 0;
+		while (iIt.hasNext()) {
+
+			Ingredient ing = iIt.next();
+			ingredients[i][0] = ing.getName();
+			ingredients[i][1] = ing.getQuantity();
+			ingredients[i][2] = "Edit/Remove " + "\"" + ing.getName() + "\"";
+			i++;
 		}
+		ingredients[i][2] = "Add new ingredient";
+
+		ingredientTable = new JTable(ingredients, ingredientColumns);
+		@SuppressWarnings("unused")
+		ButtonColumn editColumn = new ButtonColumn(ingredientTable, edit, 2);
+
+		functions.setComponentAt(2, new JScrollPane(ingredientTable));
+
 	}
 	
 	
 	private void refreshEmployee(){
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
 		
-		errorMessage.setText(error);
-		if(error == null || error.length() == 0) {
-			
-			employeeMap = new HashMap<Integer, Employee>();
-			employeeTable.removeAll();
-			
-			employees = new Object[ftm.getEmployees().size() + 1][3];
-			Iterator<Employee> emIt = ftm.getEmployees().iterator();
-			
-			int i = 0;
-			while(emIt.hasNext()){
-				
-				Employee e = emIt.next();
-				employeeMap.put(i, e);
-				employees[i][0] = e.getName();								
-				employees[i][1] = "Check/Edit Shifts";
-				employees[i][2] = "Edit/Remove " + "\""+e.getName()+"\"";
-				i++;
-			}
-			employees[i][2] = "Add new employee";
-			
-			employeeTable = new JTable(employees, employeeColumns);
-			@SuppressWarnings("unused")
-			ButtonColumn editColumn = new ButtonColumn(employeeTable, edit, 2);
-			@SuppressWarnings("unused")
-			ButtonColumn shiftColumn = new ButtonColumn(employeeTable, shifts, 1);
-			
-			functions.setComponentAt(1, new JScrollPane(employeeTable));
-			
+		employeeTable.removeAll();
+
+		employees = new Object[ftm.getEmployees().size() + 1][3];
+		Iterator<Employee> emIt = ftm.getEmployees().iterator();
+
+		int i = 0;
+		while (emIt.hasNext()) {
+
+			Employee e = emIt.next();
+			employees[i][0] = e.getName();
+			employees[i][1] = "Check/Edit Shifts";
+			employees[i][2] = "Edit/Remove " + "\"" + e.getName() + "\"";
+			i++;
 		}
+		employees[i][2] = "Add new employee";
+
+		employeeTable = new JTable(employees, employeeColumns);
+		@SuppressWarnings("unused")
+		ButtonColumn editColumn = new ButtonColumn(employeeTable, edit, 2);
+		@SuppressWarnings("unused")
+		ButtonColumn shiftColumn = new ButtonColumn(employeeTable, shifts, 1);
+
+		functions.setComponentAt(1, new JScrollPane(employeeTable));
+
 	}
 	
 	Action edit = new AbstractAction(){
 		private static final long serialVersionUID = 2807908237298004936L;
 		
-		@SuppressWarnings("unused")
 		ViewEditGUI veg;
 		
 		public void actionPerformed(ActionEvent evt) {
@@ -258,6 +228,25 @@ public class FoodTruckManagerPage extends JFrame{
 			
 			else if(table.equals(foodTable)){
 				veg = new ViewEditGUI("Food", modelRow, isNew);
+				veg.addWindowListener(new WindowListener(){
+					@Override
+					public void windowClosed(WindowEvent e) {
+						refreshFood();
+					}
+					@Override
+					public void windowClosing(WindowEvent e) {}
+					@Override
+					public void windowDeactivated(WindowEvent e) {}
+					@Override
+					public void windowDeiconified(WindowEvent e) {}
+					@Override
+					public void windowIconified(WindowEvent e) {}
+					@Override
+					public void windowOpened(WindowEvent e) {}
+					@Override
+					public void windowActivated(WindowEvent arg0) {}
+				});
+				
 				refreshFood();
 			}
 			
