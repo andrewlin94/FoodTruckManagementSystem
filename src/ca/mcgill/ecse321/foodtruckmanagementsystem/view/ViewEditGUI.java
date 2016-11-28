@@ -3,7 +3,6 @@ package ca.mcgill.ecse321.foodtruckmanagementsystem.view;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -20,6 +19,7 @@ import ca.mcgill.ecse321.foodtruckmanagementsystem.model.Equipment;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.model.Food;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.model.FoodTruckManager;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.model.Ingredient;
+import ca.mcgill.ecse321.foodtruckmanagementsystem.persistence.PersistenceXStream;
 
 public class ViewEditGUI extends JFrame{
 
@@ -39,13 +39,11 @@ public class ViewEditGUI extends JFrame{
 	private JLabel priceLabel;
 	private JTextField price;
 	
-	FoodTruckManager ftm;
+	FoodTruckManager ftm = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
 	FoodTruckManagementSystemController ftmsc; 
 	private String itemType;
 	private int index;
 	private boolean isNew;
-	private HashMap<Integer, Employee> employeeMap;
-
 	
 	
 	public ViewEditGUI(String item, int index, boolean isNew){
@@ -96,12 +94,13 @@ public class ViewEditGUI extends JFrame{
 			}
 			else{	//Equipment
 				equipmentWindow(new Equipment("", 0));
-			}		
+			}
+			
+			
 		}
 		
 		else{	
 			
-			ftm = FoodTruckManager.getInstance();
 			if(itemType.equals("Food")){
 				foodWindow(ftm.getFood(index));
 			}
@@ -119,7 +118,7 @@ public class ViewEditGUI extends JFrame{
 	
 	private void foodWindow(Food food){
 		nameLabel = new JLabel("Food Name (No special characters):");
-		quantityLabel = new JLabel("Orders (1, 2, 3, ...):");
+		quantityLabel = new JLabel("Add number of orders (1, 2, 3, ...):");
 		priceLabel = new JLabel("Price ($0.00):");
 		
 		name = new JTextField();
@@ -142,7 +141,7 @@ public class ViewEditGUI extends JFrame{
 				else{
 					try {
 						ftmsc.editFood(ftm.getFood(index), name.getText(), Double.parseDouble(price.getText()));
-						//ftmsc.editOrder(ftm.getFood(index), Integer.parseInt(quantity.getText()));
+						ftmsc.editOrder(ftm.getFood(index), Integer.parseInt(quantity.getText()));
 					} catch (InvalidInputException e) {
 						error = e.getMessage();
 					}
@@ -208,235 +207,21 @@ public class ViewEditGUI extends JFrame{
 	}
 	
 	private void employeeWindow(Employee employee){
-		nameLabel = new JLabel("Employee Name (No special characters):");		
-		name = new JTextField();
-		name.setText(employee.getName());
 		
-		saveAndClose.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent evt){
-				error = null;
-				if(isNew){
-					try {
-						ftmsc.createEmployee(name.getText());
-					} catch (InvalidInputException e) {
-						error = e.getMessage();
-					}
-				}
-				else{
-					try {
-						ftmsc.editEmployeeName(ftm.getEmployee(index), name.getText());
-						//ftmsc.editOrder(ftm.getFood(index), Integer.parseInt(quantity.getText()));
-					} catch (InvalidInputException e) {
-						error = e.getMessage();
-					}
-				}
-				if(error == null || error.length() == 0){
-					dispose();
-				}
-				errorMessage.setText(error);
-				pack();
-			}
-		});
-		
-		remove.setText("Delete this employee's record");
-		remove.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent evt){
-				ftmsc.removeEmployee(ftm.getEmployee(index));
-				dispose();
-			}
-		});
-		
-		GroupLayout layout = new GroupLayout(getContentPane());
-		getContentPane().setLayout(layout);
-		layout.setAutoCreateGaps(true);
-		layout.setAutoCreateContainerGaps(true);
-		layout.setHorizontalGroup(
-				layout.createParallelGroup()
-				.addComponent(errorMessage)
-				.addGroup(layout.createSequentialGroup()
-						.addComponent(nameLabel)
-						.addComponent(name))
-				.addGroup(layout.createSequentialGroup()
-						.addComponent(saveAndClose)
-						.addComponent(remove)
-						.addComponent(cancel))
-				);
-		
-		layout.linkSize(SwingConstants.HORIZONTAL, new java.awt.Component[] {nameLabel, name, saveAndClose});
-		
-		layout.setVerticalGroup(
-				layout.createSequentialGroup()
-				.addComponent(errorMessage)
-				.addGroup(layout.createParallelGroup()
-						.addComponent(nameLabel)
-						.addComponent(name))
-				.addGroup(layout.createParallelGroup()
-						.addComponent(saveAndClose)
-						.addComponent(remove)
-						.addComponent(cancel))
-				);
-		pack();
 	}
 	
 	private void ingredientWindow(Ingredient ingredient){
-		nameLabel = new JLabel("Ingredient Name (No special characters):");
-		quantityLabel = new JLabel("Quantity:");
 		
-		name = new JTextField();
-		name.setText(ingredient.getName());
-		quantity = new JTextField();
-		quantity.setText(""+ingredient.getQuantity());
-		
-		saveAndClose.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent evt){
-				error = null;
-				if(isNew){
-					try {
-						ftmsc.createIngredient(name.getText(), Integer.parseInt(quantity.getText()));
-					} catch (InvalidInputException e) {
-						error = e.getMessage();
-					}
-				}
-				else{
-					try {
-						ftmsc.editIngredient(ftm.getIngredient(index), name.getText(), Integer.parseInt(quantity.getText()));
-						//ftmsc.editOrder(ftm.getFood(index), Integer.parseInt(quantity.getText()));
-					} catch (InvalidInputException e) {
-						error = e.getMessage();
-					}
-				}
-				if(error == null || error.length() == 0){
-					dispose();
-				}
-				errorMessage.setText(error);
-				pack();
-			}
-		});
-		
-		remove.setText("Delete this ingredient");
-		remove.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent evt){
-				ftmsc.removeIngredient(ftm.getIngredient(index));
-				dispose();
-			}
-		});
-		
-		GroupLayout layout = new GroupLayout(getContentPane());
-		getContentPane().setLayout(layout);
-		layout.setAutoCreateGaps(true);
-		layout.setAutoCreateContainerGaps(true);
-		layout.setHorizontalGroup(
-				layout.createParallelGroup()
-				.addComponent(errorMessage)
-				.addGroup(layout.createSequentialGroup()
-						.addComponent(nameLabel)
-						.addComponent(name))
-				.addGroup(layout.createSequentialGroup()
-						.addComponent(quantityLabel)
-						.addComponent(quantity))
-				.addGroup(layout.createSequentialGroup()
-						.addComponent(saveAndClose)
-						.addComponent(remove)
-						.addComponent(cancel))
-				);
-		
-		layout.linkSize(SwingConstants.HORIZONTAL, new java.awt.Component[] {nameLabel, name, saveAndClose});
-		
-		layout.setVerticalGroup(
-				layout.createSequentialGroup()
-				.addComponent(errorMessage)
-				.addGroup(layout.createParallelGroup()
-						.addComponent(nameLabel)
-						.addComponent(name))
-				.addGroup(layout.createParallelGroup()
-						.addComponent(quantityLabel)
-						.addComponent(quantity))
-				.addGroup(layout.createParallelGroup()
-						.addComponent(saveAndClose)
-						.addComponent(remove)
-						.addComponent(cancel))
-				);
-		pack();
 	}
 	
 	private void equipmentWindow(Equipment equipment){
-		nameLabel = new JLabel("Ingredient Name (No special characters):");
-		quantityLabel = new JLabel("Quantity:");
 		
-		name = new JTextField();
-		name.setText(equipment.getName());
-		quantity = new JTextField();
-		quantity.setText(""+equipment.getQuantity());
-		
-		saveAndClose.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent evt){
-				error = null;
-				if(isNew){
-					try {
-						ftmsc.createEquipment(name.getText(), Integer.parseInt(quantity.getText()));
-					} catch (InvalidInputException e) {
-						error = e.getMessage();
-					}
-				}
-				else{
-					try {
-						ftmsc.editEquipment(ftm.getEquipment(index), name.getText(), Integer.parseInt(quantity.getText()));
-						//ftmsc.editOrder(ftm.getFood(index), Integer.parseInt(quantity.getText()));
-					} catch (InvalidInputException e) {
-						error = e.getMessage();
-					}
-				}
-				if(error == null || error.length() == 0){
-					dispose();
-				}
-				errorMessage.setText(error);
-				pack();
-			}
-		});
-		
-		remove.setText("Delete this equipment");
-		remove.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent evt){
-				ftmsc.removeIngredient(ftm.getIngredient(index));
-				dispose();
-			}
-		});
-		
-		GroupLayout layout = new GroupLayout(getContentPane());
-		getContentPane().setLayout(layout);
-		layout.setAutoCreateGaps(true);
-		layout.setAutoCreateContainerGaps(true);
-		layout.setHorizontalGroup(
-				layout.createParallelGroup()
-				.addComponent(errorMessage)
-				.addGroup(layout.createSequentialGroup()
-						.addComponent(nameLabel)
-						.addComponent(name))
-				.addGroup(layout.createSequentialGroup()
-						.addComponent(quantityLabel)
-						.addComponent(quantity))
-				.addGroup(layout.createSequentialGroup()
-						.addComponent(saveAndClose)
-						.addComponent(remove)
-						.addComponent(cancel))
-				);
-		
-		layout.linkSize(SwingConstants.HORIZONTAL, new java.awt.Component[] {nameLabel, name, saveAndClose});
-		
-		layout.setVerticalGroup(
-				layout.createSequentialGroup()
-				.addComponent(errorMessage)
-				.addGroup(layout.createParallelGroup()
-						.addComponent(nameLabel)
-						.addComponent(name))
-				.addGroup(layout.createParallelGroup()
-						.addComponent(quantityLabel)
-						.addComponent(quantity))
-				.addGroup(layout.createParallelGroup()
-						.addComponent(saveAndClose)
-						.addComponent(remove)
-						.addComponent(cancel))
-				);
-		pack();
 	}
 }
+
+
+
+
+
+
+

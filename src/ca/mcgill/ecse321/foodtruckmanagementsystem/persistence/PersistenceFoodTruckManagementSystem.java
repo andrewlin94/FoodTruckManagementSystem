@@ -18,7 +18,7 @@ public class PersistenceFoodTruckManagementSystem{
 
 	public static void loadFoodTruckManagerModel()
 	{
-		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		FoodTruckManager ftm = FoodTruckManager.getInstance();		
 		PersistenceFoodTruckManagementSystem.initializeXStream();
 		FoodTruckManager ftm2 = (FoodTruckManager)PersistenceXStream.loadFromXMLwithXStream();
 		if(ftm2 != null) {

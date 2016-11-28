@@ -48,7 +48,8 @@ public class ViewShiftGUI extends JFrame{
 	public ViewShiftGUI(int index) {
 		
 		this.index = index;
-		setTitle(ftm.getEmployee(index).getName() + "Shifts");
+		ftm = FoodTruckManager.getInstance();
+		setTitle(ftm.getEmployee(index).getName()+"'s " + "Shifts");
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		initComponents();
 		setVisible(true);
@@ -65,7 +66,6 @@ public class ViewShiftGUI extends JFrame{
 		
 		shiftsTable = new JTable();
 		ftmsc = new FoodTruckManagementSystemController();
-		ftm = FoodTruckManager.getInstance();
 		shiftsWindow(ftm.getEmployee(index));
 		pack();
 	}

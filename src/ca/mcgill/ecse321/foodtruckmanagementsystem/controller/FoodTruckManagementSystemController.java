@@ -36,7 +36,7 @@ public class FoodTruckManagementSystemController {
 		if (error.length() > 0) {
 			throw new InvalidInputException(error);
 		}
-		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		FoodTruckManager ftm = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
 		Employee aEmployee = new Employee(name);
 		ftm.addEmployee(aEmployee);
 		PersistenceXStream.saveToXMLwithXStream(ftm);
@@ -73,7 +73,7 @@ public class FoodTruckManagementSystemController {
 		if (error.length() > 0) {
 			throw new InvalidInputException(error);
 		}
-		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		FoodTruckManager ftm = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
 		Ingredient i = new Ingredient(name, quantity);
 		ftm.addIngredient(i);
 		PersistenceXStream.saveToXMLwithXStream(ftm);
@@ -158,7 +158,7 @@ public class FoodTruckManagementSystemController {
 		if (error.length() > 0) {
 			throw new InvalidInputException(error);
 		}
-		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		FoodTruckManager ftm = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
 		Equipment e = new Equipment(name, quantity);
 		ftm.addEquipment(e);
 		PersistenceXStream.saveToXMLwithXStream(ftm);
@@ -201,7 +201,7 @@ public class FoodTruckManagementSystemController {
 		if (error.length() > 0) {
 			throw new InvalidInputException(error);
 		}
-		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		FoodTruckManager ftm = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
 		Food aFood = new Food(name, price, popularity);
 		ftm.addFood(aFood);
 		PersistenceXStream.saveToXMLwithXStream(ftm);

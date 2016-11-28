@@ -19,6 +19,7 @@ import ca.mcgill.ecse321.foodtruckmanagementsystem.model.Equipment;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.model.Food;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.model.FoodTruckManager;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.model.Ingredient;
+import ca.mcgill.ecse321.foodtruckmanagementsystem.persistence.PersistenceXStream;
 
 public class FoodTruckManagerPage extends JFrame{
 
@@ -85,7 +86,7 @@ public class FoodTruckManagerPage extends JFrame{
 	
 	
 	private void refreshFood(){
-		FoodTruckManager ftm = FoodTruckManager.getInstance();		
+		FoodTruckManager ftm = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();		
 		
 		foodTable.removeAll();
 		foods = new Object[ftm.getFoods().size() + 1][4];
@@ -119,7 +120,7 @@ public class FoodTruckManagerPage extends JFrame{
 	
 	
 	private void refreshEquipment(){
-		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		FoodTruckManager ftm = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
 		
 		equipmentTable.removeAll();
 		equipment = new Object[ftm.getEquipment().size() + 1][3];
@@ -141,15 +142,12 @@ public class FoodTruckManagerPage extends JFrame{
 		ButtonColumn editColumn = new ButtonColumn(equipmentTable, edit, 2);
 
 		functions.setComponentAt(3, new JScrollPane(equipmentTable));
-		SwingUtilities.updateComponentTreeUI(this);
-		invalidate();
-		validate();
-		repaint();
+
 	}
 	
 	
 	private void refreshIngredient(){
-		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		FoodTruckManager ftm = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
 		
 		ingredientTable.removeAll();
 		ingredients = new Object[ftm.getIngredients().size() + 1][3];
@@ -171,15 +169,12 @@ public class FoodTruckManagerPage extends JFrame{
 		ButtonColumn editColumn = new ButtonColumn(ingredientTable, edit, 2);
 
 		functions.setComponentAt(2, new JScrollPane(ingredientTable));
-		SwingUtilities.updateComponentTreeUI(this);
-		invalidate();
-		validate();
-		repaint();
+
 	}
 	
 	
 	private void refreshEmployee(){
-		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		FoodTruckManager ftm = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
 		
 		employeeTable.removeAll();
 
@@ -204,10 +199,7 @@ public class FoodTruckManagerPage extends JFrame{
 		ButtonColumn shiftColumn = new ButtonColumn(employeeTable, shifts, 1);
 
 		functions.setComponentAt(1, new JScrollPane(employeeTable));
-		SwingUtilities.updateComponentTreeUI(this);
-		invalidate();
-		validate();
-		repaint();
+
 	}
 	
 	Action edit = new AbstractAction(){
@@ -226,7 +218,24 @@ public class FoodTruckManagerPage extends JFrame{
 			
 			if(table.equals(employeeTable)){
 				veg = new ViewEditGUI("Employee", modelRow, isNew);		
-				refreshEmployee();
+				veg.addWindowListener(new WindowListener(){
+					@Override
+					public void windowClosed(WindowEvent e) {
+						refreshEmployee();
+					}
+					@Override
+					public void windowClosing(WindowEvent e) {}
+					@Override
+					public void windowDeactivated(WindowEvent e) {}
+					@Override
+					public void windowDeiconified(WindowEvent e) {}
+					@Override
+					public void windowIconified(WindowEvent e) {}
+					@Override
+					public void windowOpened(WindowEvent e) {}
+					@Override
+					public void windowActivated(WindowEvent arg0) {}
+				});				
 			}
 			
 			else if(table.equals(foodTable)){
@@ -249,55 +258,15 @@ public class FoodTruckManagerPage extends JFrame{
 					@Override
 					public void windowActivated(WindowEvent arg0) {}
 				});
-				
-				refreshFood();
 			}
 			
 			else if(table.equals(ingredientTable)){
 				veg = new ViewEditGUI("Ingredient", modelRow, isNew);	
-				veg.addWindowListener(new WindowListener(){
-					@Override
-					public void windowClosed(WindowEvent e) {
-						refreshIngredient();
-					}
-					@Override
-					public void windowClosing(WindowEvent e) {}
-					@Override
-					public void windowDeactivated(WindowEvent e) {}
-					@Override
-					public void windowDeiconified(WindowEvent e) {}
-					@Override
-					public void windowIconified(WindowEvent e) {}
-					@Override
-					public void windowOpened(WindowEvent e) {}
-					@Override
-					public void windowActivated(WindowEvent arg0) {}
-				});
 				refreshIngredient();
 			}
 			
 			else if(table.equals(equipmentTable)){
-				veg = new ViewEditGUI("Equipment", modelRow, isNew);
-				veg.addWindowListener(new WindowListener(){
-					@Override
-					public void windowClosed(WindowEvent e) {
-						refreshEquipment();
-					}
-					@Override
-					public void windowClosing(WindowEvent e) {}
-					@Override
-					public void windowDeactivated(WindowEvent e) {}
-					@Override
-					public void windowDeiconified(WindowEvent e) {}
-					@Override
-					public void windowIconified(WindowEvent e) {}
-					@Override
-					public void windowOpened(WindowEvent e) {}
-					@Override
-					public void windowActivated(WindowEvent arg0) {
-						refreshEquipment();
-					}
-				});
+				veg = new ViewEditGUI("Equipment", modelRow, isNew);				
 				refreshEquipment();
 			}
 			
@@ -325,3 +294,12 @@ public class FoodTruckManagerPage extends JFrame{
 	};
 	
 }
+
+
+
+
+
+
+
+
+

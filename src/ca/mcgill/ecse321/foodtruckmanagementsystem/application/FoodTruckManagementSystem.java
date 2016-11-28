@@ -1,7 +1,6 @@
 package ca.mcgill.ecse321.foodtruckmanagementsystem.application;
 
 import ca.mcgill.ecse321.foodtruckmanagementsystem.persistence.PersistenceFoodTruckManagementSystem;
-import ca.mcgill.ecse321.foodtruckmanagementsystem.persistence.PersistenceXStream;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.view.FoodTruckManagerPage;
 
 public class FoodTruckManagementSystem {
