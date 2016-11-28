@@ -246,11 +246,49 @@ public class FoodTruckManagerPage extends JFrame{
 			
 			else if(table.equals(ingredientTable)){
 				veg = new ViewEditGUI("Ingredient", modelRow, isNew);	
+				veg.addWindowListener(new WindowListener(){
+					@Override
+					public void windowClosed(WindowEvent e) {
+						refreshIngredient();
+					}
+					@Override
+					public void windowClosing(WindowEvent e) {}
+					@Override
+					public void windowDeactivated(WindowEvent e) {}
+					@Override
+					public void windowDeiconified(WindowEvent e) {}
+					@Override
+					public void windowIconified(WindowEvent e) {}
+					@Override
+					public void windowOpened(WindowEvent e) {}
+					@Override
+					public void windowActivated(WindowEvent arg0) {}
+				});
 				refreshIngredient();
 			}
 			
 			else if(table.equals(equipmentTable)){
-				veg = new ViewEditGUI("Equipment", modelRow, isNew);				
+				veg = new ViewEditGUI("Equipment", modelRow, isNew);
+				veg.addWindowListener(new WindowListener(){
+					@Override
+					public void windowClosed(WindowEvent e) {
+						refreshEquipment();
+					}
+					@Override
+					public void windowClosing(WindowEvent e) {}
+					@Override
+					public void windowDeactivated(WindowEvent e) {}
+					@Override
+					public void windowDeiconified(WindowEvent e) {}
+					@Override
+					public void windowIconified(WindowEvent e) {}
+					@Override
+					public void windowOpened(WindowEvent e) {}
+					@Override
+					public void windowActivated(WindowEvent arg0) {
+						refreshEquipment();
+					}
+				});
 				refreshEquipment();
 			}
 			
@@ -278,12 +316,3 @@ public class FoodTruckManagerPage extends JFrame{
 	};
 	
 }
-
-
-
-
-
-
-
-
-

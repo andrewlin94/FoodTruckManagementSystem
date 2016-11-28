@@ -208,21 +208,235 @@ public class ViewEditGUI extends JFrame{
 	}
 	
 	private void employeeWindow(Employee employee){
+		nameLabel = new JLabel("Employee Name (No special characters):");		
+		name = new JTextField();
+		name.setText(employee.getName());
 		
+		saveAndClose.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				error = null;
+				if(isNew){
+					try {
+						ftmsc.createEmployee(name.getText());
+					} catch (InvalidInputException e) {
+						error = e.getMessage();
+					}
+				}
+				else{
+					try {
+						ftmsc.editEmployeeName(ftm.getEmployee(index), name.getText());
+						//ftmsc.editOrder(ftm.getFood(index), Integer.parseInt(quantity.getText()));
+					} catch (InvalidInputException e) {
+						error = e.getMessage();
+					}
+				}
+				if(error == null || error.length() == 0){
+					dispose();
+				}
+				errorMessage.setText(error);
+				pack();
+			}
+		});
+		
+		remove.setText("Delete this employee's record");
+		remove.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				ftmsc.removeEmployee(ftm.getEmployee(index));
+				dispose();
+			}
+		});
+		
+		GroupLayout layout = new GroupLayout(getContentPane());
+		getContentPane().setLayout(layout);
+		layout.setAutoCreateGaps(true);
+		layout.setAutoCreateContainerGaps(true);
+		layout.setHorizontalGroup(
+				layout.createParallelGroup()
+				.addComponent(errorMessage)
+				.addGroup(layout.createSequentialGroup()
+						.addComponent(nameLabel)
+						.addComponent(name))
+				.addGroup(layout.createSequentialGroup()
+						.addComponent(saveAndClose)
+						.addComponent(remove)
+						.addComponent(cancel))
+				);
+		
+		layout.linkSize(SwingConstants.HORIZONTAL, new java.awt.Component[] {nameLabel, name, saveAndClose});
+		
+		layout.setVerticalGroup(
+				layout.createSequentialGroup()
+				.addComponent(errorMessage)
+				.addGroup(layout.createParallelGroup()
+						.addComponent(nameLabel)
+						.addComponent(name))
+				.addGroup(layout.createParallelGroup()
+						.addComponent(saveAndClose)
+						.addComponent(remove)
+						.addComponent(cancel))
+				);
+		pack();
 	}
 	
 	private void ingredientWindow(Ingredient ingredient){
+		nameLabel = new JLabel("Ingredient Name (No special characters):");
+		quantityLabel = new JLabel("Quantity:");
 		
+		name = new JTextField();
+		name.setText(ingredient.getName());
+		quantity = new JTextField();
+		quantity.setText(""+ingredient.getQuantity());
+		
+		saveAndClose.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				error = null;
+				if(isNew){
+					try {
+						ftmsc.createIngredient(name.getText(), Integer.parseInt(quantity.getText()));
+					} catch (InvalidInputException e) {
+						error = e.getMessage();
+					}
+				}
+				else{
+					try {
+						ftmsc.editIngredient(ftm.getIngredient(index), name.getText(), Integer.parseInt(quantity.getText()));
+						//ftmsc.editOrder(ftm.getFood(index), Integer.parseInt(quantity.getText()));
+					} catch (InvalidInputException e) {
+						error = e.getMessage();
+					}
+				}
+				if(error == null || error.length() == 0){
+					dispose();
+				}
+				errorMessage.setText(error);
+				pack();
+			}
+		});
+		
+		remove.setText("Delete this ingredient");
+		remove.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				ftmsc.removeIngredient(ftm.getIngredient(index));
+				dispose();
+			}
+		});
+		
+		GroupLayout layout = new GroupLayout(getContentPane());
+		getContentPane().setLayout(layout);
+		layout.setAutoCreateGaps(true);
+		layout.setAutoCreateContainerGaps(true);
+		layout.setHorizontalGroup(
+				layout.createParallelGroup()
+				.addComponent(errorMessage)
+				.addGroup(layout.createSequentialGroup()
+						.addComponent(nameLabel)
+						.addComponent(name))
+				.addGroup(layout.createSequentialGroup()
+						.addComponent(quantityLabel)
+						.addComponent(quantity))
+				.addGroup(layout.createSequentialGroup()
+						.addComponent(saveAndClose)
+						.addComponent(remove)
+						.addComponent(cancel))
+				);
+		
+		layout.linkSize(SwingConstants.HORIZONTAL, new java.awt.Component[] {nameLabel, name, saveAndClose});
+		
+		layout.setVerticalGroup(
+				layout.createSequentialGroup()
+				.addComponent(errorMessage)
+				.addGroup(layout.createParallelGroup()
+						.addComponent(nameLabel)
+						.addComponent(name))
+				.addGroup(layout.createParallelGroup()
+						.addComponent(quantityLabel)
+						.addComponent(quantity))
+				.addGroup(layout.createParallelGroup()
+						.addComponent(saveAndClose)
+						.addComponent(remove)
+						.addComponent(cancel))
+				);
+		pack();
 	}
 	
 	private void equipmentWindow(Equipment equipment){
+		nameLabel = new JLabel("Ingredient Name (No special characters):");
+		quantityLabel = new JLabel("Quantity:");
 		
+		name = new JTextField();
+		name.setText(equipment.getName());
+		quantity = new JTextField();
+		quantity.setText(""+equipment.getQuantity());
+		
+		saveAndClose.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				error = null;
+				if(isNew){
+					try {
+						ftmsc.createEquipment(name.getText(), Integer.parseInt(quantity.getText()));
+					} catch (InvalidInputException e) {
+						error = e.getMessage();
+					}
+				}
+				else{
+					try {
+						ftmsc.editEquipment(ftm.getEquipment(index), name.getText(), Integer.parseInt(quantity.getText()));
+						//ftmsc.editOrder(ftm.getFood(index), Integer.parseInt(quantity.getText()));
+					} catch (InvalidInputException e) {
+						error = e.getMessage();
+					}
+				}
+				if(error == null || error.length() == 0){
+					dispose();
+				}
+				errorMessage.setText(error);
+				pack();
+			}
+		});
+		
+		remove.setText("Delete this equipment");
+		remove.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				ftmsc.removeIngredient(ftm.getIngredient(index));
+				dispose();
+			}
+		});
+		
+		GroupLayout layout = new GroupLayout(getContentPane());
+		getContentPane().setLayout(layout);
+		layout.setAutoCreateGaps(true);
+		layout.setAutoCreateContainerGaps(true);
+		layout.setHorizontalGroup(
+				layout.createParallelGroup()
+				.addComponent(errorMessage)
+				.addGroup(layout.createSequentialGroup()
+						.addComponent(nameLabel)
+						.addComponent(name))
+				.addGroup(layout.createSequentialGroup()
+						.addComponent(quantityLabel)
+						.addComponent(quantity))
+				.addGroup(layout.createSequentialGroup()
+						.addComponent(saveAndClose)
+						.addComponent(remove)
+						.addComponent(cancel))
+				);
+		
+		layout.linkSize(SwingConstants.HORIZONTAL, new java.awt.Component[] {nameLabel, name, saveAndClose});
+		
+		layout.setVerticalGroup(
+				layout.createSequentialGroup()
+				.addComponent(errorMessage)
+				.addGroup(layout.createParallelGroup()
+						.addComponent(nameLabel)
+						.addComponent(name))
+				.addGroup(layout.createParallelGroup()
+						.addComponent(quantityLabel)
+						.addComponent(quantity))
+				.addGroup(layout.createParallelGroup()
+						.addComponent(saveAndClose)
+						.addComponent(remove)
+						.addComponent(cancel))
+				);
+		pack();
 	}
 }
-
-
-
-
-
-
-

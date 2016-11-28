@@ -48,7 +48,7 @@ public class ViewShiftGUI extends JFrame{
 	public ViewShiftGUI(int index) {
 		
 		this.index = index;
-		setTitle("Shifts");
+		setTitle(ftm.getEmployee(index).getName() + "Shifts");
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		initComponents();
 		setVisible(true);
