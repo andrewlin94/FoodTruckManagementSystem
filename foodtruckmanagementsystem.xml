@@ -2,9 +2,9 @@
   <foods id="2">
     <food id="3">
       <name>Burger</name>
-      <price>5.95</price>
-      <popularity>1</popularity>
-      <id>2</id>
+      <price>10.0</price>
+      <popularity>0</popularity>
+      <id>3</id>
     </food>
   </foods>
   <employees id="4">
@@ -20,19 +20,6 @@
       <name>Forks</name>
       <quantity>10</quantity>
     </equipment>
-    <equipment id="10">
-      <name>Spoon</name>
-      <quantity>420</quantity>
-    </equipment>
   </equipment>
-  <ingredients id="11">
-    <ingredient id="12">
-      <name>Lettuce</name>
-      <quantity>10</quantity>
-    </ingredient>
-    <ingredient id="13">
-      <name>Tomato</name>
-      <quantity>12</quantity>
-    </ingredient>
-  </ingredients>
+  <ingredients id="10"/>
 </manager>

@@ -404,7 +404,7 @@ public class ViewEditGUI extends JFrame{
 		remove.setText("Remove this equipment");
 		remove.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
-				ftmsc.removeIngredient(ftm.getIngredient(index));
+				ftmsc.removeEquipment(ftm.getEquipment(index));
 				dispose();
 			}
 		});
