@@ -1,3 +1,11 @@
+/*
+ * Team 10 Food Truck Management System
+ * Wang, Ying Han	260588337
+ * Mircic, Michael	260587925
+ * Qian, Carl		260617009
+ * Yang, Qing Zhou	260687570
+ * Lin, Andrew 		270586060 
+ */
 /*PLEASE DO NOT EDIT THIS CODE*/
 /*This code was generated using the UMPLE 1.20.1.4071 modeling language!*/
 
