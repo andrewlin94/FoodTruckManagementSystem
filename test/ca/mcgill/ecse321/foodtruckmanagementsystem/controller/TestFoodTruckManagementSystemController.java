@@ -44,7 +44,7 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(0, ftm.getFoods().size());
 		
 		String error = "";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createFood("", 12, 12);
 		} catch (InvalidInputException e) {
@@ -61,7 +61,7 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(0, ftm.getFoods().size());
 				
 		String error = "";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createFood("", 0, 0);
 		} catch (InvalidInputException e) {
@@ -81,7 +81,7 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(0, ftm.getFoods().size());
 		
 		String error = "";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createFood("Burger", 0, 0);
 		}
@@ -105,7 +105,7 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(0, ftm.getFoods().size());
 		
 		String error = "";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createFood("Burger!@#", 12.95, 0);
 		} catch (InvalidInputException e) {
@@ -125,7 +125,7 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(0, ftm.getFoods().size());
 		
 		String error = "";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createFood("Burger", 12.95, -1);
 		} catch (InvalidInputException e) {
@@ -145,7 +145,7 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(0, ftm.getFoods().size());
 		
 		String error = "";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createFood("Burger", 0.0, -1);
 		} catch (InvalidInputException e) {
@@ -165,7 +165,7 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(0, ftm.getFoods().size());
 		
 		String error = "";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createFood("Burger!@#", 12.95, -1);
 		} catch (InvalidInputException e) {
@@ -185,7 +185,7 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(0, ftm.getFoods().size());
 		
 		String error = "";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createFood("        !", -0.1, 2132143);
 		} catch (InvalidInputException e) {
@@ -205,7 +205,7 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(0, ftm.getFoods().size());
 		
 		String error = "";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createFood("        !", -0.1, -12);
 		} catch (InvalidInputException e) {
@@ -225,7 +225,7 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(0, ftm.getFoods().size());
 		
 		String error = "";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createFood("", -0.1, -12);
 		} catch (InvalidInputException e) {
@@ -247,7 +247,7 @@ public class TestFoodTruckManagementSystemController {
 		String error = "";
 		String name = "Burger";
 		
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createFood(name, 12.95, 0);
 		} catch (InvalidInputException e) {
@@ -273,7 +273,7 @@ public class TestFoodTruckManagementSystemController {
 		String error = "";
 		String name = "Burger";
 		
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createFood(name, 12.95, 0);
 		} catch (InvalidInputException e) {
@@ -307,7 +307,7 @@ public class TestFoodTruckManagementSystemController {
 		String name = "Burger";
 		double price = 12.95;
 		Food f = new Food(name, price, 0);
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createFood(name, price, 0);
 		} catch (InvalidInputException e) {
@@ -345,7 +345,7 @@ public class TestFoodTruckManagementSystemController {
 		String name = "Burger";
 		double price = 12.95;
 		Food f = new Food(name, price, 0);
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createFood(name, price, 0);
 		} catch (InvalidInputException e) {
@@ -380,7 +380,7 @@ public class TestFoodTruckManagementSystemController {
 		String name = "Burger";
 		double price = 12.95;
 		Food f = new Food(name, price, 0);
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createFood(name, price, 0);
 		} catch (InvalidInputException e) {
@@ -414,7 +414,7 @@ public class TestFoodTruckManagementSystemController {
 		String name = "Burger";
 		double price = 12.95;
 		Food f = new Food(name, price, 0);
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createFood(name, price, 0);
 		} catch (InvalidInputException e) {
@@ -449,7 +449,7 @@ public class TestFoodTruckManagementSystemController {
 		String name = "Burger";
 		double price = 12.95;
 		Food f = new Food(name, price, 0);
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createFood(name, price, 0);
 		} catch (InvalidInputException e) {
@@ -484,7 +484,7 @@ public class TestFoodTruckManagementSystemController {
 		String name = "Burger";
 		double price = 12.95;
 		Food f = new Food(name, price, 0);
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createFood(name, price, 0);
 		} catch (InvalidInputException e) {
@@ -519,7 +519,7 @@ public class TestFoodTruckManagementSystemController {
 		String name = "Burger";
 		double price = 12.95;
 		Food f = new Food(name, price, 0);
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createFood(name, price, 0);
 		} catch (InvalidInputException e) {
@@ -557,7 +557,7 @@ public class TestFoodTruckManagementSystemController {
 		String name = "Burger";
 		double price = 12.95;
 		Food f = new Food(name, price, 0);
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createFood(name, price, 0);
 		} catch (InvalidInputException e) {
@@ -569,7 +569,7 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(0, ftm2.getFood(0).getPopularity());
 		
 		assertEquals("", error);
-		assertEquals(1, ftm.getFoods().size());
+		assertEquals(1, ftm2.getFoods().size());
 		
 		try {
 			ftmsc.editFood(f, "Burger", 5.95);
@@ -594,7 +594,7 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(0, ftm.getIngredients().size());
 		
 		String error = "";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createIngredient(" ", 1);
 		} catch (InvalidInputException e) {
@@ -613,7 +613,7 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(0, ftm.getIngredients().size());
 		
 		String error = "";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createIngredient("Lettuce!", 1);
 		} catch (InvalidInputException e) {
@@ -632,7 +632,7 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(0, ftm.getIngredients().size());
 		
 		String error = "";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createIngredient("Lettuce", -1);
 		} catch (InvalidInputException e) {
@@ -651,7 +651,7 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(0, ftm.getIngredients().size());
 		
 		String error = "";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createIngredient("Lettuce!", -1);
 		} catch (InvalidInputException e) {
@@ -672,7 +672,7 @@ public class TestFoodTruckManagementSystemController {
 		String error = "";
 		String name = "Lettuce";
 		
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createIngredient(name, 1);
 		} catch (InvalidInputException e) {
@@ -699,7 +699,7 @@ public class TestFoodTruckManagementSystemController {
 		String error = "";
 		String name = "Lettuce";
 		
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createIngredient(name, 1);
 		} catch (InvalidInputException e) {
@@ -732,7 +732,7 @@ public class TestFoodTruckManagementSystemController {
 		String error = "";
 		String name = "Lettuce";
 		
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createIngredient(name, 1);
 		} catch (InvalidInputException e) {
@@ -767,7 +767,7 @@ public class TestFoodTruckManagementSystemController {
 		String error = "";
 		String name = "Lettuce";
 		
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createIngredient(name, 1);
 		} catch (InvalidInputException e) {
@@ -802,7 +802,7 @@ public class TestFoodTruckManagementSystemController {
 		String error = "";
 		String name = "Lettuce";
 		
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createIngredient(name, 1);
 		} catch (InvalidInputException e) {
@@ -837,7 +837,7 @@ public class TestFoodTruckManagementSystemController {
 		String error = "";
 		String name = "Lettuce";
 		
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createIngredient(name, 1);
 		} catch (InvalidInputException e) {
@@ -871,7 +871,7 @@ public class TestFoodTruckManagementSystemController {
 		String error = "";
 		String name = "Lettuce";
 		
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createIngredient(name, 1);
 		} catch (InvalidInputException e) {
@@ -905,7 +905,7 @@ public class TestFoodTruckManagementSystemController {
 		String error = "";
 		String name = "Lettuce";
 		
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createIngredient(name, 1);
 		} catch (InvalidInputException e) {
@@ -943,7 +943,7 @@ public class TestFoodTruckManagementSystemController {
 		String error = "";
 		String name = "Lettuce";
 		
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createIngredient(name, 1);
 		} catch (InvalidInputException e) {
@@ -982,7 +982,7 @@ public class TestFoodTruckManagementSystemController {
 		String error = "";
 		String name = "Lettuce";
 		
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createIngredient(name, 1);
 		} catch (InvalidInputException e) {
@@ -1021,7 +1021,7 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(0, ftm.getEquipment().size());
 		
 		String error = "";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createEquipment("  ", 1);
 		} catch (InvalidInputException e) {
@@ -1040,7 +1040,7 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(0, ftm.getEquipment().size());
 		
 		String error = "";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createEquipment("Fork!", 1);
 		} catch (InvalidInputException e) {
@@ -1059,7 +1059,7 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(0, ftm.getEquipment().size());
 		
 		String error = "";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createEquipment("Fork", -1);
 		} catch (InvalidInputException e) {
@@ -1078,7 +1078,7 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(0, ftm.getEquipment().size());
 		
 		String error = "";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createEquipment("Fork!", -1);
 		} catch (InvalidInputException e) {
@@ -1098,7 +1098,7 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(0, ftm.getEquipment().size());
 		
 		String error = "";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createEquipment("", -1);
 		} catch (InvalidInputException e) {
@@ -1119,7 +1119,7 @@ public class TestFoodTruckManagementSystemController {
 		String error = "";
 		String name = "Fork";
 		
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createEquipment(name, 1);
 		} catch (InvalidInputException e) {
@@ -1146,7 +1146,7 @@ public class TestFoodTruckManagementSystemController {
 		String error = "";
 		String name = "Fork";
 		
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createEquipment(name, 1);
 		} catch (InvalidInputException e) {
@@ -1177,7 +1177,7 @@ public class TestFoodTruckManagementSystemController {
 		
 		String error = "";
 		String name = "Fork";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createEquipment(name, 1);
 		} catch (InvalidInputException e) {
@@ -1207,7 +1207,7 @@ public class TestFoodTruckManagementSystemController {
 		
 		String error = "";
 		String name = "Fork";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createEquipment(name, 1);
 		} catch (InvalidInputException e) {
@@ -1241,7 +1241,7 @@ public class TestFoodTruckManagementSystemController {
 		
 		String error = "";
 		String name = "Fork";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createEquipment(name, 1);
 		} catch (InvalidInputException e) {
@@ -1274,7 +1274,7 @@ public class TestFoodTruckManagementSystemController {
 		
 		String error = "";
 		String name = "Fork";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createEquipment(name, 1);
 		} catch (InvalidInputException e) {
@@ -1307,7 +1307,7 @@ public class TestFoodTruckManagementSystemController {
 		
 		String error = "";
 		String name = "Fork";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createEquipment(name, 1);
 		} catch (InvalidInputException e) {
@@ -1342,7 +1342,7 @@ public class TestFoodTruckManagementSystemController {
 		
 		String error = "";
 		String name = "Fork";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createEquipment(name, 1);
 		} catch (InvalidInputException e) {
@@ -1383,7 +1383,7 @@ public class TestFoodTruckManagementSystemController {
 		String name = "Burger";
 		double price = 12.95;
 		
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createFood(name, price, 0);
 		} catch (InvalidInputException e) {
@@ -1419,7 +1419,7 @@ public class TestFoodTruckManagementSystemController {
 		String name = "Burger";
 		double price = 12.95;
 		
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createFood(name, price, 0);
 		} catch (InvalidInputException e) {
@@ -1456,7 +1456,7 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(0, ftm.getEmployees().size());
 		
 		String error = "";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createEmployee(" ");
 		} catch (InvalidInputException e) {
@@ -1476,7 +1476,7 @@ public class TestFoodTruckManagementSystemController {
 		assertEquals(0, ftm.getEmployees().size());
 		
 		String error = "";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createEmployee("Albert!@#");
 		} catch (InvalidInputException e) {
@@ -1496,7 +1496,7 @@ public class TestFoodTruckManagementSystemController {
 				
 		String error = "";
 		String name = "BobbyJoe";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createEmployee(name);
 		} catch (InvalidInputException e) {
@@ -1520,7 +1520,7 @@ public class TestFoodTruckManagementSystemController {
 				
 		String error = "";
 		String name = "BobbyJoe";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createEmployee(name);
 		} catch (InvalidInputException e) {
@@ -1548,7 +1548,7 @@ public class TestFoodTruckManagementSystemController {
 				
 		String error = "";
 		String name = "BobbyJoe";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createEmployee(name);
 		} catch (InvalidInputException e) {
@@ -1581,7 +1581,7 @@ public class TestFoodTruckManagementSystemController {
 				
 		String error = "";
 		String name = "BobbyJoe";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createEmployee(name);
 		} catch (InvalidInputException e) {
@@ -1612,7 +1612,7 @@ public class TestFoodTruckManagementSystemController {
 				
 		String error = "";
 		String name = "BobbyJoe";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createEmployee(name);
 		} catch (InvalidInputException e) {
@@ -1644,7 +1644,7 @@ public class TestFoodTruckManagementSystemController {
 				
 		String error = "";
 		String name = "Michael";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createEmployee(name);
 		} catch (InvalidInputException e) {
@@ -1688,7 +1688,7 @@ public class TestFoodTruckManagementSystemController {
 				
 		String error = "";
 		String name = "Michael";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createEmployee(name);
 		} catch (InvalidInputException e) {
@@ -1712,6 +1712,8 @@ public class TestFoodTruckManagementSystemController {
 			error = e.getMessage();
 		}
 		assertEquals("End time cannot be empty! ", error);
+		assertEquals(0, emp.numberOfWorkStartTime());
+		assertEquals(0, emp.numberOfWorkEndTime());
 		
 		endTime = new Date();
 		try {
@@ -1720,6 +1722,8 @@ public class TestFoodTruckManagementSystemController {
 			error = e.getMessage();
 		}
 		assertEquals("End time cannot be empty! ", error);
+		assertEquals(0, emp.numberOfWorkStartTime());
+		assertEquals(0, emp.numberOfWorkEndTime());
 	}
 	
 	/**
@@ -1732,7 +1736,7 @@ public class TestFoodTruckManagementSystemController {
 				
 		String error = "";
 		String name = "Michael";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createEmployee(name);
 		} catch (InvalidInputException e) {
@@ -1754,6 +1758,8 @@ public class TestFoodTruckManagementSystemController {
 			error = e.getMessage();
 		}
 		assertEquals("Start time cannot be empty! End time cannot be empty! ", error);
+		assertEquals(0, emp.numberOfWorkStartTime());
+		assertEquals(0, emp.numberOfWorkEndTime());
 		
 		startTime = null;
 		endTime = new Date();
@@ -1763,6 +1769,8 @@ public class TestFoodTruckManagementSystemController {
 			error = e.getMessage();
 		}
 		assertEquals("Start time cannot be empty! End time cannot be empty! ", error);
+		assertEquals(0, emp.numberOfWorkStartTime());
+		assertEquals(0, emp.numberOfWorkEndTime());
 		
 		startTime = new Date();
 		endTime = null;
@@ -1772,6 +1780,8 @@ public class TestFoodTruckManagementSystemController {
 			error = e.getMessage();
 		}
 		assertEquals("Start time cannot be empty! End time cannot be empty! ", error);
+		assertEquals(0, emp.numberOfWorkStartTime());
+		assertEquals(0, emp.numberOfWorkEndTime());
 		
 		startTime = null;
 		endTime = null;
@@ -1781,6 +1791,8 @@ public class TestFoodTruckManagementSystemController {
 			error = e.getMessage();
 		}
 		assertEquals("Start time cannot be empty! End time cannot be empty! ", error);
+		assertEquals(0, emp.numberOfWorkStartTime());
+		assertEquals(0, emp.numberOfWorkEndTime());
 	}
 	
 	/**
@@ -1793,7 +1805,7 @@ public class TestFoodTruckManagementSystemController {
 				
 		String error = "";
 		String name = "Michael";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createEmployee(name);
 		} catch (InvalidInputException e) {
@@ -1830,7 +1842,7 @@ public class TestFoodTruckManagementSystemController {
 				
 		String error = "";
 		String name = "Michael";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createEmployee(name);
 		} catch (InvalidInputException e) {
@@ -1874,7 +1886,7 @@ public class TestFoodTruckManagementSystemController {
 				
 		String error = "";
 		String name = "Michael";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createEmployee(name);
 		} catch (InvalidInputException e) {
@@ -1925,7 +1937,7 @@ public class TestFoodTruckManagementSystemController {
 				
 		String error = "";
 		String name = "Michael";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createEmployee(name);
 		} catch (InvalidInputException e) {
@@ -1977,7 +1989,7 @@ public class TestFoodTruckManagementSystemController {
 				
 		String error = "";
 		String name = "Michael";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createEmployee(name);
 		} catch (InvalidInputException e) {
@@ -2029,7 +2041,7 @@ public class TestFoodTruckManagementSystemController {
 				
 		String error = "";
 		String name = "Michael";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createEmployee(name);
 		} catch (InvalidInputException e) {
@@ -2084,7 +2096,7 @@ public class TestFoodTruckManagementSystemController {
 				
 		String error = "";
 		String name = "Michael";
-		FoodTruckManagementSystemController ftmsc = new FoodTruckManagementSystemController();
+		Controller ftmsc = new Controller();
 		try {
 			ftmsc.createEmployee(name);
 		} catch (InvalidInputException e) {
