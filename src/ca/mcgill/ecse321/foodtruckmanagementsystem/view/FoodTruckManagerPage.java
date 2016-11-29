@@ -27,19 +27,19 @@ public class FoodTruckManagerPage extends JFrame{
 	
 	private JTabbedPane functions;
 	
-	private String[] foodColumns = new String[] {"Dish", "Price", "Popularity", "Edit/Add/Remove"};
+	private String[] foodColumns = new String[] {"Dish", "Price", "Popularity", "Add/Edit/Remove"};
 	private Object[][] foods;
 	private JTable foodTable;
 	
-	private String[] equipmentColumns = new String[] {"Item", "Quantity", "Edit/Add/Remove"};
+	private String[] equipmentColumns = new String[] {"Item", "Quantity", "Add/Edit/Remove"};
 	private Object[][] equipment;
 	private JTable equipmentTable;
 	
-	private String[] ingredientColumns = new String[] {"Ingredient", "Quantity", "Edit/Add/Remove"};
+	private String[] ingredientColumns = new String[] {"Ingredient", "Quantity", "Add/Edit/Remove"};
 	private Object[][] ingredients;
 	private JTable ingredientTable;
 	
-	private String[] employeeColumns = new String[] {"Employee", "Check Shifts", "Edit/Add/Remove"};
+	private String[] employeeColumns = new String[] {"Employee", "Check Shifts", "Add/Edit/Remove"};
 	private Object[][] employees;
 	private JTable employeeTable;
 	
@@ -59,9 +59,7 @@ public class FoodTruckManagerPage extends JFrame{
 		
 		setVisible(true);
 		
-	}
-	
-	
+	}	
 	private void initComponents(){
 		
 		foodTable = new JTable();		
@@ -183,7 +181,6 @@ public class FoodTruckManagerPage extends JFrame{
 
 		int i = 0;
 		while (emIt.hasNext()) {
-
 			Employee e = emIt.next();
 			employees[i][0] = e.getName();
 			employees[i][1] = "Check/Edit Shifts";
@@ -269,7 +266,6 @@ public class FoodTruckManagerPage extends JFrame{
 				veg = new ViewEditGUI("Equipment", modelRow, isNew);				
 				refreshEquipment();
 			}
-			
 			else{
 				System.out.println("Something went very very wrong");
 			}
