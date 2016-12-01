@@ -148,8 +148,8 @@ public class ViewEditGUI extends JFrame{
 				}
 				else{
 					try {
-						ftmsc.editFood(ftm.getFood(index), name.getText(), Double.parseDouble(price.getText()));
 						ftmsc.editOrder(ftm.getFood(index), Integer.parseInt(quantity.getText()));
+						ftmsc.editFood(ftm.getFood(index), name.getText(), Double.parseDouble(price.getText()));
 					} catch (InvalidInputException e) {
 						error = e.getMessage();
 					}
@@ -165,8 +165,10 @@ public class ViewEditGUI extends JFrame{
 		remove.setText("Remove this item");
 		remove.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
-				ftmsc.removeFood(ftm.getFood(index));
-				dispose();
+				if(!isNew){
+					ftmsc.removeFood(ftm.getFood(index));
+					dispose();
+				}
 			}
 		});
 		
@@ -192,7 +194,7 @@ public class ViewEditGUI extends JFrame{
 						.addComponent(cancel))
 				);
 		
-		layout.linkSize(SwingConstants.HORIZONTAL, new java.awt.Component[] {nameLabel, name, saveAndClose});
+		layout.linkSize(SwingConstants.HORIZONTAL, new java.awt.Component[] {saveAndClose, remove, cancel});
 		
 		layout.setVerticalGroup(
 				layout.createSequentialGroup()
@@ -248,8 +250,10 @@ public class ViewEditGUI extends JFrame{
 		remove.setText("Remove this employee's record");
 		remove.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
-				ftmsc.removeEmployee(ftm.getEmployee(index));
-				dispose();
+				if(!isNew){
+					ftmsc.removeEmployee(ftm.getEmployee(index));
+					dispose();
+				}
 			}
 		});
 		
@@ -269,7 +273,7 @@ public class ViewEditGUI extends JFrame{
 						.addComponent(cancel))
 				);
 		
-		layout.linkSize(SwingConstants.HORIZONTAL, new java.awt.Component[] {nameLabel, name, saveAndClose});
+		layout.linkSize(SwingConstants.HORIZONTAL, new java.awt.Component[] {saveAndClose, remove, cancel});
 		
 		layout.setVerticalGroup(
 				layout.createSequentialGroup()
@@ -323,8 +327,10 @@ public class ViewEditGUI extends JFrame{
 		remove.setText("Remove this ingredient");
 		remove.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
-				ftmsc.removeIngredient(ftm.getIngredient(index));
-				dispose();
+				if(!isNew){
+					ftmsc.removeIngredient(ftm.getIngredient(index));
+					dispose();
+				}
 			}
 		});
 		
@@ -347,7 +353,7 @@ public class ViewEditGUI extends JFrame{
 						.addComponent(cancel))
 				);
 		
-		layout.linkSize(SwingConstants.HORIZONTAL, new java.awt.Component[] {nameLabel, name, saveAndClose});
+		layout.linkSize(SwingConstants.HORIZONTAL, new java.awt.Component[] {saveAndClose, remove, cancel});
 		
 		layout.setVerticalGroup(
 				layout.createSequentialGroup()
@@ -404,8 +410,10 @@ public class ViewEditGUI extends JFrame{
 		remove.setText("Remove this equipment");
 		remove.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
-				ftmsc.removeEquipment(ftm.getEquipment(index));
-				dispose();
+				if(!isNew){
+					ftmsc.removeEquipment(ftm.getEquipment(index));
+					dispose();
+				}
 			}
 		});
 		
@@ -428,7 +436,7 @@ public class ViewEditGUI extends JFrame{
 						.addComponent(cancel))
 				);
 		
-		layout.linkSize(SwingConstants.HORIZONTAL, new java.awt.Component[] {nameLabel, name, saveAndClose});
+		layout.linkSize(SwingConstants.HORIZONTAL, new java.awt.Component[] {saveAndClose, remove, cancel});
 		
 		layout.setVerticalGroup(
 				layout.createSequentialGroup()

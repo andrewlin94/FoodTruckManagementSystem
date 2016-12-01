@@ -19,7 +19,6 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
-import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 import ca.mcgill.ecse321.foodtruckmanagementsystem.model.Employee;
@@ -117,10 +116,6 @@ public class FoodTruckManagerPage extends JFrame{
 		ButtonColumn editColumn = new ButtonColumn(foodTable, edit, 3);
 
 		functions.setComponentAt(0, new JScrollPane(foodTable));
-		SwingUtilities.updateComponentTreeUI(this);
-		invalidate();
-		validate();
-		repaint();
 
 	}
 	
@@ -240,8 +235,7 @@ public class FoodTruckManagerPage extends JFrame{
 					public void windowOpened(WindowEvent e) {}
 					@Override
 					public void windowActivated(WindowEvent arg0) {}
-				});			
-				refreshEmployee();
+				});
 			}
 			
 			else if(table.equals(foodTable)){
@@ -264,7 +258,6 @@ public class FoodTruckManagerPage extends JFrame{
 					@Override
 					public void windowActivated(WindowEvent arg0) {}
 				});
-				refreshFood();
 			}
 			
 			else if(table.equals(ingredientTable)){
@@ -287,7 +280,6 @@ public class FoodTruckManagerPage extends JFrame{
 					@Override
 					public void windowActivated(WindowEvent arg0) {}
 				});
-				refreshIngredient();
 			}
 			
 			else if(table.equals(equipmentTable)){
@@ -310,11 +302,8 @@ public class FoodTruckManagerPage extends JFrame{
 					@Override
 					public void windowActivated(WindowEvent arg0) {}
 				});
-				refreshEquipment();
 			}
-			else{
-				System.out.println("Something went very very wrong");
-			}
+			else{}
 		}
 	};
 
@@ -328,9 +317,25 @@ public class FoodTruckManagerPage extends JFrame{
 			if(table.getRowCount() == (modelRow+1)){}
 			
 			else{
-				@SuppressWarnings("unused")
 				ViewShiftGUI vsg = new ViewShiftGUI(modelRow);				
-				refreshEmployee();
+				vsg.addWindowListener(new WindowListener(){
+					@Override
+					public void windowClosed(WindowEvent e) {
+						refreshEmployee();
+					}
+					@Override
+					public void windowClosing(WindowEvent e) {}
+					@Override
+					public void windowDeactivated(WindowEvent e) {}
+					@Override
+					public void windowDeiconified(WindowEvent e) {}
+					@Override
+					public void windowIconified(WindowEvent e) {}
+					@Override
+					public void windowOpened(WindowEvent e) {}
+					@Override
+					public void windowActivated(WindowEvent arg0) {}
+				});
 			}
 		}
 	};	

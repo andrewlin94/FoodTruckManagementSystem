@@ -1,11 +1,3 @@
-/*
- * Team 10 Food Truck Management System
- * Wang, Ying Han	260588337
- * Mircic, Michael	260587925
- * Qian, Carl		260617009
- * Yang, Qing Zhou	260687570
- * Lin, Andrew 		270586060 
- */
 package ca.mcgill.ecse321.foodtruckmanagementsystem.view;
 
 import java.awt.*;
@@ -13,6 +5,16 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.table.*;
+
+/**
+ * DISCLAIMER
+ * We are not the original authors of this code, it has been copy pasted from an online blog made
+ * to help people programming in java.
+ * 
+ * Camick, Rob. "Table Button Column" Web blog. *Java Tips Weblog*. WordPress. Published 12 July 2009. 
+ * https://tips4java.wordpress.com/2009/07/12/table-button-column/. Accessed 19 November 2016.
+ * 
+ */
 
 /**
  *  The ButtonColumn class provides a renderer and an editor that looks like a
