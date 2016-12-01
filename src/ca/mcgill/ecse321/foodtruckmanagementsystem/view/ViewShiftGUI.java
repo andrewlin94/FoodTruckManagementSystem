@@ -102,12 +102,28 @@ public class ViewShiftGUI extends JFrame{
 
 			startHour = c.get(Calendar.HOUR);
 			startMinute = c.get(Calendar.MINUTE);
-			workDates.add(year + "/" + month + "/" + date);
-			workStartTimes.add(startHour + ":" + startMinute);
+			if (month == Calendar.DECEMBER) {
+				workDates.add(year + "/" + 12 + "/" + date);
+			}
+			else {
+				workDates.add(year + "/" + month + "/" + date);
+			}
+			if (startMinute <= 9) {
+				workStartTimes.add(startHour + ":0" + startMinute);
+			}
+			else {
+				workStartTimes.add(startHour + ":" + startMinute);
+			}
 			c.setTime(e.getWorkEndTime(i));
 			endHour = c.get(Calendar.HOUR);
 			endMinute = c.get(Calendar.MINUTE);
-			workEndTimes.add(endHour + ":" + endMinute);
+			if (endMinute <= 9) {
+				workEndTimes.add(endHour + ":0" + endMinute);
+			}
+			else {
+				workEndTimes.add(endHour + ":" + endMinute);
+			}
+			
 		}
 
 		shifts = new Object[e.numberOfWorkStartTime()+1][4];
@@ -170,7 +186,8 @@ public class ViewShiftGUI extends JFrame{
 			public void actionPerformed(ActionEvent evt){
 				error = null;
 				int year = workDatePicker.getModel().getYear();
-				int month = workDatePicker.getModel().getMonth() + 1;
+				System.out.println(year);
+				int month;
 				int date = workDatePicker.getModel().getDay();
 				Calendar c = Calendar.getInstance();
 				c.setTime(((Date)startTimeSpinner.getValue()));
@@ -179,10 +196,93 @@ public class ViewShiftGUI extends JFrame{
 				c.setTime(((Date)endTimeSpinner.getValue()));
 				int endHour = c.get(Calendar.HOUR_OF_DAY);
 				int endMin = c.get(Calendar.MINUTE);
-				c.set(year, month, date, startHour, startMin);
+				int temp = workDatePicker.getModel().getMonth()+1;
 				Date start = new Date(c.getTimeInMillis());
-				c.set(year, month, date, endHour, endMin);
 				Date end = new Date(c.getTimeInMillis());
+				if (temp == 1) {
+					month = Calendar.JANUARY + 1;
+					c.set(year, month, date, startHour, startMin);
+					start = new Date(c.getTimeInMillis());
+					c.set(year, month, date, endHour, endMin);
+					end = new Date(c.getTimeInMillis());
+				}
+				else if (temp == 2) {
+					month = Calendar.FEBRUARY + 1;
+					c.set(year, month, date, startHour, startMin);
+					start = new Date(c.getTimeInMillis());
+					c.set(year, month, date, endHour, endMin);
+					end = new Date(c.getTimeInMillis());
+				}
+				else if (temp == 3) {
+					month = Calendar.MARCH + 1;
+					c.set(year, month, date, startHour, startMin);
+					start = new Date(c.getTimeInMillis());
+					c.set(year, month, date, endHour, endMin);
+					end = new Date(c.getTimeInMillis());
+				}
+				else if (temp == 4) {
+					month = Calendar.APRIL + 1;
+					c.set(year, month, date, startHour, startMin);
+					start = new Date(c.getTimeInMillis());
+					c.set(year, month, date, endHour, endMin);
+					end = new Date(c.getTimeInMillis());
+				}
+				else if (temp == 5) {
+					month = Calendar.MAY + 1;
+					c.set(year, month, date, startHour, startMin);
+					start = new Date(c.getTimeInMillis());
+					c.set(year, month, date, endHour, endMin);
+					end = new Date(c.getTimeInMillis());
+				}
+				else if (temp == 6) {
+					month = Calendar.JUNE + 1 ;
+					c.set(year, month, date, startHour, startMin);
+					start = new Date(c.getTimeInMillis());
+					c.set(year, month, date, endHour, endMin);
+					end = new Date(c.getTimeInMillis());
+				}
+				else if (temp == 7) {
+					month = Calendar.JULY + 1;
+					c.set(year, month, date, startHour, startMin);
+					start = new Date(c.getTimeInMillis());
+					c.set(year, month, date, endHour, endMin);
+					end = new Date(c.getTimeInMillis());
+				}
+				else if (temp == 8) {
+					month = Calendar.AUGUST + 1;
+					c.set(year, month, date, startHour, startMin);
+					start = new Date(c.getTimeInMillis());
+					c.set(year, month, date, endHour, endMin);
+					end = new Date(c.getTimeInMillis());
+				}
+				else if (temp == 9) {
+					month = Calendar.SEPTEMBER + 1;
+					c.set(year, month, date, startHour, startMin);
+					start = new Date(c.getTimeInMillis());
+					c.set(year, month, date, endHour, endMin);
+					end = new Date(c.getTimeInMillis());
+				}
+				else if (temp == 10) {
+					month = Calendar.OCTOBER + 1;
+					c.set(year, month, date, startHour, startMin);
+					start = new Date(c.getTimeInMillis());
+					c.set(year, month, date, endHour, endMin);
+					end = new Date(c.getTimeInMillis());
+				}
+				else if (temp == 11) {
+					month = Calendar.NOVEMBER + 1;
+					c.set(year, month, date, startHour, startMin);
+					start = new Date(c.getTimeInMillis());
+					c.set(year, month, date, endHour, endMin);
+					end = new Date(c.getTimeInMillis());
+				}
+				else {
+					month = Calendar.DECEMBER;
+					c.set(year, month, date, startHour, startMin);
+					start = new Date(c.getTimeInMillis());
+					c.set(year, month, date, endHour, endMin);
+					end = new Date(c.getTimeInMillis());
+				}
 				if(newShift) {
 					try{
 						ftmsc.addShift(employee, start, end);
@@ -229,16 +329,16 @@ public class ViewShiftGUI extends JFrame{
 				.addGroup(layout.createSequentialGroup()
 						.addComponent(workDateLabel)
 						.addComponent(workDatePicker))
-				.addGroup(layout.createSequentialGroup()
-						.addComponent(workStartTimeLabel)
-						.addComponent(startTimeSpinner))
-				.addGroup(layout.createSequentialGroup()
-						.addComponent(workEndTimeLabel)
-						.addComponent(endTimeSpinner))
-				.addGroup(layout.createSequentialGroup()
-						.addComponent(saveAndClose)
-						.addComponent(remove)
-						.addComponent(cancel))
+						.addGroup(layout.createSequentialGroup()
+								.addComponent(workStartTimeLabel)
+								.addComponent(startTimeSpinner))
+								.addGroup(layout.createSequentialGroup()
+										.addComponent(workEndTimeLabel)
+										.addComponent(endTimeSpinner))
+										.addGroup(layout.createSequentialGroup()
+												.addComponent(saveAndClose)
+												.addComponent(remove)
+												.addComponent(cancel))
 				);
 
 		layout.linkSize(SwingConstants.HORIZONTAL, new java.awt.Component[] {saveAndClose, remove, cancel});
@@ -249,16 +349,16 @@ public class ViewShiftGUI extends JFrame{
 				.addGroup(layout.createParallelGroup()
 						.addComponent(workDateLabel)
 						.addComponent(workDatePicker))
-				.addGroup(layout.createParallelGroup()
-						.addComponent(workStartTimeLabel)
-						.addComponent(startTimeSpinner))
-				.addGroup(layout.createParallelGroup()
-						.addComponent(workEndTimeLabel)
-						.addComponent(endTimeSpinner))
-				.addGroup(layout.createParallelGroup()
-						.addComponent(saveAndClose)
-						.addComponent(remove)
-						.addComponent(cancel))
+						.addGroup(layout.createParallelGroup()
+								.addComponent(workStartTimeLabel)
+								.addComponent(startTimeSpinner))
+								.addGroup(layout.createParallelGroup()
+										.addComponent(workEndTimeLabel)
+										.addComponent(endTimeSpinner))
+										.addGroup(layout.createParallelGroup()
+												.addComponent(saveAndClose)
+												.addComponent(remove)
+												.addComponent(cancel))
 				);		
 		editShiftFrame.pack();
 		editShiftFrame.setVisible(true);
