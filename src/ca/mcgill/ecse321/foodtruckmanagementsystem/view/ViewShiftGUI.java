@@ -40,9 +40,9 @@ import ca.mcgill.ecse321.foodtruckmanagementsystem.model.*;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.persistence.PersistenceXStream;
 
 public class ViewShiftGUI extends JFrame{
-	
+
 	private static final long serialVersionUID = 4803035983576092263L;
-	
+
 	private Employee employee;
 	private JLabel errorMessage;
 	private FoodTruckManagementSystemController ftmsc;
@@ -65,7 +65,7 @@ public class ViewShiftGUI extends JFrame{
 	private JSpinner endTimeSpinner;
 	private JLabel workEndTimeLabel;
 	private JFrame editShiftFrame;
-	
+
 
 	public ViewShiftGUI(int index) {
 		this.index = index;
@@ -80,7 +80,7 @@ public class ViewShiftGUI extends JFrame{
 	private void initComponents() {
 		errorMessage = new JLabel();
 		errorMessage.setForeground(Color.RED);
-		
+
 		ftmsc = new FoodTruckManagementSystemController();
 		shiftsWindow(employee);
 		pack();
@@ -109,7 +109,7 @@ public class ViewShiftGUI extends JFrame{
 			endMinute = c.get(Calendar.MINUTE);
 			workEndTimes.add(endHour + ":" + endMinute);
 		}
-		
+
 		shifts = new Object[e.numberOfWorkStartTime()+1][4];
 		int i = 0;
 		for (i = 0; i < workDates.size(); i++) {
@@ -123,23 +123,23 @@ public class ViewShiftGUI extends JFrame{
 		shiftsTable = new JTable(shifts, shiftsColumns);
 		@SuppressWarnings("unused")
 		ButtonColumn editColumn = new ButtonColumn(shiftsTable, edit, 3);
-		
+
 		this.add(new JScrollPane(shiftsTable), 0);
 		this.validate();
 	}
-	
+
 	private void editShift(int shift, boolean isNew) {
 		this.shiftIndex = shift;
 		this.newShift = isNew;
 		this.employee = ftm.getEmployee(index);
-		
+
 		editShiftFrame = new JFrame();
 		editShiftFrame.setTitle("Editing " + employee.getName()+"'s " + "shift");
-		
+
 		workDateLabel = new JLabel("Work date:");
 		workStartTimeLabel = new JLabel("Work start time:");
 		workEndTimeLabel = new JLabel("Work end time:");
-		
+
 		SqlDateModel model = new SqlDateModel();
 		Properties p = new Properties();
 		p.put("text.today", "Today");
@@ -147,14 +147,14 @@ public class ViewShiftGUI extends JFrame{
 		p.put("text.year", "Year");
 		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
 		workDatePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
-		
+
 		startTimeSpinner = new JSpinner(new SpinnerDateModel());		
 		JSpinner.DateEditor startTimeEditor = new JSpinner.DateEditor(startTimeSpinner, "HH:mm");
 		startTimeSpinner.setEditor(startTimeEditor);
 		endTimeSpinner = new JSpinner(new SpinnerDateModel());
 		JSpinner.DateEditor endTimeEditor = new JSpinner.DateEditor(endTimeSpinner, "HH:mm");
 		endTimeSpinner.setEditor(endTimeEditor);
-				
+
 		cancel = new JButton();
 		cancel.setText("Quit without Saving");
 		cancel.addActionListener(new ActionListener(){
@@ -163,26 +163,38 @@ public class ViewShiftGUI extends JFrame{
 				editShiftFrame.dispose();
 			}
 		});
-		
+
 		saveAndClose = new JButton();
 		saveAndClose.setText("Save and Quit");
 		saveAndClose.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
 				error = null;
-				if(newShift){
+				int year = workDatePicker.getModel().getYear();
+				int month = workDatePicker.getModel().getMonth() + 1;
+				int date = workDatePicker.getModel().getDay();
+				Calendar c = Calendar.getInstance();
+				c.setTime(((Date)startTimeSpinner.getValue()));
+				int startHour = c.get(Calendar.HOUR_OF_DAY);
+				int startMin = c.get(Calendar.MINUTE);
+				c.setTime(((Date)endTimeSpinner.getValue()));
+				int endHour = c.get(Calendar.HOUR_OF_DAY);
+				int endMin = c.get(Calendar.MINUTE);
+				c.set(year, month, date, startHour, startMin);
+				Date start = new Date(c.getTimeInMillis());
+				c.set(year, month, date, endHour, endMin);
+				Date end = new Date(c.getTimeInMillis());
+				if(newShift) {
 					try{
-						ftmsc.addShift(employee, (Date) startTimeSpinner.getValue(), 
-								(Date) endTimeSpinner.getValue());
+						ftmsc.addShift(employee, start, end);
 					} catch (InvalidInputException e){
 						error = e.getMessage();
 					}
 				}
-				
+
 				else{
 					try {
 						ftmsc.editShift(employee, employee.getWorkStartTime(shiftIndex), 
-								employee.getWorkEndTime(shiftIndex), (Date) startTimeSpinner.getValue(), 
-								(Date) endTimeSpinner.getValue());
+								employee.getWorkEndTime(shiftIndex), start, end);
 					} catch (InvalidInputException e) {
 						error = e.getMessage();
 					}
@@ -194,7 +206,7 @@ public class ViewShiftGUI extends JFrame{
 				editShiftFrame.pack();
 			}
 		});
-		
+
 		remove = new JButton();
 		remove.setText("Remove this shift");
 		remove.addActionListener(new ActionListener(){
@@ -206,7 +218,7 @@ public class ViewShiftGUI extends JFrame{
 				}
 			}
 		});
-		
+
 		GroupLayout layout = new GroupLayout(editShiftFrame.getContentPane());
 		editShiftFrame.getContentPane().setLayout(layout);
 		layout.setAutoCreateGaps(true);
@@ -228,9 +240,9 @@ public class ViewShiftGUI extends JFrame{
 						.addComponent(remove)
 						.addComponent(cancel))
 				);
-		
+
 		layout.linkSize(SwingConstants.HORIZONTAL, new java.awt.Component[] {saveAndClose, remove, cancel});
-		
+
 		layout.setVerticalGroup(
 				layout.createSequentialGroup()
 				.addComponent(errorMessage)
@@ -259,11 +271,11 @@ public class ViewShiftGUI extends JFrame{
 			JTable table = (JTable)evt.getSource();
 			int modelRow = Integer.valueOf(evt.getActionCommand());
 			boolean isNew = false;
-			
+
 			if((modelRow+1) == table.getRowCount()){
 				isNew = true;
 			}
-			
+
 			editShift(modelRow, isNew);
 			editShiftFrame.addWindowListener(new WindowListener(){
 				@Override

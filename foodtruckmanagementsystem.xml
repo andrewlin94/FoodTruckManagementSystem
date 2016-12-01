@@ -10,16 +10,20 @@
   <employees id="4">
     <employee id="5">
       <name>Michael</name>
-      <workStartTime id="6"/>
-      <workEndTime id="7"/>
+      <workStartTime id="6">
+        <date id="7">2016-12-06 02:58:17.326 UTC</date>
+      </workStartTime>
+      <workEndTime id="8">
+        <date id="9">2016-12-06 04:58:17.326 UTC</date>
+      </workEndTime>
       <id>2</id>
     </employee>
   </employees>
-  <equipment id="8">
-    <equipment id="9">
+  <equipment id="10">
+    <equipment id="11">
       <name>Forks</name>
       <quantity>10</quantity>
     </equipment>
   </equipment>
-  <ingredients id="10"/>
+  <ingredients id="12"/>
 </manager>
