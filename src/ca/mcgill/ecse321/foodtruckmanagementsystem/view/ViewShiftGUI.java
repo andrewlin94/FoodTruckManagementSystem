@@ -95,35 +95,43 @@ public class ViewShiftGUI extends JFrame{
 
 		Calendar c = Calendar.getInstance();
 		for (int i = 0; i < e.numberOfWorkStartTime(); i++) {
+			
+			// get the lists of workStartTime
 			c.setTime(e.getWorkStartTime(i));
+			
+			// get year, month, date, hour and minute
 			year = c.get(Calendar.YEAR);
-			month = c.get(Calendar.MONTH);
+			
+			// +1 for month because month ranges from 0 to 11 to represent Jan - Dec
+			month = (c.get(Calendar.MONTH)) + 1;
 			date = c.get(Calendar.DATE);
-
 			startHour = c.get(Calendar.HOUR);
 			startMinute = c.get(Calendar.MINUTE);
-			if (month == Calendar.DECEMBER) {
-				workDates.add(year + "/" + 12 + "/" + date);
-			}
-			else {
-				workDates.add(year + "/" + month + "/" + date);
-			}
+			
+			// add the date to the list
+			workDates.add(year + "/" + month + "/" + date);
+			// if minute is single digit, add a leading 0 to minutes
 			if (startMinute <= 9) {
 				workStartTimes.add(startHour + ":0" + startMinute);
 			}
+			
+			// otherwise, just display what it is
 			else {
 				workStartTimes.add(startHour + ":" + startMinute);
 			}
 			c.setTime(e.getWorkEndTime(i));
 			endHour = c.get(Calendar.HOUR);
 			endMinute = c.get(Calendar.MINUTE);
+			
+			// if minute is single digit, add a leading 0 to minutes
 			if (endMinute <= 9) {
 				workEndTimes.add(endHour + ":0" + endMinute);
 			}
+			
+			// otherwise, just display what it is
 			else {
 				workEndTimes.add(endHour + ":" + endMinute);
 			}
-			
 		}
 
 		shifts = new Object[e.numberOfWorkStartTime()+1][4];
@@ -185,104 +193,30 @@ public class ViewShiftGUI extends JFrame{
 		saveAndClose.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
 				error = null;
+				
+				// extract year, month, date from DatePicker, because workStartTime and workEndTime includes the date
 				int year = workDatePicker.getModel().getYear();
-				System.out.println(year);
-				int month;
+				int month = workDatePicker.getModel().getMonth();
 				int date = workDatePicker.getModel().getDay();
+				
+				// extract time from spinner, only the hour and time is needed, date is extracted above
 				Calendar c = Calendar.getInstance();
 				c.setTime(((Date)startTimeSpinner.getValue()));
 				int startHour = c.get(Calendar.HOUR_OF_DAY);
 				int startMin = c.get(Calendar.MINUTE);
+	
 				c.setTime(((Date)endTimeSpinner.getValue()));
 				int endHour = c.get(Calendar.HOUR_OF_DAY);
 				int endMin = c.get(Calendar.MINUTE);
-				int temp = workDatePicker.getModel().getMonth()+1;
+				
+				// set the calendar to the actual workStartDate, and create a Date for that
+				c.set(year, month, date, startHour, startMin);
 				Date start = new Date(c.getTimeInMillis());
+				
+				// set the calendar to actual workEndDate, and create a Date for that
+				c.set(year, month, date, endHour, endMin);
 				Date end = new Date(c.getTimeInMillis());
-				if (temp == 1) {
-					month = Calendar.JANUARY + 1;
-					c.set(year, month, date, startHour, startMin);
-					start = new Date(c.getTimeInMillis());
-					c.set(year, month, date, endHour, endMin);
-					end = new Date(c.getTimeInMillis());
-				}
-				else if (temp == 2) {
-					month = Calendar.FEBRUARY + 1;
-					c.set(year, month, date, startHour, startMin);
-					start = new Date(c.getTimeInMillis());
-					c.set(year, month, date, endHour, endMin);
-					end = new Date(c.getTimeInMillis());
-				}
-				else if (temp == 3) {
-					month = Calendar.MARCH + 1;
-					c.set(year, month, date, startHour, startMin);
-					start = new Date(c.getTimeInMillis());
-					c.set(year, month, date, endHour, endMin);
-					end = new Date(c.getTimeInMillis());
-				}
-				else if (temp == 4) {
-					month = Calendar.APRIL + 1;
-					c.set(year, month, date, startHour, startMin);
-					start = new Date(c.getTimeInMillis());
-					c.set(year, month, date, endHour, endMin);
-					end = new Date(c.getTimeInMillis());
-				}
-				else if (temp == 5) {
-					month = Calendar.MAY + 1;
-					c.set(year, month, date, startHour, startMin);
-					start = new Date(c.getTimeInMillis());
-					c.set(year, month, date, endHour, endMin);
-					end = new Date(c.getTimeInMillis());
-				}
-				else if (temp == 6) {
-					month = Calendar.JUNE + 1 ;
-					c.set(year, month, date, startHour, startMin);
-					start = new Date(c.getTimeInMillis());
-					c.set(year, month, date, endHour, endMin);
-					end = new Date(c.getTimeInMillis());
-				}
-				else if (temp == 7) {
-					month = Calendar.JULY + 1;
-					c.set(year, month, date, startHour, startMin);
-					start = new Date(c.getTimeInMillis());
-					c.set(year, month, date, endHour, endMin);
-					end = new Date(c.getTimeInMillis());
-				}
-				else if (temp == 8) {
-					month = Calendar.AUGUST + 1;
-					c.set(year, month, date, startHour, startMin);
-					start = new Date(c.getTimeInMillis());
-					c.set(year, month, date, endHour, endMin);
-					end = new Date(c.getTimeInMillis());
-				}
-				else if (temp == 9) {
-					month = Calendar.SEPTEMBER + 1;
-					c.set(year, month, date, startHour, startMin);
-					start = new Date(c.getTimeInMillis());
-					c.set(year, month, date, endHour, endMin);
-					end = new Date(c.getTimeInMillis());
-				}
-				else if (temp == 10) {
-					month = Calendar.OCTOBER + 1;
-					c.set(year, month, date, startHour, startMin);
-					start = new Date(c.getTimeInMillis());
-					c.set(year, month, date, endHour, endMin);
-					end = new Date(c.getTimeInMillis());
-				}
-				else if (temp == 11) {
-					month = Calendar.NOVEMBER + 1;
-					c.set(year, month, date, startHour, startMin);
-					start = new Date(c.getTimeInMillis());
-					c.set(year, month, date, endHour, endMin);
-					end = new Date(c.getTimeInMillis());
-				}
-				else {
-					month = Calendar.DECEMBER;
-					c.set(year, month, date, startHour, startMin);
-					start = new Date(c.getTimeInMillis());
-					c.set(year, month, date, endHour, endMin);
-					end = new Date(c.getTimeInMillis());
-				}
+				
 				if(newShift) {
 					try{
 						ftmsc.addShift(employee, start, end);

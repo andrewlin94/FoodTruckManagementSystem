@@ -49,34 +49,51 @@ public class TestFoodTruckManagementSystemController {
 	@Test
 	public void testCreateEmptyFoodName() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		
+		// check memory is empty
 		assertEquals(0, ftm.getFoods().size());
 		
 		String error = "";
 		Controller ftmsc = new Controller();
+		
+		// try create food
 		try {
 			ftmsc.createFood("", 12, 12);
 		} catch (InvalidInputException e) {
 			error = e.getMessage();
 		}
+		
+		// check if the error is what was expected
 		assertEquals("Food name cannot be empty! ", error);
+		
+		// check no change in memory
+		assertEquals(0, ftm.getFoods().size());
 	}
+	
 	/**
 	 * Unit test case for empty food name and free price (INVALID)
 	 */
 	@Test
 	public void testCreateEmptyFoodNamePrice() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		
+		// check memory is empty
 		assertEquals(0, ftm.getFoods().size());
 				
 		String error = "";
 		Controller ftmsc = new Controller();
+		
+		// try create food
 		try {
 			ftmsc.createFood("", 0, 0);
 		} catch (InvalidInputException e) {
 			error = e.getMessage();
 		}
 		
+		// check if error is what we expected
 		assertEquals("Food name cannot be empty! Food price is not valid! ", error);
+		
+		// check no change in memory
 		assertEquals(0, ftm.getFoods().size());
 	}
 	
@@ -86,10 +103,14 @@ public class TestFoodTruckManagementSystemController {
 	@Test
 	public void testCreateEmptyFoodPrice() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		
+		// check memory is empty
 		assertEquals(0, ftm.getFoods().size());
 		
 		String error = "";
 		Controller ftmsc = new Controller();
+		 
+		// try create food
 		try {
 			ftmsc.createFood("Burger", 0, 0);
 		}
@@ -110,17 +131,24 @@ public class TestFoodTruckManagementSystemController {
 	@Test
 	public void testCreateInvalidFoodName() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		
+		// check memory is empty
 		assertEquals(0, ftm.getFoods().size());
 		
 		String error = "";
 		Controller ftmsc = new Controller();
+		
+		// try create food
 		try {
 			ftmsc.createFood("Burger!@#", 12.95, 0);
 		} catch (InvalidInputException e) {
 			error = e.getMessage();
 		}
 		
-		assertEquals("Food name is not valid! ", error);		
+		// check error
+		assertEquals("Food name is not valid! ", error);
+		
+		// check no change in memory
 		assertEquals(0, ftm.getFoods().size());
 	}
 	
@@ -130,17 +158,24 @@ public class TestFoodTruckManagementSystemController {
 	@Test
 	public void testCreateInvalidFoodPopularity() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		
+		// check memory is empty
 		assertEquals(0, ftm.getFoods().size());
 		
 		String error = "";
 		Controller ftmsc = new Controller();
+		
+		// try create food
 		try {
 			ftmsc.createFood("Burger", 12.95, -1);
 		} catch (InvalidInputException e) {
 			error = e.getMessage();
 		}
 		
-		assertEquals("Food popularity is not valid! ", error);		
+		// check error
+		assertEquals("Food popularity is not valid! ", error);
+		
+		// check no change in memory
 		assertEquals(0, ftm.getFoods().size());
 	}
 	
@@ -150,17 +185,24 @@ public class TestFoodTruckManagementSystemController {
 	@Test
 	public void testCreateInvalidFoodPricePopularity() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		
+		// check memory is empty
 		assertEquals(0, ftm.getFoods().size());
 		
 		String error = "";
 		Controller ftmsc = new Controller();
+		
+		// try create food
 		try {
 			ftmsc.createFood("Burger", 0.0, -1);
 		} catch (InvalidInputException e) {
 			error = e.getMessage();
 		}
 		
-		assertEquals("Food price is not valid! Food popularity is not valid! ", error);		
+		// check errors
+		assertEquals("Food price is not valid! Food popularity is not valid! ", error);
+		
+		// check no change in memory
 		assertEquals(0, ftm.getFoods().size());
 	}
 	

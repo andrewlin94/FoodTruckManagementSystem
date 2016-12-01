@@ -1,4 +1,8 @@
 /*
+ * This controller is solely used for the JUnit tests!
+ * Only one line is changed, where instead of loading the FTM from XML,
+ * this one gets an instance of it.
+ * 
  * Team 10 Food Truck Management System
  * Wang, Ying Han	260588337
  * Mircic, Michael	260587925
