@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import javax.swing.JFormattedTextField.AbstractFormatter;
 
+//Helper class used to generalize input for Dates and Times
 public class DateLabelFormatter extends AbstractFormatter {
 	private static final long serialVersionUID = -2169252224419341678L;
 	private String datePattern = "yyyy-MM-dd";

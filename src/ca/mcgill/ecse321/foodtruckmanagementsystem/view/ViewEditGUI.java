@@ -53,7 +53,14 @@ public class ViewEditGUI extends JFrame{
 	private int index;
 	private boolean isNew;
 	
-	
+	/**
+	 * Constructor takes String identifying the item being edited, its index in the saved data,
+	 * and a boolean isNew stating whether the item is a new addition.
+	 * 
+	 * @param item
+	 * @param index
+	 * @param isNew
+	 */
 	public ViewEditGUI(String item, int index, boolean isNew){
 		this.itemType = item;
 		this.index = index;
@@ -71,7 +78,9 @@ public class ViewEditGUI extends JFrame{
 		initComponents();		
 	}
 
-
+	/**
+	 * Initiate new window components
+	 */
 	private void initComponents() {
 		
 		errorMessage = new JLabel();
@@ -107,8 +116,7 @@ public class ViewEditGUI extends JFrame{
 			
 		}
 		
-		else{	
-			
+		else{				
 			if(itemType.equals("Food")){
 				foodWindow(ftm.getFood(index));
 			}
@@ -124,6 +132,11 @@ public class ViewEditGUI extends JFrame{
 		}		
 	}
 	
+	/**
+	 * Opens up the window to edit a food item.
+	 * 
+	 * @param food
+	 */
 	private void foodWindow(Food food){
 		nameLabel = new JLabel("Food Name (No special characters):");
 		quantityLabel = new JLabel("Add number of orders (1, 2, 3, ...):");
@@ -141,7 +154,8 @@ public class ViewEditGUI extends JFrame{
 				error = null;
 				if(isNew){
 					try {
-						ftmsc.createFood(name.getText(), Double.parseDouble(price.getText()), Integer.parseInt(quantity.getText()));
+						ftmsc.createFood(name.getText(), Double.parseDouble(price.getText()), 
+								Integer.parseInt(quantity.getText()));
 					} catch (InvalidInputException e) {
 						error = e.getMessage();
 					}
@@ -149,7 +163,8 @@ public class ViewEditGUI extends JFrame{
 				else{
 					try {
 						ftmsc.editOrder(ftm.getFood(index), Integer.parseInt(quantity.getText()));
-						ftmsc.editFood(ftm.getFood(index), name.getText(), Double.parseDouble(price.getText()));
+						ftmsc.editFood(ftm.getFood(index), name.getText(), 
+								Double.parseDouble(price.getText()));
 					} catch (InvalidInputException e) {
 						error = e.getMessage();
 					}
@@ -158,6 +173,7 @@ public class ViewEditGUI extends JFrame{
 					dispose();
 				}
 				errorMessage.setText(error);
+				//resize the window in case an error message needs to be shown
 				pack();
 			}
 		});
@@ -165,6 +181,7 @@ public class ViewEditGUI extends JFrame{
 		remove.setText("Remove this item");
 		remove.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
+				//checks that user isn't trying to remove an item that doesn't exist
 				if(!isNew){
 					ftmsc.removeFood(ftm.getFood(index));
 					dispose();
@@ -216,6 +233,10 @@ public class ViewEditGUI extends JFrame{
 		pack();
 	}
 	
+	/**
+	 * Create a window to edit a specified employee (or create a new one)
+	 * @param employee
+	 */
 	private void employeeWindow(Employee employee){
 		nameLabel = new JLabel("Employee Name (No special characters):");		
 		name = new JTextField();
@@ -234,7 +255,6 @@ public class ViewEditGUI extends JFrame{
 				else{
 					try {
 						ftmsc.editEmployeeName(ftm.getEmployee(index), name.getText());
-						//ftmsc.editOrder(ftm.getFood(index), Integer.parseInt(quantity.getText()));
 					} catch (InvalidInputException e) {
 						error = e.getMessage();
 					}
@@ -243,6 +263,7 @@ public class ViewEditGUI extends JFrame{
 					dispose();
 				}
 				errorMessage.setText(error);
+				//resize the window in case an error message needs to be shown
 				pack();
 			}
 		});
@@ -250,6 +271,7 @@ public class ViewEditGUI extends JFrame{
 		remove.setText("Remove this employee's record");
 		remove.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
+				//checks that the user isn't trying to delete a non-existant employee
 				if(!isNew){
 					ftmsc.removeEmployee(ftm.getEmployee(index));
 					dispose();
@@ -289,6 +311,10 @@ public class ViewEditGUI extends JFrame{
 		pack();
 	}
 	
+	/**
+	 * Create a window to edit a specified ingredient
+	 * @param ingredient
+	 */
 	private void ingredientWindow(Ingredient ingredient){
 		nameLabel = new JLabel("Ingredient Name (No special characters):");
 		quantityLabel = new JLabel("Quantity:");
@@ -310,8 +336,8 @@ public class ViewEditGUI extends JFrame{
 				}
 				else{
 					try {
-						ftmsc.editIngredient(ftm.getIngredient(index), name.getText(), Integer.parseInt(quantity.getText()));
-						//ftmsc.editOrder(ftm.getFood(index), Integer.parseInt(quantity.getText()));
+						ftmsc.editIngredient(ftm.getIngredient(index), name.getText(), 
+								Integer.parseInt(quantity.getText()));
 					} catch (InvalidInputException e) {
 						error = e.getMessage();
 					}
@@ -320,6 +346,7 @@ public class ViewEditGUI extends JFrame{
 					dispose();
 				}
 				errorMessage.setText(error);
+				//resize the window in case an error message needs to be shown
 				pack();
 			}
 		});
@@ -327,6 +354,7 @@ public class ViewEditGUI extends JFrame{
 		remove.setText("Remove this ingredient");
 		remove.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
+				//checks that the ingredient exists before deleting it
 				if(!isNew){
 					ftmsc.removeIngredient(ftm.getIngredient(index));
 					dispose();
@@ -372,6 +400,10 @@ public class ViewEditGUI extends JFrame{
 		pack();
 	}
 	
+	/**
+	 * Create a window to edit a specified equipment item.
+	 * @param equipment
+	 */
 	private void equipmentWindow(Equipment equipment){
 		nameLabel = new JLabel("Ingredient Name (No special characters):");
 		quantityLabel = new JLabel("Quantity:");
@@ -393,8 +425,8 @@ public class ViewEditGUI extends JFrame{
 				}
 				else{
 					try {
-						ftmsc.editEquipment(ftm.getEquipment(index), name.getText(), Integer.parseInt(quantity.getText()));
-						//ftmsc.editOrder(ftm.getFood(index), Integer.parseInt(quantity.getText()));
+						ftmsc.editEquipment(ftm.getEquipment(index), name.getText(), 
+								Integer.parseInt(quantity.getText()));
 					} catch (InvalidInputException e) {
 						error = e.getMessage();
 					}
@@ -403,6 +435,7 @@ public class ViewEditGUI extends JFrame{
 					dispose();
 				}
 				errorMessage.setText(error);
+				//resize the window in case an error message needs to be shown
 				pack();
 			}
 		});

@@ -55,7 +55,9 @@ public class FoodTruckManagerPage extends JFrame{
 	final static String EQUIPMENTTAB = "Equipment";
 	final static String INGREDIENTTAB = "Ingredients";
 	
-	
+	/**
+	 * Constructor instantiating the initial window
+	 */
 	public FoodTruckManagerPage(){
 		
 		setTitle("Food Truck Manager");
@@ -67,6 +69,10 @@ public class FoodTruckManagerPage extends JFrame{
 		setVisible(true);
 		
 	}	
+	
+	/**
+	 * Method to create the main window shown to the user
+	 */
 	private void initComponents(){
 		
 		foodTable = new JTable();		
@@ -89,7 +95,10 @@ public class FoodTruckManagerPage extends JFrame{
 		
 	}
 	
-	
+	/**
+	 * Adds all the food items to the food JTable
+	 * Calls to this method will refresh the table
+	 */
 	private void refreshFood(){
 		FoodTruckManager ftm = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();		
 		
@@ -112,6 +121,7 @@ public class FoodTruckManagerPage extends JFrame{
 		foods[i][3] = "Add new food";
 
 		foodTable = new JTable(foods, foodColumns);
+		//Will create an interactable buttons for user editing
 		@SuppressWarnings("unused")
 		ButtonColumn editColumn = new ButtonColumn(foodTable, edit, 3);
 
@@ -119,7 +129,10 @@ public class FoodTruckManagerPage extends JFrame{
 
 	}
 	
-	
+	/**
+	 * Populates the equipment JTable
+	 * Calling this method will also refresh the Table contents
+	 */
 	private void refreshEquipment(){
 		FoodTruckManager ftm = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
 		
@@ -139,6 +152,7 @@ public class FoodTruckManagerPage extends JFrame{
 		equipment[i][2] = "Add new equipment";
 
 		equipmentTable = new JTable(equipment, equipmentColumns);
+		//Will create an interactable buttons for user editing
 		@SuppressWarnings("unused")
 		ButtonColumn editColumn = new ButtonColumn(equipmentTable, edit, 2);
 
@@ -146,7 +160,10 @@ public class FoodTruckManagerPage extends JFrame{
 
 	}
 	
-	
+	/**
+	 * Populate the ingredient table
+	 * Calling this method will also refresh the visuals of the table
+	 */
 	private void refreshIngredient(){
 		FoodTruckManager ftm = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
 		
@@ -166,6 +183,7 @@ public class FoodTruckManagerPage extends JFrame{
 		ingredients[i][2] = "Add new ingredient";
 
 		ingredientTable = new JTable(ingredients, ingredientColumns);
+		//Will create an interactable buttons for user editing
 		@SuppressWarnings("unused")
 		ButtonColumn editColumn = new ButtonColumn(ingredientTable, edit, 2);
 
@@ -173,7 +191,10 @@ public class FoodTruckManagerPage extends JFrame{
 
 	}
 	
-	
+	/**
+	 * Populates the employee table
+	 * Calling this method will also refresh the Table visuals
+	 */
 	private void refreshEmployee(){
 		FoodTruckManager ftm = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
 		
@@ -193,6 +214,7 @@ public class FoodTruckManagerPage extends JFrame{
 		employees[i][2] = "Add new employee";
 
 		employeeTable = new JTable(employees, employeeColumns);
+		//Will create an interactable buttons for user editing
 		@SuppressWarnings("unused")
 		ButtonColumn editColumn = new ButtonColumn(employeeTable, edit, 2);
 		@SuppressWarnings("unused")
@@ -202,6 +224,10 @@ public class FoodTruckManagerPage extends JFrame{
 
 	}
 	
+	/**
+	 * Method to be called when a button in one of the interactable "edit" columns is pressed
+	 * It will take the user to the appropriate editing window
+	 */
 	Action edit = new AbstractAction(){
 		private static final long serialVersionUID = 2807908237298004936L;
 		
@@ -212,12 +238,14 @@ public class FoodTruckManagerPage extends JFrame{
 			int modelRow = Integer.valueOf(evt.getActionCommand());
 			boolean isNew = false;
 			
+			//Checks to see if the item is new or not
 			if ((modelRow+1) == table.getRowCount()){
 				isNew = true;
 			}
 			
 			if(table.equals(employeeTable)){
-				veg = new ViewEditGUI("Employee", modelRow, isNew);		
+				veg = new ViewEditGUI("Employee", modelRow, isNew);	
+				//adding a window listener to refresh data and table visuals after edit
 				veg.addWindowListener(new WindowListener(){
 					@Override
 					public void windowClosed(WindowEvent e) {
@@ -240,6 +268,7 @@ public class FoodTruckManagerPage extends JFrame{
 			
 			else if(table.equals(foodTable)){
 				veg = new ViewEditGUI("Food", modelRow, isNew);
+				//adding a window listener to refresh data and table visuals after edit
 				veg.addWindowListener(new WindowListener(){
 					@Override
 					public void windowClosed(WindowEvent e) {
@@ -262,6 +291,7 @@ public class FoodTruckManagerPage extends JFrame{
 			
 			else if(table.equals(ingredientTable)){
 				veg = new ViewEditGUI("Ingredient", modelRow, isNew);
+				//adding a window listener to refresh data and table visuals after edit
 				veg.addWindowListener(new WindowListener(){
 					@Override
 					public void windowClosed(WindowEvent e) {
@@ -284,6 +314,7 @@ public class FoodTruckManagerPage extends JFrame{
 			
 			else if(table.equals(equipmentTable)){
 				veg = new ViewEditGUI("Equipment", modelRow, isNew);
+				//adding a window listener to refresh data and table visuals after edit
 				veg.addWindowListener(new WindowListener(){
 					@Override
 					public void windowClosed(WindowEvent e) {
@@ -307,6 +338,10 @@ public class FoodTruckManagerPage extends JFrame{
 		}
 	};
 
+	/**
+	 * Method for the interactable buttons in the employee columns labeled "Shift"
+	 * Will take the user to a window of that employee's shift data
+	 */
 	Action shifts = new AbstractAction(){
 		private static final long serialVersionUID = -2586924078002381328L;
 
@@ -317,7 +352,8 @@ public class FoodTruckManagerPage extends JFrame{
 			if(table.getRowCount() == (modelRow+1)){}
 			
 			else{
-				ViewShiftGUI vsg = new ViewShiftGUI(modelRow);				
+				ViewShiftGUI vsg = new ViewShiftGUI(modelRow);	
+				//adding a window listener to refresh data and table visuals after edit
 				vsg.addWindowListener(new WindowListener(){
 					@Override
 					public void windowClosed(WindowEvent e) {

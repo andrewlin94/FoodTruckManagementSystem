@@ -66,7 +66,10 @@ public class ViewShiftGUI extends JFrame{
 	private JLabel workEndTimeLabel;
 	private JFrame editShiftFrame;
 
-
+	/**
+	 * constructor where "index" is used to get a specific employee's shift data
+	 * @param index
+	 */
 	public ViewShiftGUI(int index) {
 		this.index = index;
 		ftm = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
@@ -77,15 +80,21 @@ public class ViewShiftGUI extends JFrame{
 		setVisible(true);
 	}
 
+	/**
+	 * sets up the JFrame and its JTable component
+	 */
 	private void initComponents() {
 		errorMessage = new JLabel();
 		errorMessage.setForeground(Color.RED);
 
 		ftmsc = new FoodTruckManagementSystemController();
 		shiftsWindow(employee);
-		pack();
 	}
 
+	/**
+	 * creates the JTable that will contain the employee's shift data
+	 * @param e
+	 */
 	private void shiftsWindow(Employee e) {
 		error = null;
 
@@ -145,13 +154,24 @@ public class ViewShiftGUI extends JFrame{
 		shifts[i][3] = "Add new shift";
 
 		shiftsTable = new JTable(shifts, shiftsColumns);
+		//Used to create a pressable button in a column in the table for user editing 
 		@SuppressWarnings("unused")
 		ButtonColumn editColumn = new ButtonColumn(shiftsTable, edit, 3);
 
+		//when refreshing, the frame needs to update the visuals shown to the user
 		this.add(new JScrollPane(shiftsTable), 0);
 		this.validate();
+
+		pack();
 	}
 
+	/**
+	 * Creates a new window where specific shifts (at index "shift") can be edited, removed,
+	 * or, if it isNew, added.
+	 * 
+	 * @param shift
+	 * @param isNew
+	 */
 	private void editShift(int shift, boolean isNew) {
 		this.shiftIndex = shift;
 		this.newShift = isNew;
@@ -164,6 +184,7 @@ public class ViewShiftGUI extends JFrame{
 		workStartTimeLabel = new JLabel("Work start time:");
 		workEndTimeLabel = new JLabel("Work end time:");
 
+		//code to model the input date in a recognizable manner
 		SqlDateModel model = new SqlDateModel();
 		Properties p = new Properties();
 		p.put("text.today", "Today");
@@ -237,6 +258,7 @@ public class ViewShiftGUI extends JFrame{
 					editShiftFrame.dispose();
 				}
 				errorMessage.setText(error);
+				//resize in case an error message needs to be shown
 				editShiftFrame.pack();
 			}
 		});
@@ -263,17 +285,17 @@ public class ViewShiftGUI extends JFrame{
 				.addGroup(layout.createSequentialGroup()
 						.addComponent(workDateLabel)
 						.addComponent(workDatePicker))
-						.addGroup(layout.createSequentialGroup()
-								.addComponent(workStartTimeLabel)
-								.addComponent(startTimeSpinner))
-								.addGroup(layout.createSequentialGroup()
-										.addComponent(workEndTimeLabel)
-										.addComponent(endTimeSpinner))
-										.addGroup(layout.createSequentialGroup()
-												.addComponent(saveAndClose)
-												.addComponent(remove)
-												.addComponent(cancel))
-				);
+				.addGroup(layout.createSequentialGroup()
+						.addComponent(workStartTimeLabel)
+						.addComponent(startTimeSpinner))
+				.addGroup(layout.createSequentialGroup()
+						.addComponent(workEndTimeLabel)
+						.addComponent(endTimeSpinner))
+				.addGroup(layout.createSequentialGroup()
+						.addComponent(saveAndClose)
+						.addComponent(remove)
+						.addComponent(cancel))
+				);	
 
 		layout.linkSize(SwingConstants.HORIZONTAL, new java.awt.Component[] {saveAndClose, remove, cancel});
 
@@ -283,20 +305,25 @@ public class ViewShiftGUI extends JFrame{
 				.addGroup(layout.createParallelGroup()
 						.addComponent(workDateLabel)
 						.addComponent(workDatePicker))
-						.addGroup(layout.createParallelGroup()
-								.addComponent(workStartTimeLabel)
-								.addComponent(startTimeSpinner))
-								.addGroup(layout.createParallelGroup()
-										.addComponent(workEndTimeLabel)
-										.addComponent(endTimeSpinner))
-										.addGroup(layout.createParallelGroup()
-												.addComponent(saveAndClose)
-												.addComponent(remove)
-												.addComponent(cancel))
-				);		
+				.addGroup(layout.createParallelGroup()
+						.addComponent(workStartTimeLabel)
+						.addComponent(startTimeSpinner))
+				.addGroup(layout.createParallelGroup()
+						.addComponent(workEndTimeLabel)
+						.addComponent(endTimeSpinner))
+				.addGroup(layout.createParallelGroup()
+						.addComponent(saveAndClose)
+						.addComponent(remove)
+						.addComponent(cancel))
+				);	
 		editShiftFrame.pack();
 		editShiftFrame.setVisible(true);
 	}
+	
+	/**
+	 * Action taken when column button in the shift window is pressed. Depending on its location
+	 * in the JTable, it will open and Add or Edit/Remove window.
+	 */
 	Action edit = new AbstractAction(){
 		private static final long serialVersionUID = 2807908237298004936L;
 
@@ -311,10 +338,13 @@ public class ViewShiftGUI extends JFrame{
 			}
 
 			editShift(modelRow, isNew);
+			//when the editing window closes, refresh table data
 			editShiftFrame.addWindowListener(new WindowListener(){
 				@Override
 				public void windowClosed(WindowEvent e) {
+					//needs to update the ftm instance due to change in data
 					ftm = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+					//while the same employee is being called, his shift data has now changed
 					shiftsWindow(ftm.getEmployee(index));
 				}
 				@Override
